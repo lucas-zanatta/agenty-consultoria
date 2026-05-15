@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://agenty.com.br/sitemap.xml
+
+# Disallow admin or private paths if added in the future
+# Disallow: /admin/
