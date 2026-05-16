@@ -102,9 +102,24 @@ body::after {
   letter-spacing: 0.06em;
   color: var(--ink);
   display: flex;
-  align-items: baseline;
-  gap: 6px;
+  align-items: center;
+  gap: 8px;
   white-space: nowrap;
+}
+.nav__logo-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask-image: url('../assets/favicon-paperblack.svg');
+  mask-image: url('../assets/favicon-paperblack.svg');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
 }
 .nav__logo-sub {
   font-size: 0.65rem;
