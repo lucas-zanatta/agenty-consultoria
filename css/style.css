@@ -973,6 +973,11 @@ body::after {
   text-transform: uppercase;
   color: rgba(250, 247, 242, 0.3);
 }
+.footer-new__legal-link {
+  color: rgba(250, 247, 242, 0.5);
+  transition: color 0.2s;
+}
+.footer-new__legal-link:hover { color: rgba(250, 247, 242, 0.9); }
 .footer-new__cta {
   color: var(--ochre);
   font-weight: 600;
