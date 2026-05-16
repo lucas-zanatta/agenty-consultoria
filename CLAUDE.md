@@ -41,11 +41,15 @@ CONSULTORIA/
 ├── robots.txt
 ├── CNAME                    # agenty.com.br
 ├── css/
-│   └── style.css            # Design system completo
+│   └── style.css            # Design system completo (paleta quente, editorial)
 ├── js/
-│   └── main.js              # Nav, FAQ accordion, scroll animations, counters
+│   └── main.js              # Nav, FAQ accordion, scroll animations, rotating text, parallax
 ├── assets/
-│   └── favicon.svg
+│   ├── favicon.svg
+│   ├── hero-man.png         # Pessoa com fundo transparente — overlay desktop no hero
+│   └── og-image.png         # OG image 1200×630px (gerada via tools/gen_og_image.py)
+├── tools/
+│   └── gen_og_image.py      # Gera og-image.png com Playwright — rodar ao mudar branding
 └── scraper/
     ├── maps_scraper.py      # Google Maps scraper (Playwright)
     ├── lead_analyzer.py     # Scoring e classificação de leads
@@ -56,32 +60,49 @@ CONSULTORIA/
     └── .env                 # NUNCA commitar — gitignored
 ```
 
-Produtos do portfólio ainda não implementados ficaram em `/produtos/{slug}/` quando desenvolvidos.
+Produtos do portfólio ficam em `/produtos/{slug}/` quando desenvolvidos.
 
 ---
 
 ## Design system (website)
 
-**Paleta:**
+**Paleta quente — tema editorial:**
 ```css
---bg:      #080812   /* fundo principal */
---surface: #0f0f23   /* cards e superfícies */
---primary: #7c5cfc   /* violeta — cor principal */
---accent:  #10b981   /* verde esmeralda — CTA e destaques */
---cyan:    #06b6d4   /* gradiente secundário */
---text:    #e2e8f0
---muted:   #94a3b8
+--paper:   #faf7f2   /* fundo principal */
+--smoke:   #f0ebe0   /* cards e superfícies alternadas */
+--ink:     #18130e   /* texto principal e fundos escuros */
+--ink-2:   #2e2520   /* bordas em fundos escuros */
+--ember:   #c94a1f   /* cor principal — laranja escuro */
+--ochre:   #f2b705   /* destaque — amarelo ouro */
+--moss:    #2d7a4f   /* verde — status online / indicadores */
+--muted:   #8a7f74   /* texto secundário */
+--border:  #e2dbd0   /* bordas em fundo claro */
 ```
 
-**Gradiente da marca:** `linear-gradient(135deg, #7c5cfc, #06b6d4)`
+**Hero gradient (imagem de fundo):** `linear-gradient(145deg, #d44d22, #a83210 38%, #5c1a08 68%, #1a100a)`
 
-**Fonte:** Inter (Google Fonts)
+**Fontes (Google Fonts):**
+- `Barlow Condensed` — display / headings (wght 700–900, uppercase)
+- `Instrument Serif` — acentos serif / itálico em ember (ex.: palavras-chave nos h2)
+- `Inter` — corpo de texto
 
-**Padrão de animação:** elementos com `[data-animate]` são revelados via `IntersectionObserver` em `main.js`.
+**Padrões de animação:**
+- `[data-reveal]` → revelado via `IntersectionObserver` com classe `.in` (padrão atual, `index.html`)
+- `[data-animate]` → compat para subpages legadas, usa classe `.visible`
+- `[data-parallax="speed"]` → parallax scroll com scale no hero visual
+- `.hero__word` → word-by-word fade/slide no load do hero
+- `.hero__rotate-text` → texto rotativo no hero (double `requestAnimationFrame`)
+
+**CSS cache-busting:** query string `?v=N` no link do CSS em `index.html`. Incrementar ao fazer deploy de mudanças de CSS. Versão atual: **v7**.
+
+**Convenções mobile (≤ 900px):**
+- `<br>` dentro de `.pg-heading` são ocultados com `display: none` — texto flui naturalmente
+- Sempre adicionar um espaço antes do `<br>` no HTML: `palavra. <br>próxima` — assim quando o br some não come as palavras
+- Imagem `hero-man.png` aparece apenas no desktop; mobile mostra só o gradiente
 
 **Agendamento:** Cal.com  
 URL: `https://cal.com/lucas-zanatta-bettbr/diagnostico`  
-Event slug: `diagnostico` (renomeado de "Diagnostico Gratuito - Agenty")
+Event slug: `diagnostico`
 
 ---
 
@@ -238,12 +259,29 @@ produtos/{slug}/
 
 ---
 
+## SEO
+
+**Estado atual (mai/2026):**
+- `sitemap.xml` submetido no Google Search Console
+- Re-indexação da homepage solicitada (título antigo "Agenty SDR" será substituído)
+- `assets/og-image.png` (1200×630px) no ar — WhatsApp/LinkedIn vão pegar o preview
+- Todas as páginas têm: canonical, meta description única, `lang="pt-BR"`, JSON-LD (`LocalBusiness` na homepage, tipos específicos nas subpages)
+- `robots.txt` aponta para o sitemap
+
+**Regenerar og-image.png** quando mudar branding:
+```bash
+python tools/gen_og_image.py
+```
+Requer Playwright instalado (já presente no scraper).
+
+---
+
 ## Tarefas pendentes
 
-- [ ] Habilitar HTTPS no GitHub Pages após propagação DNS: `gh api repos/lucas-zanatta/agenty-consultoria/pages --method PUT --field https_enforced=true`
 - [ ] Corrigir extração de `reviews_count` no scraper (retorna 0 — depurar com `--visible`)
 - [ ] Atualizar `servicos.html` com os produtos reais do portfólio
 - [ ] Conectar Google Calendar à conta Cal.com
 - [ ] Configurar disponibilidade/agenda no Cal.com
 - [ ] Configurar Google Analytics no site
 - [ ] Desenvolver primeiros produtos do portfólio (começar pelo Gestor de Reputação)
+- [ ] Criar caso de uso / depoimento da Cássia Marconi após setup do Gestor de Reputação
