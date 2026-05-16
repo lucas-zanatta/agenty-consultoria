@@ -999,8 +999,8 @@ body::after {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;   /* fixed width keeps natural aspect ratio */
-    height: auto; /* height follows image proportions — arms overflow above */
+    width: 62%;
+    height: auto;
     z-index: 1;
     pointer-events: none;
   }
@@ -1013,7 +1013,7 @@ body::after {
     font-size: clamp(2.6rem, 9.5vw, 4.5rem);
     width: 100%;
   }
-  .hero__display-wrap { padding: 20px var(--gutter); }
+  .hero__display-wrap { padding: 20px var(--gutter); gap: 28px; }
   .hero__status-bar { padding: 12px var(--gutter); }
   .hero__scroll-hint { padding: 12px var(--gutter); }
 
@@ -1051,6 +1051,11 @@ body::after {
 
   .footer-new__inner { flex-direction: column; align-items: flex-start; }
   .footer-new__right { flex-wrap: wrap; gap: 16px; }
+
+  .marquee__item { font-size: 1.22rem; }
+
+  /* Remove explicit <br> from headings — let text wrap naturally on mobile */
+  .pg-heading br { display: none; }
 
   /* Body text — revert to original sizes on mobile */
   .hero__sub            { font-size: 0.92rem; }
