@@ -219,6 +219,7 @@ body::after {
   width: 100%;
   margin: 0 auto;
   border-left: 1px solid var(--border);
+  position: relative;
 }
 
 /* Left column: flex column with internal rows */
@@ -425,6 +426,27 @@ body::after {
   background: rgba(26, 16, 10, 0.65);
   padding: 4px 10px;
   border-radius: 2px;
+}
+
+/* Hero person overlay — above gradient (z1), below text (z2) */
+.hero__person {
+  position: absolute;
+  bottom: 0;
+  /* sits near the column dividing line (58% from left), centered on it */
+  left: 56%;
+  transform: translateX(-50%);
+  height: 90%;
+  z-index: 1;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+}
+.hero__person img {
+  height: 100%;
+  width: auto;
+  max-width: none;
+  display: block;
+  object-fit: contain;
 }
 
 /* ── Marquee ─────────────────────────────────────────────────── */
@@ -960,6 +982,8 @@ body::after {
     border-left: none;
     border-right: none;
   }
+  .hero__person { display: none; }
+
   .hero__left  { border-right: none; }
   .hero__right {
     height: 72vw;
