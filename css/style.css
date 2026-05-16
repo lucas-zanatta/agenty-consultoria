@@ -1015,8 +1015,8 @@ body::after {
 }
 .lucas-photos {
   position: relative;
-  width: 160px;
-  height: 160px;
+  width: 200px;
+  height: 200px;
 }
 .lucas-photo {
   position: absolute;
@@ -1039,13 +1039,13 @@ body::after {
 .lucas-photo--mid   { z-index: 20; transition-delay: 0.30s; }
 .lucas-photo--right { z-index: 10; transition-delay: 0.45s; }
 
-.lucas-photos.animated .lucas-photo--left  { transform: rotate(-8deg) translate(-110px, 10px); }
+.lucas-photos.animated .lucas-photo--left  { transform: rotate(-8deg) translate(-135px, 10px); }
 .lucas-photos.animated .lucas-photo--mid   { transform: rotate(6deg); }
-.lucas-photos.animated .lucas-photo--right { transform: rotate(-6deg) translate(140px, 20px); }
+.lucas-photos.animated .lucas-photo--right { transform: rotate(-6deg) translate(172px, 20px); }
 
-.lucas-photos.animated .lucas-photo--left:hover  { transform: rotate(1deg) translate(-118px, 0); }
+.lucas-photos.animated .lucas-photo--left:hover  { transform: rotate(1deg) translate(-145px, 0); }
 .lucas-photos.animated .lucas-photo--mid:hover   { transform: rotate(0) translateY(-10px); }
-.lucas-photos.animated .lucas-photo--right:hover { transform: rotate(3deg) translate(144px, 10px); }
+.lucas-photos.animated .lucas-photo--right:hover { transform: rotate(3deg) translate(178px, 10px); }
 
 .lucas-meta {
   display: flex;
