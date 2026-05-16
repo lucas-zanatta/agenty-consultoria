@@ -8,13 +8,16 @@ Uso:
     python maps_scraper.py --all   # Roda todas as queries do config.py
 """
 
+import sys
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8')
+
 import argparse
 import asyncio
 import json
 import logging
 import os
 import re
-import sys
 import time
 from dataclasses import dataclass, asdict, field
 from pathlib import Path
@@ -90,7 +93,7 @@ class GoogleMapsScraper:
             try:
                 # Navega para o Google Maps com a query
                 search_url = f"https://www.google.com/maps/search/{query.replace(' ', '+')}"
-                await page.goto(search_url, wait_until="networkidle", timeout=30_000)
+                await page.goto(search_url, wait_until="domcontentloaded", timeout=60_000)
                 await page.wait_for_timeout(int(config.PAGE_LOAD_WAIT * 1000))
 
                 # Fecha modal de cookies se aparecer
@@ -146,7 +149,7 @@ class GoogleMapsScraper:
                         biz = await self._scrape_business_page(page, link, query)
                         if biz and biz.name:
                             businesses.append(biz)
-                            log.info(f"  [{i}/{min(len(collected_links), max_results)}] {biz.name} — ⭐{biz.rating} ({biz.reviews_count} avaliações)")
+                            log.info(f"  [{i}/{min(len(collected_links), max_results)}] {biz.name} -- {biz.rating} ({biz.reviews_count} avaliacoes)")
                     except Exception as e:
                         log.warning(f"  Erro ao raspar {link}: {e}")
 
@@ -161,7 +164,7 @@ class GoogleMapsScraper:
 
     async def _scrape_business_page(self, page: Page, url: str, query: str) -> Optional[Business]:
         """Extrai dados de um estabelecimento específico."""
-        await page.goto(url, wait_until="networkidle", timeout=20_000)
+        await page.goto(url, wait_until="domcontentloaded", timeout=60_000)
         await page.wait_for_timeout(1_500)
 
         biz = Business(maps_url=url, query_source=query)
@@ -302,13 +305,13 @@ async def main():
         log.info(f"📊 Leads classificados salvos em: {csv_file}")
 
     # Estatísticas
-    high = sum(1 for l in leads if l["priority"] == "Alta")
-    med  = sum(1 for l in leads if l["priority"] == "Média")
-    low  = sum(1 for l in leads if l["priority"] == "Baixa")
-    log.info(f"\n📈 Classificação de leads:")
-    log.info(f"   🔴 Alta prioridade:  {high}")
-    log.info(f"   🟡 Média prioridade: {med}")
-    log.info(f"   🟢 Baixa prioridade: {low}")
+    high = sum(1 for l in leads if l["prioridade"] == "Alta")
+    med  = sum(1 for l in leads if l["prioridade"] == "Média")
+    low  = sum(1 for l in leads if l["prioridade"] == "Baixa")
+    log.info(f"\nClassificacao de leads:")
+    log.info(f"   Alta prioridade:  {high}")
+    log.info(f"   Media prioridade: {med}")
+    log.info(f"   Baixa prioridade: {low}")
 
     # Sincroniza com Notion CRM
     if not args.no_crm and config.NOTION_API_KEY and config.NOTION_DATABASE_ID:

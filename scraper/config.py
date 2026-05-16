@@ -74,8 +74,16 @@ SCORE_WEIGHTS = {
 }
 
 # ── Notion CRM ────────────────────────────────────────────────────────────────
-# Configure com suas credenciais (use variáveis de ambiente em produção)
 import os
+from pathlib import Path
+
+# Carrega .env se existir
+_env_file = Path(__file__).parent / ".env"
+if _env_file.exists():
+    for _line in _env_file.read_text().splitlines():
+        if "=" in _line and not _line.startswith("#"):
+            _k, _v = _line.split("=", 1)
+            os.environ.setdefault(_k.strip(), _v.strip())
 
 NOTION_API_KEY      = os.getenv("NOTION_API_KEY", "")
 NOTION_DATABASE_ID  = os.getenv("NOTION_DATABASE_ID", "")

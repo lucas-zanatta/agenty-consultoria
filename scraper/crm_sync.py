@@ -93,7 +93,10 @@ class NotionCRMSync:
         """Constrói o payload para criar uma página no Notion."""
 
         def rich_text(text: str) -> list:
-            return [{"type": "text", "text": {"content": str(text)[:2000]}}]
+            # Notion limita 1 bloco a 2000 chars; quebra em múltiplos blocos se necessário
+            text = str(text)
+            chunks = [text[i:i+1990] for i in range(0, min(len(text), 6000), 1990)]
+            return [{"type": "text", "text": {"content": chunk}} for chunk in chunks] or [{"type": "text", "text": {"content": ""}}]
 
         def select(value: str) -> dict:
             return {"name": str(value)[:100]}
@@ -141,7 +144,7 @@ class NotionCRMSync:
                 "rich_text": rich_text(lead.get("oportunidades", "")),
             },
             "Script de Abordagem": {
-                "rich_text": rich_text(lead.get("script_abordagem", "")[:2000]),
+                "rich_text": rich_text(lead.get("script_abordagem", "")),
             },
             "Fonte": {
                 "select": select("Google Maps"),
@@ -252,7 +255,7 @@ async def setup_notion_database(api_key: str, parent_page_id: str) -> str:
         )
         resp.raise_for_status()
         db_id = resp.json()["id"]
-        print(f"\n✅ Banco de dados criado com sucesso!")
+        print(f"\nBanco de dados criado com sucesso!")
         print(f"   ID: {db_id}")
         print(f"   Adicione ao seu .env: NOTION_DATABASE_ID={db_id}")
         return db_id
