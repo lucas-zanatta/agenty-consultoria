@@ -98,7 +98,7 @@ body::after {
 .nav__logo {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   letter-spacing: 0.06em;
   color: var(--ink);
   display: flex;
@@ -291,6 +291,18 @@ body::after {
   font-size: 0.91em;
 }
 
+.hero__rotate-wrap { display: inline-block; }
+.hero__rotate-text {
+  display: inline-block;
+  color: var(--ember);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  font-size: 0.91em;
+  transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+}
+
 .hero__sub-row {
   display: flex;
   flex-direction: column;
@@ -369,7 +381,7 @@ body::after {
   position: relative;
   /* extend to right viewport edge when hero__body is narrower than viewport */
   width: calc(100% + max(0px, (100vw - var(--max-w)) / 2));
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   flex-shrink: 0;
   border-radius: 4px 0 0 4px;

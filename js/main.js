@@ -53,6 +53,27 @@
     });
   });
 
+  // ── Hero rotating text ────────────────────────────────────
+  const rotateEl = document.querySelector('.hero__rotate-text');
+  if (rotateEl) {
+    const rotateTexts = ['Vender mais', 'Fidelizar mais', 'Encantar mais', 'Economizar mais', 'Crescer mais'];
+    let rotIdx = 0;
+    setInterval(() => {
+      rotateEl.style.opacity = '0';
+      rotateEl.style.transform = 'translateY(-22px)';
+      setTimeout(() => {
+        rotIdx = (rotIdx + 1) % rotateTexts.length;
+        rotateEl.textContent = rotateTexts[rotIdx];
+        rotateEl.style.transition = 'none';
+        rotateEl.style.transform = 'translateY(22px)';
+        rotateEl.getBoundingClientRect(); // force reflow
+        rotateEl.style.transition = '';
+        rotateEl.style.opacity = '1';
+        rotateEl.style.transform = 'translateY(0)';
+      }, 360);
+    }, 2600);
+  }
+
   // ── Hero word-by-word animation ───────────────────────────
   const heroWords = document.querySelectorAll('.hero__word');
   if (heroWords.length > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
