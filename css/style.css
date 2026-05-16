@@ -432,9 +432,8 @@ body::after {
 .hero__person {
   position: absolute;
   bottom: 0;
-  /* sits near the column dividing line (58% from left), centered on it */
-  left: 56%;
-  transform: translateX(-50%);
+  right: 4%;
+  transform: none;
   height: 90%;
   z-index: 1;
   pointer-events: none;
