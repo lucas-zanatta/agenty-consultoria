@@ -294,11 +294,11 @@ body::after {
 .hero__rotate-wrap { display: inline-block; }
 .hero__rotate-text {
   display: inline-block;
-  color: var(--ember);
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  text-transform: none;
+  color: var(--ember) !important;
+  font-family: var(--font-serif) !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
   font-size: 0.91em;
   transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
 }

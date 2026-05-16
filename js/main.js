@@ -59,19 +59,26 @@
     const rotateTexts = ['Vender mais', 'Fidelizar mais', 'Encantar mais', 'Economizar mais', 'Crescer mais'];
     let rotIdx = 0;
     setInterval(() => {
+      // Slide out upward
       rotateEl.style.opacity = '0';
-      rotateEl.style.transform = 'translateY(-22px)';
+      rotateEl.style.transform = 'translateY(-24px)';
       setTimeout(() => {
+        // Instantly reset to below (no transition)
+        rotateEl.style.transition = 'none';
+        rotateEl.style.opacity = '0';
+        rotateEl.style.transform = 'translateY(24px)';
         rotIdx = (rotIdx + 1) % rotateTexts.length;
         rotateEl.textContent = rotateTexts[rotIdx];
-        rotateEl.style.transition = 'none';
-        rotateEl.style.transform = 'translateY(22px)';
-        rotateEl.getBoundingClientRect(); // force reflow
-        rotateEl.style.transition = '';
-        rotateEl.style.opacity = '1';
-        rotateEl.style.transform = 'translateY(0)';
-      }, 360);
-    }, 2600);
+        // Double rAF: first frame applies the "from" state, second frame triggers transition
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            rotateEl.style.transition = '';
+            rotateEl.style.opacity = '1';
+            rotateEl.style.transform = 'translateY(0)';
+          });
+        });
+      }, 380);
+    }, 2800);
   }
 
   // ── Hero word-by-word animation ───────────────────────────
