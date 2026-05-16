@@ -14,7 +14,7 @@
   }
 
   // ── Mobile menu ───────────────────────────────────────────
-  const mobileBtn = document.getElementById('mobile-btn');
+  const mobileBtn  = document.getElementById('mobile-btn');
   const mobileMenu = document.getElementById('mobile-menu');
   if (mobileBtn && mobileMenu) {
     mobileBtn.addEventListener('click', () => {
@@ -31,8 +31,8 @@
         document.body.style.overflow = '';
       });
     });
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && mobileMenu.classList.contains('open')) {
+    document.addEventListener('click', e => {
+      if (nav && !nav.contains(e.target) && mobileMenu.classList.contains('open')) {
         mobileMenu.classList.remove('open');
         mobileBtn.classList.remove('open');
         mobileBtn.setAttribute('aria-expanded', 'false');
@@ -41,21 +41,94 @@
     });
   }
 
-  // ── Scroll animations ─────────────────────────────────────
+  // ── Smooth scroll for anchor links ────────────────────────
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', e => {
+      const target = document.querySelector(anchor.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      const navH = nav ? nav.offsetHeight : 0;
+      const top  = target.getBoundingClientRect().top + window.scrollY - navH - 20;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
+
+  // ── Hero word-by-word animation ───────────────────────────
+  const heroWords = document.querySelectorAll('.hero__word');
+  if (heroWords.length > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    heroWords.forEach((word, i) => {
+      setTimeout(() => word.classList.add('in'), i * 90 + 200);
+    });
+  } else {
+    heroWords.forEach(w => w.classList.add('in'));
+  }
+
+  // ── Scroll-driven parallax ────────────────────────────────
+  //
+  // Elements with [data-parallax="speed"] move at speed * scrollDelta.
+  // The hero image wrapper uses this for the sticky depth effect.
+  //
+  const parallaxEls = document.querySelectorAll('[data-parallax]');
+  let   scrollY = 0;
+  let   ticking = false;
+
+  function applyParallax() {
+    parallaxEls.forEach(el => {
+      const speed = parseFloat(el.dataset.parallax) || 0.2;
+      const rect  = el.getBoundingClientRect();
+      if (rect.bottom < -100 || rect.top > window.innerHeight + 100) return;
+      const inner  = el.querySelector('.hero__visual-inner');
+      if (inner) {
+        // Scale grows as user scrolls (image expands); cap at 1.38x
+        const scale  = Math.min(1 + scrollY * 0.00022, 1.38);
+        const offset = -(scrollY * speed);
+        el.style.transform    = `scale(${scale})`;
+        inner.style.transform = `translateY(${offset}px)`;
+      } else {
+        el.style.transform = `translateY(${-(scrollY * speed)}px)`;
+      }
+    });
+    ticking = false;
+  }
+
+  if (parallaxEls.length > 0) {
+    window.addEventListener('scroll', () => {
+      scrollY = window.scrollY;
+      if (!ticking) {
+        requestAnimationFrame(applyParallax);
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
+  // ── Scroll reveal ─────────────────────────────────────────
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  if (revealEls.length > 0 && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -48px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in'));
+  }
+
+  // ── Old [data-animate] compat (subpages) ─────────────────
   const animatedEls = document.querySelectorAll('[data-animate]');
   if (animatedEls.length > 0 && 'IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -32px 0px' }
-    );
-    animatedEls.forEach(el => observer.observe(el));
+    const observer2 = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer2.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
+    animatedEls.forEach(el => observer2.observe(el));
   } else {
     animatedEls.forEach(el => el.classList.add('visible'));
   }
@@ -63,9 +136,9 @@
   // ── FAQ accordion ─────────────────────────────────────────
   document.querySelectorAll('.faq-item__btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const item = btn.closest('.faq-item');
+      const item   = btn.closest('.faq-item');
       const isOpen = item.classList.contains('open');
-      const list = item.closest('.faq-list');
+      const list   = item.closest('.faq-list, .faq-accordion');
       if (list) {
         list.querySelectorAll('.faq-item.open').forEach(openItem => {
           if (openItem !== item) {
@@ -79,139 +152,50 @@
     });
   });
 
-  // ── Smooth scroll ─────────────────────────────────────────
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', (e) => {
-      const target = document.querySelector(anchor.getAttribute('href'));
-      if (!target) return;
-      e.preventDefault();
-      const navH = nav ? nav.offsetHeight : 0;
-      const top = target.getBoundingClientRect().top + window.scrollY - navH - 16;
-      window.scrollTo({ top, behavior: 'smooth' });
+  // ── Product row hover: pointer cursor on desktop ──────────
+  // CSS handles the visual; this just makes sure links inside rows work
+  document.querySelectorAll('.product-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const link = row.querySelector('a');
+      if (link) link.click();
     });
   });
 
-  // ── TextRotate ────────────────────────────────────────────
-  //
-  // Replicates the TextRotate React component in vanilla JS.
-  // Characters animate in from below (translateY 120% → 0) with stagger,
-  // and exit upward (translateY 0 → -130%) before the next text enters.
-  //
-  const rotateEl = document.getElementById('rotate-text');
-  const rotateSr = document.getElementById('rotate-sr');
-
-  if (rotateEl && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-
-    const TEXTS = [
-      'fatura mais.',
-      'atende melhor.',
-      'cresce mais.',
-      'trabalha menos.',
-    ];
-
-    const ENTER_STAGGER  = 0.034;  // seconds between characters on enter
-    const EXIT_STAGGER   = 0.022;  // seconds between characters on exit
-    const ENTER_DURATION = 0.62;   // seconds for each char transition (enter)
-    const EXIT_DURATION  = 0.38;   // seconds for each char transition (exit)
-    const HOLD_MS        = 2600;   // milliseconds text stays visible
-
-    let current = 0;
-    let running = false;
-
-    function buildChars(text) {
-      rotateEl.innerHTML = '';
-      return [...text].map(char => {
-        const span = document.createElement('span');
-        span.className = 'char';
-        span.textContent = char === ' ' ? ' ' : char;
-        // Start below the clip area immediately (before appending)
-        span.style.cssText = 'display:inline-block;transform:translateY(120%);opacity:0;';
-        rotateEl.appendChild(span);
-        return span;
+  // ── Marquee pause on hover (CSS handles it; belt-and-suspenders) ──
+  const marqueeTrack = document.querySelector('.marquee__track');
+  if (marqueeTrack) {
+    const marquee = marqueeTrack.closest('.marquee');
+    if (marquee) {
+      marquee.addEventListener('mouseenter', () => {
+        marqueeTrack.style.animationPlayState = 'paused';
+      });
+      marquee.addEventListener('mouseleave', () => {
+        marqueeTrack.style.animationPlayState = 'running';
       });
     }
-
-    function enterChars(spans) {
-      // Force a reflow so the browser registers the initial transform
-      // before the transition starts — otherwise it would skip the animation.
-      rotateEl.getBoundingClientRect();
-
-      spans.forEach((span, i) => {
-        const delay = i * ENTER_STAGGER;
-        span.style.transition =
-          `transform ${ENTER_DURATION}s cubic-bezier(0.34, 1.4, 0.64, 1) ${delay}s,` +
-          `opacity 0.4s ease ${delay}s`;
-        span.style.transform = 'translateY(0)';
-        span.style.opacity   = '1';
-      });
-    }
-
-    function exitChars(spans) {
-      return new Promise(resolve => {
-        spans.forEach((span, i) => {
-          const delay = i * EXIT_STAGGER;
-          span.style.transition =
-            `transform ${EXIT_DURATION}s cubic-bezier(0.55, 0, 1, 0.45) ${delay}s,` +
-            `opacity 0.25s ease ${delay}s`;
-          span.style.transform = 'translateY(-130%)';
-          span.style.opacity   = '0';
-        });
-
-        // Resolve after the last character finishes exiting
-        const totalMs = (spans.length * EXIT_STAGGER + EXIT_DURATION) * 1000;
-        setTimeout(resolve, totalMs);
-      });
-    }
-
-    async function rotate() {
-      if (running) return;
-      running = true;
-
-      const currentSpans = [...rotateEl.querySelectorAll('.char')];
-      await exitChars(currentSpans);
-
-      current = (current + 1) % TEXTS.length;
-      rotateSr.textContent = TEXTS[current];
-
-      const newSpans = buildChars(TEXTS[current]);
-      enterChars(newSpans);
-
-      // Wait for the enter animation to settle before releasing the lock
-      const enterTotal = (newSpans.length * ENTER_STAGGER + ENTER_DURATION) * 1000;
-      setTimeout(() => { running = false; }, enterTotal);
-    }
-
-    // Initialise: build first text and animate in
-    const initSpans = buildChars(TEXTS[0]);
-    rotateSr.textContent = TEXTS[0];
-    // Small delay so the page has rendered before the first animation
-    setTimeout(() => {
-      enterChars(initSpans);
-      setInterval(rotate, HOLD_MS);
-    }, 300);
   }
 
-  // ── Stat counter animation ────────────────────────────────
+  // ── Stat counter animation (subpages) ────────────────────
   function animateCounter(el, target, duration) {
-    const start = performance.now();
+    const start   = performance.now();
     const isFloat = String(target).includes('.');
-    const update = (now) => {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const val = eased * target;
+    const update  = now => {
+      const p     = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val   = eased * target;
       el.textContent = isFloat ? val.toFixed(1) : Math.floor(val).toLocaleString('pt-BR');
-      if (progress < 1) requestAnimationFrame(update);
+      if (p < 1) requestAnimationFrame(update);
       else el.textContent = isFloat ? target.toFixed(1) : target.toLocaleString('pt-BR');
     };
     requestAnimationFrame(update);
   }
 
-  const statNums = document.querySelectorAll('.stat__num');
+  const statNums = document.querySelectorAll('.stat__num, .why__stat-num');
   if (statNums.length > 0 && 'IntersectionObserver' in window) {
     const statObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
-        const el = entry.target;
+        const el  = entry.target;
         const raw = el.textContent.trim();
         const match = raw.match(/([+\-−]?)(\d+(?:\.\d+)?)(.*)/);
         if (match) {
@@ -232,6 +216,26 @@
       });
     }, { threshold: 0.5 });
     statNums.forEach(el => statObserver.observe(el));
+  }
+
+  // ── Section progress indicator ────────────────────────────
+  //
+  // Highlights nav links as user scrolls through numbered sections.
+  //
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('.nav__link');
+  if (sections.length > 0 && navLinks.length > 0 && 'IntersectionObserver' in window) {
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(s => sectionObserver.observe(s));
   }
 
 })();
