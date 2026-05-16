@@ -433,7 +433,7 @@ body::after {
   position: absolute;
   bottom: 0;
   /* stick out left into the text column for the overlap effect */
-  left: -18%;
+  left: -28%;
   height: 96%;
   z-index: 1;
   pointer-events: none;
@@ -999,8 +999,8 @@ body::after {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    height: 130%; /* taller than container so arms stick above the gradient box */
-    width: auto;
+    width: 80%;   /* fixed width keeps natural aspect ratio */
+    height: auto; /* height follows image proportions — arms overflow above */
     z-index: 1;
     pointer-events: none;
   }
