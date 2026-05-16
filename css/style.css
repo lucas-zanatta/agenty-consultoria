@@ -219,7 +219,6 @@ body::after {
   width: 100%;
   margin: 0 auto;
   border-left: 1px solid var(--border);
-  position: relative;
 }
 
 /* Left column: flex column with internal rows */
@@ -376,6 +375,7 @@ body::after {
   align-items: center;
   padding: clamp(32px, 4vw, 60px) 0 clamp(32px, 4vw, 60px) clamp(20px, 2.5vw, 36px);
   overflow: visible;
+  position: relative;
 }
 
 .hero__visual {
@@ -428,13 +428,13 @@ body::after {
   border-radius: 2px;
 }
 
-/* Hero person overlay — above gradient (z1), below text (z2) */
+/* Hero person overlay — anchored in hero__right, above gradient (z1), below text (z2) */
 .hero__person {
   position: absolute;
   bottom: 0;
-  right: 4%;
-  transform: none;
-  height: 90%;
+  /* stick out left into the text column for the overlap effect */
+  left: -18%;
+  height: 96%;
   z-index: 1;
   pointer-events: none;
   display: flex;
@@ -988,9 +988,9 @@ body::after {
   .hero__left  { border-right: none; }
   .hero__right {
     height: 72vw;
-    padding: 20px 0 20px clamp(16px, 4vw, 24px);
+    padding: 0;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .hero__person-mobile {
@@ -999,7 +999,7 @@ body::after {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    height: 100%;
+    height: 130%; /* taller than container so arms stick above the gradient box */
     width: auto;
     z-index: 1;
     pointer-events: none;
