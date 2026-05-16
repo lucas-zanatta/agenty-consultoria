@@ -266,4 +266,47 @@
     sections.forEach(s => sectionObserver.observe(s));
   }
 
+  // ── Lucas photos fan animation ────────────────────────────────
+  const lucasPhotos = document.getElementById('lucas-photos');
+  if (lucasPhotos && 'IntersectionObserver' in window) {
+    const photoObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('animated'), 200);
+          photoObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    photoObserver.observe(lucasPhotos);
+  }
+
+  // ── Cal.com modal ─────────────────────────────────────────────
+  const calModal    = document.getElementById('cal-modal');
+  const calClose    = document.getElementById('cal-modal-close');
+  const calBackdrop = document.getElementById('cal-modal-backdrop');
+
+  function openCalModal() {
+    if (!calModal) return;
+    calModal.classList.add('open');
+    calModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCalModal() {
+    if (!calModal) return;
+    calModal.classList.remove('open');
+    calModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  if (calModal) {
+    document.querySelectorAll('[data-cal-link]').forEach(el => {
+      el.addEventListener('click', e => { e.preventDefault(); openCalModal(); });
+    });
+    if (calClose)    calClose.addEventListener('click', closeCalModal);
+    if (calBackdrop) calBackdrop.addEventListener('click', closeCalModal);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeCalModal();
+    });
+  }
+
 })();
