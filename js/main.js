@@ -309,4 +309,37 @@
     });
   }
 
+  // ── Slot-machine animation — sh-sub stat numbers ──────────
+  const shSub = document.querySelector('.sh-sub');
+  if (shSub) {
+    const statNums = shSub.querySelectorAll('.prod-hero__stat-num');
+    let fired = false;
+
+    function slotAnimate(el) {
+      const final  = el.textContent.trim();
+      const digits = '0123456789';
+      let frame    = 0;
+      const total  = 20;
+
+      (function tick() {
+        frame++;
+        const progress = frame / total;
+        el.textContent = final.split('').map((ch, i) => {
+          if (!/\d/.test(ch)) return ch;
+          if (progress >= 0.45 + (i / final.length) * 0.45) return ch;
+          return digits[Math.floor(Math.random() * 10)];
+        }).join('');
+        if (frame < total) setTimeout(tick, 35 + frame * 7);
+        else el.textContent = final;
+      })();
+    }
+
+    new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !fired) {
+        fired = true;
+        statNums.forEach((el, i) => setTimeout(() => slotAnimate(el), i * 140));
+      }
+    }, { threshold: 0.4 }).observe(shSub);
+  }
+
 })();
