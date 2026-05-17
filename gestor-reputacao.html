@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=10">
+  <link rel="stylesheet" href="css/style.css?v=11">
 </head>
 <body>
 
@@ -49,41 +49,43 @@
   </div>
 </nav>
 
-<!-- ── Hero ── -->
-<section class="prod-hero">
-  <div class="container">
-    <div class="prod-hero__inner">
-      <div class="prod-hero__left" data-reveal>
-        <div class="prod-hero__status">
-          <span class="prod-hero__dot"></span>
-          <span>EM PRODUÇÃO</span>
-        </div>
-        <h1 class="prod-hero__title">
-          Seu Google
-          <br><em>respondendo sozinho.</em>
-        </h1>
-        <p class="prod-hero__sub">
-          Monitoramos suas avaliações a cada 2 horas.
-          Respondemos as boas automaticamente — no seu tom, com o seu nome.
-          Negativas, você aprova com um clique antes de publicar.
-        </p>
-        <a href="index.html#agendar" class="btn btn-primary prod-hero__cta" data-cal-link="lucas-zanatta-bettbr/diagnostico" data-cal-namespace="diagnostico" data-cal-config='{"layout":"month_view"}'>
-          Quero uma demo →
-        </a>
+<!-- ── Scroll-Expand Hero ── -->
+<section class="sh" id="scroll-hero">
+  <div class="sh__bg" id="sh-bg"></div>
+
+  <div class="sh__media" id="sh-media">
+    <video autoplay muted loop playsinline preload="auto">
+      <source src="assets/google-video.mp4" type="video/mp4">
+    </video>
+    <div class="sh__overlay" id="sh-overlay"></div>
+  </div>
+
+  <div class="sh__badge" id="sh-badge">
+    <span class="sh__badge-dot"></span>EM PRODUÇÃO
+  </div>
+
+  <div class="sh__text" id="sh-text">
+    <span id="sh-word-l">Seu Google</span>
+    <span id="sh-word-r">respondendo sozinho.</span>
+  </div>
+
+  <div class="sh__hint" id="sh-hint">role para expandir ↓</div>
+
+  <div class="sh__reveal" id="sh-reveal">
+    <p class="sh__reveal-sub">Monitoramos suas avaliações a cada 2 horas. Respondemos as boas automaticamente — no seu tom, com o seu nome. Negativas, você aprova com um clique antes de publicar.</p>
+    <a href="index.html#agendar" class="btn btn-primary" data-cal-link="lucas-zanatta-bettbr/diagnostico" data-cal-namespace="diagnostico" data-cal-config='{"layout":"month_view"}'>Quero uma demo →</a>
+    <div class="sh__reveal-stats">
+      <div class="prod-hero__stat">
+        <span class="prod-hero__stat-num">2h</span>
+        <span class="prod-hero__stat-label">Tempo máximo de resposta</span>
       </div>
-      <div class="prod-hero__stats" data-reveal data-reveal-delay="1">
-        <div class="prod-hero__stat">
-          <span class="prod-hero__stat-num">2h</span>
-          <span class="prod-hero__stat-label">Tempo máximo de resposta</span>
-        </div>
-        <div class="prod-hero__stat">
-          <span class="prod-hero__stat-num">0</span>
-          <span class="prod-hero__stat-label">Avaliações sem resposta</span>
-        </div>
-        <div class="prod-hero__stat">
-          <span class="prod-hero__stat-num">24/7</span>
-          <span class="prod-hero__stat-label">Funcionando sem você</span>
-        </div>
+      <div class="prod-hero__stat">
+        <span class="prod-hero__stat-num">0</span>
+        <span class="prod-hero__stat-label">Avaliações sem resposta</span>
+      </div>
+      <div class="prod-hero__stat">
+        <span class="prod-hero__stat-num">24/7</span>
+        <span class="prod-hero__stat-label">Funcionando sem você</span>
       </div>
     </div>
   </div>
@@ -275,6 +277,7 @@
   Cal.ns["diagnostico"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
 </script>
 
+<script src="js/scroll-hero.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
