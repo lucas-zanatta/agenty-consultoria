@@ -309,6 +309,45 @@
     });
   }
 
+  // ── Universal auto-reveal ─────────────────────────────────
+  (function () {
+    if (!('IntersectionObserver' in window)) return;
+
+    const sel = [
+      'h2', 'h3', 'h4', '.pg-label', '.pg-subhead',
+      '.feat-card', '.dore-card', '.dore-col', '.process-col',
+      '.faq-item', '.product-row', '.cta-box', '.prod-price__card',
+      '.sh-sub__text', '.sh-sub .btn', '.sh-sub__stats',
+    ].join(',');
+
+    const skip = el =>
+      !!el.closest('nav, footer, .sh') ||
+      el.hasAttribute('data-reveal') ||
+      el.hasAttribute('data-animate') ||
+      !!el.closest('[data-reveal], [data-animate]');
+
+    const els = [...document.querySelectorAll(sel)].filter(el => !skip(el));
+
+    els.forEach(el => el.classList.add('ar'));
+
+    // Stagger siblings within the same parent (cards in grids, etc.)
+    els.forEach(el => {
+      const group = [...(el.parentElement?.children || [])].filter(c => c.classList.contains('ar'));
+      const i = group.indexOf(el);
+      if (i > 0) el.style.transitionDelay = Math.min(i * 0.1, 0.35) + 's';
+    });
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(({ target, isIntersecting }) => {
+        if (!isIntersecting) return;
+        target.classList.add('in');
+        io.unobserve(target);
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    els.forEach(el => io.observe(el));
+  })();
+
   // ── Slot-machine animation — sh-sub stat numbers ──────────
   const shSub = document.querySelector('.sh-sub');
   if (shSub) {
