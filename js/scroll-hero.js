@@ -2,6 +2,7 @@
   const media = document.getElementById('sh-media');
   if (!media) return;
 
+  const section = document.getElementById('scroll-hero');
   const bg      = document.getElementById('sh-bg');
   const overlay = document.getElementById('sh-overlay');
   const wordL   = document.getElementById('sh-word-l');
@@ -34,11 +35,13 @@
   function unlock() {
     expanded = true;
     document.body.style.overflow = '';
+    section.classList.add('sh--expanded');
   }
 
   function lock() {
     expanded = false;
     document.body.style.overflow = 'hidden';
+    section.classList.remove('sh--expanded');
     window.scrollTo(0, 0);
   }
 
