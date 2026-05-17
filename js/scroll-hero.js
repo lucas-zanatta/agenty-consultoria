@@ -8,7 +8,6 @@
   const wordR   = document.getElementById('sh-word-r');
   const hint    = document.getElementById('sh-hint');
   const badge   = document.getElementById('sh-badge');
-  const reveal  = document.getElementById('sh-reveal');
 
   let progress = 0;
   let expanded = false;
@@ -35,13 +34,11 @@
   function unlock() {
     expanded = true;
     document.body.style.overflow = '';
-    reveal.classList.add('visible');
   }
 
   function lock() {
     expanded = false;
     document.body.style.overflow = 'hidden';
-    reveal.classList.remove('visible');
     window.scrollTo(0, 0);
   }
 
