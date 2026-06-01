@@ -240,6 +240,12 @@ produtos/{slug}/
 
 ---
 
+## Fluxo de trabalho
+
+- **Toda mudança grande termina com commit e push.** Após implementar um conjunto de alterações significativas (novas features, refatorações, correções em múltiplos arquivos, atualizações de conteúdo), sempre fazer `git commit` e `git push origin master` antes de encerrar a tarefa.
+
+---
+
 ## Convenções de código
 
 - **Idioma do código:** inglês para variáveis/funções; português para strings voltadas ao usuário e comentários de negócio
