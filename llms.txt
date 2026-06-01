@@ -48,8 +48,16 @@ Allow: /
 ## Páginas principais
 
 - / — Homepage principal com descrição dos serviços
-- /gestor-reputacao.html — Produto: Gestor de Reputação Automático
+- /gestor-reputacao.html — Produto: Gestor de Reputação Google Meu Negócio
 - /servicos.html — Catálogo completo de soluções
 - /sobre.html — Sobre a Agenty e Lucas Zanatta
 - /casos.html — Casos de sucesso
 - /faq.html — Perguntas frequentes sobre IA para PMEs
+- /gestao-google-meu-negocio-curitiba.html — Guia: quanto custa e como funciona a gestão do Google Meu Negócio
+
+## Landing pages por segmento
+
+- /clinicas.html — IA para clínicas em Curitiba (agendamento WhatsApp + reputação Google)
+- /saloes.html — IA para salões de beleza em Curitiba (atendimento WhatsApp + reputação)
+- /restaurantes.html — IA para restaurantes em Curitiba (atendimento WhatsApp + reputação)
+- /varejo.html — IA para varejo local em Curitiba (atendimento WhatsApp + Google Maps)
