@@ -1537,13 +1537,17 @@ body::after {
    Mantém as classes antigas funcionando no novo tema quente
    ================================================================ */
 
-/* Shared nav for subpages */
-body:not(.home) .nav {
+/* Shared nav for subpages (exceto dark-hero que gerencia o próprio nav) */
+body:not(.home):not(.dark-hero) .nav {
   background: var(--paper);
   border-bottom: 1px solid var(--border);
 }
-body:not(.home) .nav.scrolled {
+body:not(.home):not(.dark-hero) .nav.scrolled {
   background: rgba(250, 247, 242, 0.95);
+}
+body.dark-hero .nav.scrolled {
+  background: rgba(250, 247, 242, 0.95);
+  border-bottom: 1px solid var(--border);
 }
 
 /* OLD nav classes still used in subpages */
