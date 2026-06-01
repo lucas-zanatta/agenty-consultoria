@@ -381,4 +381,81 @@
     }, { threshold: 0.4 }).observe(shSub);
   }
 
+  // ── Analytics Events ─────────────────────────────────────
+  function track(name, params) {
+    if (typeof gtag !== 'function') return;
+    gtag('event', name, Object.assign({ page_path: location.pathname }, params || {}));
+  }
+
+  // Categoriza a página no GA4 para filtros por tipo
+  (function () {
+    const path = location.pathname.replace(/^\//, '').replace(/\.html$/, '') || 'index';
+    const cat = {
+      index:                                'homepage',
+      'gestor-reputacao':                   'produto',
+      'gestao-google-meu-negocio-curitiba': 'artigo',
+      servicos:                             'servicos',
+      sobre:                                'sobre',
+      casos:                                'casos',
+      faq:                                  'faq',
+      clinicas:                             'nicho_clinicas',
+      saloes:                               'nicho_saloes',
+      restaurantes:                         'nicho_restaurantes',
+      varejo:                               'nicho_varejo',
+    }[path] || 'outro';
+    if (typeof gtag === 'function') gtag('set', { content_group: cat });
+  })();
+
+  // Conversão principal: clique em agendamento Cal.com
+  document.querySelectorAll('a[href*="cal.com"], [data-cal-link]').forEach(el => {
+    el.addEventListener('click', () => {
+      track('generate_lead', { method: 'cal_com', event_category: 'conversao' });
+    });
+  });
+
+  // Conversão: clique no WhatsApp
+  document.querySelectorAll('a[href*="wa.me"]').forEach(el => {
+    el.addEventListener('click', () => {
+      track('contact', { method: 'whatsapp', event_category: 'conversao' });
+    });
+  });
+
+  // Conversão: clique em email
+  document.querySelectorAll('a[href^="mailto:"]').forEach(el => {
+    el.addEventListener('click', () => {
+      track('contact', { method: 'email', event_category: 'conversao' });
+    });
+  });
+
+  // Engajamento: seção #agendar ficou visível (intenção de conversão)
+  const agendarSection = document.getElementById('agendar');
+  if (agendarSection && 'IntersectionObserver' in window) {
+    let agendarSeen = false;
+    new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !agendarSeen) {
+        agendarSeen = true;
+        track('scroll_to_cta', { event_category: 'engajamento' });
+      }
+    }, { threshold: 0.25 }).observe(agendarSection);
+  }
+
+  // Engajamento: FAQ aberto
+  document.querySelectorAll('.faq-item__btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!btn.closest('.faq-item').classList.contains('open')) {
+        track('faq_open', {
+          question: (btn.textContent || '').trim().slice(0, 100),
+          event_category: 'engajamento',
+        });
+      }
+    });
+  });
+
+  // Engajamento: LinkedIn
+  document.querySelectorAll('a[href*="linkedin.com"]').forEach(el => {
+    el.addEventListener('click', () => {
+      track('social_click', { platform: 'linkedin', event_category: 'engajamento' });
+    });
+  });
+
 })();
