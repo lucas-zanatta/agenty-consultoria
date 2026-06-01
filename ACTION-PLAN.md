@@ -1,254 +1,194 @@
 # Plano de Ação SEO — agenty.com.br
-**Data:** 2026-06-01 | **Score atual:** 62/100 | **Score estimado pós-fixes:** 78/100
+**Data:** 2026-06-01 | **Auditoria #2** | **Score atual:** 69/100 | **Score estimado pós-fixes:** 82/100
 
 ---
 
-## CRÍTICO — Fix imediato (hoje)
+## CRÍTICO — Fix imediato (impacto em CTR e rankings)
 
-### 1. Adicionar H1 em gestor-reputacao.html
-**Impacto:** Alto | **Esforço:** 5 min
+### C1. Encurtar títulos das páginas de nicho e do artigo gestao
+**Esforço:** 15 min | **Impacto:** Alto (CTR direto nos SERPs)
 
-A seção hero usa `<span>` para o texto principal. Envolver o texto principal em um H1.
+Títulos acima de 60 chars são truncados no Google — a palavra-chave principal pode ser cortada.
 
+| Arquivo | Título atual | Título proposto |
+|---------|-------------|----------------|
+| `saloes.html` | IA para Salão de Beleza em Curitiba \| Atendimento e Agendamento Automático \| Agenty (83) | IA para Salão de Beleza em Curitiba \| Agenty (46) |
+| `restaurantes.html` | IA para Restaurantes em Curitiba \| Atendimento e Reputação Automáticos \| Agenty (79) | IA para Restaurantes em Curitiba \| Agenty (43) |
+| `varejo.html` | IA para Varejo Local em Curitiba \| Atendimento WhatsApp e Google Maps \| Agenty (78) | IA para Varejo Local em Curitiba \| Agenty (43) |
+| `clinicas.html` | IA para Clínicas em Curitiba \| Atendimento e Reputação Automáticos \| Agenty (75) | IA para Clínicas em Curitiba \| Agenty (38) |
+| `gestao-google-meu-negocio-curitiba.html` | Quanto Custa a Gestão do Google Meu Negócio em Curitiba? \| Agenty (65) | Gestão Google Meu Negócio Curitiba \| Quanto Custa \| Agenty (60) |
+
+### C2. Alt text em hero-man.png
+**Esforço:** 2 min | **Impacto:** Médio (acessibilidade + Google Images)
+
+Em `index.html`, alterar:
 ```html
-<!-- Antes (linha ~68): -->
-<div class="sh__text" id="sh-text">
-  <span id="sh-word-l">Seu Google</span>
-  <span id="sh-word-r">respondendo sozinho.</span>
-</div>
+<!-- ANTES -->
+<img src="assets/hero-man.png" alt="">
 
-<!-- Depois: -->
-<h1 class="sh__text" id="sh-text">
-  <span id="sh-word-l">Seu Google</span>
-  <span id="sh-word-r">respondendo sozinho.</span>
-</h1>
+<!-- DEPOIS -->
+<img src="assets/hero-man.png" alt="Consultor de IA para pequenos negócios em Curitiba" width="520" height="680" loading="lazy">
+```
+
+### C3. Linkar artigo `gestao-google-meu-negocio-curitiba.html` internamente
+**Esforço:** 20 min | **Impacto:** Alto (PageRank interno + crawl budget)
+
+A página tem conteúdo de profundidade (Article + FAQPage schema) mas recebe apenas 2 links internos.
+
+**Adicionar link em `gestor-reputacao.html`** — dentro de uma seção de contexto ou antes do CTA:
+```html
+<p>Quer entender quanto custa a gestão manual antes de automatizar? 
+   <a href="gestao-google-meu-negocio-curitiba.html">Veja o guia completo →</a></p>
+```
+
+**Adicionar link no footer de `index.html`** — na coluna de links do footer:
+```html
+<a href="gestao-google-meu-negocio-curitiba.html" class="footer-new__link">Gestão Google</a>
+```
+
+**Adicionar link em `servicos.html`** — dentro do card/seção de Gestor de Reputação:
+```html
+<a href="gestao-google-meu-negocio-curitiba.html">Guia: Quanto custa a gestão Google →</a>
 ```
 
 ---
 
-### 2. Adicionar gestor-reputacao.html ao sitemap.xml
-**Impacto:** Alto | **Esforço:** 2 min
+## ALTO — Fix esta semana
 
-```xml
-<url>
-  <loc>https://agenty.com.br/gestor-reputacao.html</loc>
-  <lastmod>2026-06-01</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.9</priority>
-</url>
+### A1. Completar LocalBusiness schema no index.html
+**Esforço:** 10 min | **Impacto:** Alto (Local Pack, Knowledge Panel)
+
+Adicionar os campos ausentes no bloco JSON-LD do `index.html`:
+```json
+"telephone": "+55-41-XXXX-XXXX",
+"openingHours": "Mo-Fr 09:00-18:00",
+"geo": {
+  "@type": "GeoCoordinates",
+  "latitude": -25.4290,
+  "longitude": -49.2710
+}
 ```
-Inserir antes de `servicos.html` (segunda posição por importância).
+Substitua o telefone e coordenadas pelos dados reais.
 
----
+### A2. Atualizar CSS version em todas as páginas para v=13
+**Esforço:** 5 min | **Impacto:** Médio (consistência de estilo)
 
-### 3. Adicionar links de navegação na homepage
-**Impacto:** Alto | **Esforço:** 15 min
+Páginas desatualizadas:
+- `index.html`, `sobre.html`, `servicos.html`, `casos.html`, `faq.html` → v=10 → mudar para v=13
+- `gestor-reputacao.html` → v=11 → mudar para v=13
+- `gestao-google-meu-negocio-curitiba.html` → v=10 → mudar para v=13
 
-O nav da homepage aponta apenas para âncoras internas. Adicionar links para subpáginas no nav ou no footer para garantir que o crawl do Google alcance todas as páginas.
+### A3. Atualizar nav/footer de `gestao-google-meu-negocio-curitiba.html`
+**Esforço:** 10 min | **Impacto:** Médio (UX + internal linking)
 
-**Opção A (recomendada):** Adicionar links no footer da homepage:
-```html
-<!-- Adicionar ao footer-new__right: -->
-<a href="servicos.html" class="footer-new__legal-link">Serviços</a>
-<a href="sobre.html" class="footer-new__legal-link">Sobre</a>
-<a href="casos.html" class="footer-new__legal-link">Casos</a>
-<a href="faq.html" class="footer-new__legal-link">FAQ</a>
-```
+A página usa o nav antigo. Atualizar para incluir os links Clínicas, Salões, Restaurantes, Varejo no footer (igual às outras páginas).
 
-**Opção B:** Substituir o nav da homepage pelo nav completo das subpáginas (maior impacto visual mas quebra o design de single-page atual).
-
----
-
-## ALTO — Esta semana
-
-### 4. Corrigir URL exibida no CTA da homepage
-**Arquivo:** `index.html:390`
+### A4. Adicionar OG tags em `privacidade.html` e `termos.html`
+**Esforço:** 10 min | **Impacto:** Baixo (previews em redes sociais)
 
 ```html
-<!-- Antes: -->
-<p class="cta-big__url">cal.com/lucaszanatta/diagnostico</p>
-
-<!-- Depois: -->
-<p class="cta-big__url">cal.com/lucas-zanatta/diagnostico</p>
-```
-Ou remover o parágrafo se a URL de exibição não for necessária.
-
----
-
-### 5. Adicionar Twitter Card tags em todas as páginas
-**Impacto:** Médio-Alto | **Esforço:** 20 min (busca e substituição)
-
-Adicionar após as tags og: em cada página:
-```html
+<meta property="og:title" content="Política de Privacidade | Agenty">
+<meta property="og:description" content="Política de Privacidade da Agenty em conformidade com a LGPD.">
+<meta property="og:image" content="https://agenty.com.br/assets/og-image.png">
+<meta property="og:url" content="https://agenty.com.br/privacidade.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="[mesmo og:title]">
-<meta name="twitter:description" content="[mesmo og:description]">
-<meta name="twitter:image" content="https://agenty.com.br/assets/og-image.png">
 ```
 
----
-
-### 6. Adicionar og:description em faq.html
-**Arquivo:** `faq.html` — inserir após og:url
+### A5. Corrigir título de `termos.html` (muito curto)
+**Esforço:** 2 min
 
 ```html
-<meta property="og:description" content="Tire suas dúvidas sobre IA para pequenos negócios. Prazo, custos, LGPD e como funciona a Agenty. Curitiba-PR.">
+<!-- ANTES -->
+<title>Termos de Uso | Agenty</title>
+
+<!-- DEPOIS -->
+<title>Termos de Uso | Agenty — Curitiba, PR</title>
 ```
 
 ---
 
-### 7. Adicionar Schema à gestor-reputacao.html
-**Impacto:** Médio | **Esforço:** 10 min
+## MÉDIO — Fix este mês
 
-```html
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "Gestor de Reputação Automático",
-  "description": "Monitora e responde avaliações do Google Maps automaticamente. Resposta em até 2 horas, 24h por dia.",
-  "url": "https://agenty.com.br/gestor-reputacao.html",
-  "provider": {
-    "@type": "LocalBusiness",
-    "name": "Agenty",
-    "url": "https://agenty.com.br"
-  },
-  "areaServed": { "@type": "City", "name": "Curitiba" },
-  "serviceType": "Gestão de Reputação Online com IA"
-}
-</script>
+### M1. Criar `llms.txt` na raiz do site
+**Esforço:** 30 min | **Impacto:** Médio (IA Search — GPTBot, ClaudeBot, Perplexity)
+
+```
+# llms.txt — Agenty (agenty.com.br)
+# Consultoria de IA para pequenos negócios em Curitiba, PR
+
+## Sobre
+A Agenty desenvolve automações de inteligência artificial personalizadas para PMEs em Curitiba.
+Fundador: Lucas Zanatta | contato@agenty.com.br
+
+## Páginas para citação
+- Homepage: https://agenty.com.br/
+- Serviços: https://agenty.com.br/servicos.html
+- FAQ: https://agenty.com.br/faq.html
+- Gestor de Reputação: https://agenty.com.br/gestor-reputacao.html
+- Guia Google Meu Negócio: https://agenty.com.br/gestao-google-meu-negocio-curitiba.html
+
+## Não citar
+- privacidade.html
+- termos.html
 ```
 
----
+### M2. Publicar caso de uso real na `casos.html`
+**Esforço:** 2h (conteúdo) | **Impacto:** Alto (E-E-A-T, conversão)
 
-### 8. Completar LocalBusiness schema na homepage
-**Arquivo:** `index.html:17-28`
+Quando o setup da Cássia Marconi (Gestor de Reputação) estiver completo, publicar:
+- Nome e segmento do negócio
+- Problema antes da Agenty
+- Solução implementada
+- Resultado mensurado (ex.: "de 2 para 4,7 estrelas em 60 dias")
+- Adicionar `Review` schema
 
-```json
-{
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "Agenty",
-  "description": "Consultoria de inteligência artificial para pequenos negócios em Curitiba.",
-  "url": "https://agenty.com.br",
-  "email": "contato@agenty.com.br",
-  "image": "https://agenty.com.br/assets/og-image.png",
-  "priceRange": "$$",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Curitiba",
-    "addressRegion": "PR",
-    "addressCountry": "BR"
-  },
-  "areaServed": { "@type": "City", "name": "Curitiba" },
-  "sameAs": ["https://www.linkedin.com/in/lucas-zanatta-1b46b2113/"]
-}
-```
+### M3. Adicionar telefone público ao site
+**Esforço:** 5 min | **Impacto:** Alto (E-E-A-T, Local SEO, conversão)
 
----
+Exibir número de telefone/WhatsApp:
+1. No footer de todas as páginas
+2. No schema LocalBusiness
+3. Na seção de contato/CTA
 
-### 9. Corrigir/remover CNPJ "em breve" no rodapé
-**Arquivo:** `index.html:401`
+Benefício: NAP completo = melhor sinal para Local Pack do Google Maps.
 
-Se o CNPJ já existe, adicioná-lo. Se não, remover a menção — melhor não mencionar do que destacar a ausência.
-
-```html
-<!-- Opção A — se tem CNPJ: -->
-<p class="footer-new__tagline">CONSULTORIA DE IA · CURITIBA, PR · CNPJ 00.000.000/0001-00</p>
-
-<!-- Opção B — sem CNPJ ainda: -->
-<p class="footer-new__tagline">CONSULTORIA DE IA · CURITIBA, PR · BR</p>
-```
-
----
-
-### 10. Corrigir dados falsos em sobre.html
-**Arquivo:** `sobre.html:177`
-
-O footer de `sobre.html` tem `wa.me/5541999999999` (número fictício) e `linkedin.com/company/agenty` (verificar se existe). Substituir pelo número real ou remover.
-
----
-
-## MÉDIO — Próximas 2 semanas
-
-### 11. Ampliar sobre.html (253 → 450+ palavras)
-Adicionar seções: trajetória do Lucas, por que escolheu PMEs, tecnologias que usa, diferenciais vs agências grandes. Ajuda com E-E-A-T e busca por "consultoria IA Curitiba".
-
-### 12. Adicionar schema BreadcrumbList nas subpáginas
-`sobre.html` já tem breadcrumb HTML — falta o schema. Adicionar em: servicos, casos, faq, gestor-reputacao.
-
-```json
-{
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {"@type": "ListItem", "position": 1, "name": "Início", "item": "https://agenty.com.br/"},
-    {"@type": "ListItem", "position": 2, "name": "[Nome da página]", "item": "https://agenty.com.br/[pagina].html"}
-  ]
-}
-```
-
-### 13. Adicionar width/height ao `<video>` em gestor-reputacao.html
-Previne CLS:
-```html
-<video autoplay muted loop playsinline preload="auto" width="1280" height="720">
-```
-
-### 14. Sincronizar CSS version em sobre.html
-Trocar `href="css/style.css"` por `href="css/style.css?v=10"` (ou versão atual).
-
-### 15. Criar llms.txt para AI search
-Arquivo `/llms.txt` na raiz com orientação para crawlers de IA:
-```
-# Agenty — Consultoria de IA para PMEs em Curitiba
-# https://agenty.com.br
-
-## Permissões
-User-agent: GPTBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-## Sobre este site
-Agenty é uma consultoria de IA para pequenos e médios negócios em Curitiba, PR.
-Serviços: Gestor de Reputação, Atendente WhatsApp, Recepcionista por Voz, Gerador de Orçamentos, Redutor de No-Show.
-Contato: contato@agenty.com.br
-```
-
-### 16. Instalar Google Analytics
-Adicionar GA4 tracking em todas as páginas. Necessário para dados orgânicos reais e para configurar GSC com precisão.
+### M4. width/height em hero-man.png para evitar CLS
+**Incluído no C2** — adicionar `width="520" height="680"` previne Cumulative Layout Shift durante o carregamento.
 
 ---
 
 ## BAIXO — Backlog
 
-### 17. Popularizar casos.html com casos reais
-Assim que o primeiro cliente (ex: Cássia Marconi) tiver resultado, documentar com: segmento, problema, solução aplicada, resultado mensurável. Adicionar Review schema.
+### B1. Configurar Google Analytics 4
+Tag GA4 não encontrada em nenhuma página. Sem dados de tráfego orgânico para medir impacto das ações de SEO.
 
-### 18. Atualizar lastmod do sitemap.xml dinamicamente
-Ou manualmente a cada deploy. Datas estáticas (`2026-05-15`) prejudicam re-crawl de páginas atualizadas.
+### B2. Conectar Google Search Console
+Verificar indexação por URL, ver queries de busca reais, detectar erros de crawl.
 
-### 19. Configurar Google Business Profile
-Criar/reclamar o perfil no GBP para agenty.com.br. Essencial para aparecer no Map Pack local de Curitiba e validar o próprio produto principal.
+### B3. Criar Google Business Profile
+O produto principal (Gestor de Reputação) depende de GBP ativo. Criar e verificar o perfil é obrigatório tanto para a própria credibilidade quanto para demonstrar o produto.
 
-### 20. Obter API key gratuita do PageSpeed Insights
-`console.cloud.google.com` → PageSpeed Insights API (key gratuita). Permite monitorar CWV reais via CrUX.
-
-### 21. Configurar Moz API gratuita
-2.500 rows/mês grátis. Habilita rastreamento de backlinks e DA ao longo do tempo.
+### B4. Expandir o artigo `gestao-google`
+O artigo atual tem bom potencial para rankear em "gestão google meu negócio curitiba". Expandir com:
+- Tabela comparativa com concorrentes locais
+- Perguntas frequentes específicas de Curitiba
+- CTA interno mais forte para gestor-reputacao.html
 
 ---
 
-## Estimativa de Impacto
+## Estimativa de impacto total
 
-| # | Fix | Esforço | Impacto no Score |
-|---|-----|---------|-----------------|
-| 1 | H1 em gestor-reputacao | 5 min | +3 pts |
-| 2 | gestor-reputacao no sitemap | 2 min | +3 pts |
-| 3 | Links de nav na homepage | 15 min | +4 pts |
-| 4-6 | Twitter Cards + og:description | 20 min | +2 pts |
-| 7-8 | Schema gestor-rep + LocalBusiness | 15 min | +3 pts |
-| 9-10 | CNPJ + dados falsos | 5 min | +1 pt |
-| 11-16 | Melhorias médias | 2-3h total | +5 pts |
-
-**Score projetado após itens críticos e altos:** ~78/100
+| Ação | Esforço | Score delta |
+|------|---------|------------|
+| C1 — Encurtar títulos | 15 min | +2,0 |
+| C2 — Alt text hero | 2 min | +0,5 |
+| C3 — Links para gestao page | 20 min | +1,5 |
+| A1 — Schema LocalBusiness | 10 min | +2,0 |
+| A2 — CSS v=13 em todas | 5 min | +0,5 |
+| A3 — Nav gestao page | 10 min | +0,5 |
+| A4 — OG tags privacidade/termos | 10 min | +0,5 |
+| A5 — Título termos | 2 min | +0,2 |
+| M1 — llms.txt | 30 min | +1,0 |
+| M2 — Caso real | 2h | +3,0 |
+| M3 — Telefone público | 5 min | +1,5 |
+| **TOTAL estimado** | ~4h | **+13 pts → Score 82/100** |

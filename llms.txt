@@ -17,10 +17,11 @@ A Agenty é um produto da Xpert Brasil Consultoria, Planejamento e Projetos (CNP
 
 ## Modelo de negócio
 
-- Implementação sob medida (pagamento único)
-- Manutenção mensal contínua
+- Implementação: R$ 3.000 por projeto (50% na assinatura do contrato, 50% na entrega)
+- Manutenção mensal: R$ 150/mês (cancelável a qualquer momento)
+- Setup: até 48 horas para o primeiro produto
 - Sem assinatura de plataforma SaaS embutida
-- Código é propriedade do cliente
+- Código é propriedade do cliente após entrega
 
 ## Contato
 
