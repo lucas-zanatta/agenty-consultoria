@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=10">
+  <link rel="stylesheet" href="css/style.css?v=12">
 
   <script type="application/ld+json">
   {
@@ -32,12 +32,7 @@
     "description": "Robô de atendimento WhatsApp para salões de beleza em Curitiba. Agendamento automático, confirmação de horários e gestão de avaliações Google Meu Negócio.",
     "keywords": "robô atendimento WhatsApp salão de beleza, agendamento automático salão Curitiba, como conseguir mais avaliações no Google salão, IA para salão de beleza",
     "url": "https://agenty.com.br/saloes.html",
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "Agenty",
-      "url": "https://agenty.com.br",
-      "email": "contato@agenty.com.br"
-    },
+    "provider": { "@type": "LocalBusiness", "name": "Agenty", "url": "https://agenty.com.br", "email": "contato@agenty.com.br" },
     "areaServed": { "@type": "City", "name": "Curitiba" },
     "serviceType": "Inteligência Artificial para Salões de Beleza"
   }
@@ -54,175 +49,193 @@
   }
   </script>
 </head>
-<body>
+<body class="dark-hero">
 
 <nav class="nav" id="nav">
-  <div class="container">
-    <div class="nav__inner">
-      <a href="/" class="nav__logo"><span class="nav__logo-icon" aria-hidden="true"></span>agenty</a>
-      <div class="nav__links">
-        <a href="servicos.html" class="nav__link">Soluções</a>
-        <a href="sobre.html" class="nav__link">Sobre</a>
-        <a href="casos.html" class="nav__link">Casos</a>
-        <a href="faq.html" class="nav__link">FAQ</a>
-      </div>
-      <a href="index.html#agendar" class="nav__cta">Agendar conversa</a>
-      <button class="nav__mobile-btn" id="mobile-btn" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Agenty">
+      <span class="nav__logo-icon" aria-hidden="true"></span>AGENTY
+    </a>
+    <div class="nav__links">
+      <a href="servicos.html" class="nav__link">Soluções</a>
+      <a href="sobre.html" class="nav__link">Sobre</a>
+      <a href="casos.html" class="nav__link">Casos</a>
+      <a href="faq.html" class="nav__link">FAQ</a>
     </div>
+    <a href="https://cal.com/lucas-zanatta-bettbr/diagnostico" class="nav__cta" target="_blank" rel="noopener">
+      <span class="nav__cta-dot"></span>Conversa grátis
+    </a>
+    <button class="nav__mobile-btn" id="mobile-btn" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
   <div class="nav__mobile-menu" id="mobile-menu">
     <a href="servicos.html" class="nav__mobile-link">Soluções</a>
     <a href="sobre.html" class="nav__mobile-link">Sobre</a>
     <a href="casos.html" class="nav__mobile-link">Casos</a>
     <a href="faq.html" class="nav__mobile-link">FAQ</a>
-    <a href="index.html#agendar" class="nav__mobile-cta">Agendar conversa</a>
+    <a href="https://cal.com/lucas-zanatta-bettbr/diagnostico" class="nav__mobile-cta" target="_blank" rel="noopener">Conversa grátis</a>
   </div>
 </nav>
 
-<header class="page-header">
-  <div class="container">
-    <div class="page-header__inner">
-      <nav class="breadcrumb" aria-label="Navegação estrutural">
-        <a href="/">Início</a>
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <a href="servicos.html">Soluções</a>
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <span>Salões de Beleza</span>
-      </nav>
-      <p class="caption" style="margin-bottom:12px">IA para salões de beleza em Curitiba</p>
-      <h1 class="h1" data-animate>Seu salão agendando<br><span class="gradient-text">enquanto você trabalha</span></h1>
-      <p class="body-lg" style="max-width:600px;margin:20px auto 0" data-animate>Robô de atendimento no WhatsApp para salões de beleza em Curitiba. Agenda horários, confirma serviços, envia lembretes e responde avaliações do Google — sem você precisar parar o atendimento para pegar o celular.</p>
-      <div style="margin-top:32px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap" data-animate>
-        <a href="index.html#agendar" class="btn btn-primary btn-lg">Diagnóstico gratuito →</a>
-        <a href="gestor-reputacao.html" class="btn btn-secondary btn-lg">Ver Gestor de Reputação</a>
-      </div>
+<!-- ── Hero ── -->
+<section class="nicho-hero">
+  <div class="nicho-hero__inner">
+    <nav aria-label="Navegação estrutural" class="nicho-hero__badge">
+      IA para salões de beleza · Curitiba, PR
+    </nav>
+    <h1 class="nicho-hero__h1" data-reveal>
+      Seu salão<br><em>agendando</em><br>enquanto você trabalha
+    </h1>
+    <p class="nicho-hero__sub" data-reveal data-reveal-delay="1">
+      Robô de atendimento no WhatsApp para salões de beleza em Curitiba. Agenda horários, confirma serviços, envia lembretes e responde avaliações do Google — sem você parar o atendimento para pegar o celular.
+    </p>
+    <div class="nicho-hero__ctas" data-reveal data-reveal-delay="2">
+      <a href="https://cal.com/lucas-zanatta-bettbr/diagnostico" class="btn-on-dark btn-lg" target="_blank" rel="noopener">Diagnóstico gratuito →</a>
+      <a href="gestor-reputacao.html" class="btn-ghost-light btn-lg">Ver Gestor de Reputação</a>
     </div>
-  </div>
-</header>
-
-<!-- Dores -->
-<section class="section" style="background:var(--bg-2)">
-  <div class="container">
-    <div class="section-header center" data-animate>
-      <p class="caption">O que rouba tempo e cliente do seu salão</p>
-      <h2 class="h2">Você perde cliente toda vez<br>que não consegue responder</h2>
-    </div>
-    <div class="grid-4" style="gap:clamp(16px,3vw,24px)">
-      <div class="why-item" style="flex-direction:column;align-items:flex-start" data-animate>
-        <div class="why-item__icon" style="font-size:2rem">✂️</div>
-        <div>
-          <h3 class="why-item__title">Interrupção constante</h3>
-          <p class="why-item__text">Você está com um cliente na cadeira. O WhatsApp não para. Responder agora significa errar o corte. Não responder significa perder o agendamento.</p>
-        </div>
+    <div class="nicho-hero__stats" data-reveal data-reveal-delay="3">
+      <div class="nicho-hero__stat">
+        <span class="nicho-hero__stat-num">24/7</span>
+        <span class="nicho-hero__stat-label">atendimento sem interromper o serviço</span>
       </div>
-      <div class="why-item" style="flex-direction:column;align-items:flex-start" data-animate data-animate-delay="1">
-        <div class="why-item__icon" style="font-size:2rem">🪑</div>
-        <div>
-          <h3 class="why-item__title">Cadeira vazia</h3>
-          <p class="why-item__text">Cliente confirma o horário e não aparece. Sem lembrete automático, isso acontece em média 1 de cada 4 agendamentos.</p>
-        </div>
+      <div class="nicho-hero__stat">
+        <span class="nicho-hero__stat-num">-35%</span>
+        <span class="nicho-hero__stat-label">no-show com confirmação automática</span>
       </div>
-      <div class="why-item" style="flex-direction:column;align-items:flex-start" data-animate data-animate-delay="2">
-        <div class="why-item__icon" style="font-size:2rem">⭐</div>
-        <div>
-          <h3 class="why-item__title">Avaliações esquecidas</h3>
-          <p class="why-item__text">Clientes satisfeitos nem sempre deixam avaliação. E quando deixam, uma resposta carinhosa vale mais do que qualquer anúncio.</p>
-        </div>
-      </div>
-      <div class="why-item" style="flex-direction:column;align-items:flex-start" data-animate data-animate-delay="3">
-        <div class="why-item__icon" style="font-size:2rem">🌙</div>
-        <div>
-          <h3 class="why-item__title">Fora do horário</h3>
-          <p class="why-item__text">A maioria dos agendamentos online acontece à noite ou no fim de semana. Sem atendimento automático, você perde esses clientes para quem responde.</p>
-        </div>
+      <div class="nicho-hero__stat">
+        <span class="nicho-hero__stat-num">2h</span>
+        <span class="nicho-hero__stat-label">tempo máximo de resposta Google</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Soluções -->
-<section class="section">
+<!-- ── 01 Dores ── -->
+<section class="pg-section" id="dores">
   <div class="container">
-    <div class="section-header center" data-animate>
-      <p class="caption">O que a Agenty entrega para salões</p>
-      <h2 class="h2">Duas soluções que trabalham<br>enquanto você atende</h2>
+    <div class="pg-section__head" data-reveal>
+      <span class="pg-label">01 — O PROBLEMA</span>
+      <h2 class="pg-heading">Você perde cliente toda vez<br><em>que não consegue responder.</em></h2>
+      <p class="pg-subhead">Atender no WhatsApp enquanto está com cliente na cadeira é impossível — e ignorar a mensagem tem um preço.</p>
     </div>
-    <div style="display:grid;gap:24px;max-width:820px;margin:0 auto">
-      <div style="padding:32px;border-radius:var(--radius-xl);background:var(--grad-card);border:1px solid var(--border-2)" data-animate>
-        <div style="display:flex;gap:20px;align-items:flex-start">
-          <div style="font-size:2rem;flex-shrink:0">💬</div>
-          <div>
-            <h3 class="h3" style="margin-bottom:8px">Atendente WhatsApp + Agendamento</h3>
-            <p class="body" style="margin-bottom:12px">Responde automaticamente no WhatsApp, mostra disponibilidade de horários, confirma o serviço desejado e agenda sem sua intervenção. Funciona 24h, 7 dias por semana.</p>
-            <p class="caption">AGENDAMENTO · CONFIRMAÇÃO · LEMBRETES · REAGENDAMENTO</p>
-          </div>
-        </div>
+    <div class="dores-grid" data-reveal data-reveal-delay="1">
+      <div class="dore-card">
+        <div class="dore-card__num">01</div>
+        <div class="dore-card__stat">NO MEIO DO CORTE</div>
+        <h3 class="dore-card__title">Interrupção constante</h3>
+        <p class="dore-card__text">Você está com cliente na cadeira. O WhatsApp não para. Responder agora significa errar o corte. Não responder significa perder o agendamento.</p>
       </div>
-      <div style="padding:32px;border-radius:var(--radius-xl);background:var(--grad-card);border:1px solid var(--border-2)" data-animate>
-        <div style="display:flex;gap:20px;align-items:flex-start">
-          <div style="font-size:2rem;flex-shrink:0">📍</div>
-          <div>
-            <h3 class="h3" style="margin-bottom:8px">Gestor de Reputação Google</h3>
-            <p class="body" style="margin-bottom:12px">Monitora e responde avaliações do Google Meu Negócio a cada 2 horas. Respostas personalizadas no seu tom aumentam o ranking local e passam confiança para novos clientes.</p>
-            <p class="caption">GOOGLE MEU NEGÓCIO · AVALIAÇÕES · RANKING NO MAPS</p>
-          </div>
-        </div>
+      <div class="dore-card">
+        <div class="dore-card__num">02</div>
+        <div class="dore-card__stat">1 EM 4 AGENDAMENTOS</div>
+        <h3 class="dore-card__title">Cadeira vazia sem aviso</h3>
+        <p class="dore-card__text">Cliente confirma horário e não aparece. Sem lembrete automático, isso acontece em média 1 de cada 4 marcações — tempo e receita perdidos.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- Stats -->
-<section class="section" style="background:var(--bg-2)">
-  <div class="container">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;text-align:center;max-width:700px;margin:0 auto">
-      <div data-animate>
-        <p style="font-size:3rem;font-weight:800;color:var(--primary);line-height:1">24/7</p>
-        <p class="caption" style="margin-top:8px">atendimento no WhatsApp sem interrupção do serviço</p>
+      <div class="dore-card">
+        <div class="dore-card__num">03</div>
+        <div class="dore-card__stat">OPORTUNIDADE PERDIDA</div>
+        <h3 class="dore-card__title">Avaliações sem resposta</h3>
+        <p class="dore-card__text">Clientes satisfeitos nem sempre deixam avaliação. E quando deixam, uma resposta carinhosa vale mais do que qualquer anúncio pago.</p>
       </div>
-      <div data-animate>
-        <p style="font-size:3rem;font-weight:800;color:var(--primary);line-height:1">-35%</p>
-        <p class="caption" style="margin-top:8px">redução de no-show com confirmação automática</p>
-      </div>
-      <div data-animate>
-        <p style="font-size:3rem;font-weight:800;color:var(--primary);line-height:1">2h</p>
-        <p class="caption" style="margin-top:8px">tempo máximo de resposta a avaliações Google</p>
+      <div class="dore-card">
+        <div class="dore-card__num">04</div>
+        <div class="dore-card__stat">NOITE E FINS DE SEMANA</div>
+        <h3 class="dore-card__title">Agendamentos que escapam</h3>
+        <p class="dore-card__text">A maioria dos agendamentos online acontece à noite ou no fim de semana. Sem atendimento automático, você perde esses clientes para quem responde.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FAQ nicho -->
-<section class="section">
+<!-- ── 02 Soluções ── -->
+<section class="pg-section pg-section--alt" id="solucoes">
   <div class="container">
-    <div style="max-width:760px;margin:0 auto">
-      <h2 class="h3" style="margin-bottom:24px;text-align:center" data-animate>Perguntas frequentes — salões de beleza</h2>
-      <div class="faq-list">
-        <div class="faq-item" data-animate>
-          <button class="faq-item__btn" aria-expanded="false">O bot consegue mostrar os serviços e preços?<span class="faq-item__icon">+</span></button>
-          <div class="faq-item__body"><p>Sim. Cadastramos seu cardápio de serviços (corte, coloração, manicure, etc.) e os valores. O cliente pergunta "quanto custa o ombré?" e o bot responde com o preço e já oferece o agendamento. Você atualiza os preços quando quiser.</p></div>
+    <div class="pg-section__head" data-reveal>
+      <span class="pg-label">02 — O QUE ENTREGAMOS</span>
+      <h2 class="pg-heading">Duas soluções que trabalham<br><em>enquanto você atende.</em></h2>
+    </div>
+    <div class="feat-grid feat-grid--2" data-reveal data-reveal-delay="1">
+      <div class="feat-card">
+        <div class="feat-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         </div>
-        <div class="faq-item" data-animate>
-          <button class="faq-item__btn" aria-expanded="false">E se eu tiver mais de uma profissional no salão?<span class="faq-item__icon">+</span></button>
-          <div class="faq-item__body"><p>Funciona com equipe. Configuramos a agenda de cada profissional e o cliente pode escolher com quem prefere ser atendido — ou o bot distribui automaticamente conforme disponibilidade.</p></div>
+        <h3 class="feat-card__title">Atendente WhatsApp + Agendamento</h3>
+        <p class="feat-card__text">Responde automaticamente, mostra disponibilidade de horários, confirma o serviço e agenda sem sua intervenção. Funciona 24h, 7 dias por semana — inclusive enquanto você está com cliente.</p>
+        <p style="font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:12px">Agendamento · Confirmação · Lembretes · Reagendamento</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
         </div>
-        <div class="faq-item" data-animate>
-          <button class="faq-item__btn" aria-expanded="false">Como peço mais avaliações no Google para meu salão?<span class="faq-item__icon">+</span></button>
-          <div class="faq-item__body"><p>Após o atendimento, o bot envia automaticamente uma mensagem de agradecimento com o link direto para avaliação no Google. Clientes satisfeitos, quando lembrados na hora certa, deixam a avaliação com muito mais frequência.</p></div>
-        </div>
+        <h3 class="feat-card__title">Gestor de Reputação Google</h3>
+        <p class="feat-card__text">Monitora e responde avaliações do Google Meu Negócio a cada 2 horas. Respostas personalizadas no seu tom aumentam o ranking local e convencem novos clientes a escolher seu salão.</p>
+        <p style="font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:12px">Google Meu Negócio · Avaliações · Ranking no Maps</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="section cta-section">
+<!-- ── 03 Stats ── -->
+<section class="pg-section pg-section--dark" id="numeros">
   <div class="container">
-    <div class="cta-box" data-animate>
-      <p class="caption" style="margin-bottom:16px">Próximo passo</p>
-      <h2 class="h2">Diagnóstico gratuito para seu salão</h2>
-      <p class="body">Conversa de 30 minutos. Mapeamos onde seu salão perde clientes e qual automação faz mais sentido. Sem compromisso.</p>
-      <a href="index.html#agendar" class="btn btn-primary btn-lg" style="display:inline-flex;margin-bottom:0">Agendar diagnóstico gratuito →</a>
+    <div class="pg-section__head" data-reveal>
+      <span class="pg-label pg-label--light">03 — OS NÚMEROS</span>
+      <h2 class="pg-heading pg-heading--light">O impacto em<br><em>salões reais.</em></h2>
+    </div>
+    <div class="nicho-stats-row" data-reveal data-reveal-delay="1">
+      <div class="nicho-stats-row__item">
+        <span class="nicho-stats-row__num">24/7</span>
+        <span class="nicho-stats-row__label">atendimento no WhatsApp sem interromper o serviço</span>
+      </div>
+      <div class="nicho-stats-row__item">
+        <span class="nicho-stats-row__num">-35%</span>
+        <span class="nicho-stats-row__label">redução de no-show com confirmação automática</span>
+      </div>
+      <div class="nicho-stats-row__item">
+        <span class="nicho-stats-row__num">2h</span>
+        <span class="nicho-stats-row__label">tempo máximo de resposta a avaliações Google</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 04 FAQ ── -->
+<section class="pg-section" id="faq">
+  <div class="container">
+    <div class="pg-section__head" data-reveal>
+      <span class="pg-label">04 — DÚVIDAS FREQUENTES</span>
+      <h2 class="pg-heading">Perguntas sobre<br><em>IA para salões.</em></h2>
+    </div>
+    <div class="faq-list" style="max-width:760px">
+      <div class="faq-item" data-reveal>
+        <button class="faq-item__btn" aria-expanded="false">O bot consegue mostrar os serviços e preços?<span class="faq-item__icon">+</span></button>
+        <div class="faq-item__body"><p>Sim. Cadastramos seu cardápio de serviços (corte, coloração, manicure, etc.) e os valores. O cliente pergunta "quanto custa o ombré?" e o bot responde com o preço e já oferece o agendamento. Você atualiza os preços quando quiser.</p></div>
+      </div>
+      <div class="faq-item" data-reveal>
+        <button class="faq-item__btn" aria-expanded="false">E se eu tiver mais de uma profissional no salão?<span class="faq-item__icon">+</span></button>
+        <div class="faq-item__body"><p>Funciona com equipe. Configuramos a agenda de cada profissional e o cliente pode escolher com quem prefere ser atendido — ou o bot distribui automaticamente conforme disponibilidade.</p></div>
+      </div>
+      <div class="faq-item" data-reveal>
+        <button class="faq-item__btn" aria-expanded="false">Como consigo mais avaliações no Google para meu salão?<span class="faq-item__icon">+</span></button>
+        <div class="faq-item__body"><p>Após o atendimento, o bot envia automaticamente uma mensagem de agradecimento com o link direto para avaliação no Google. Clientes satisfeitos, quando lembrados no momento certo, deixam avaliação com muito mais frequência.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 05 CTA ── -->
+<section class="pg-section pg-section--ochre" id="agendar">
+  <div class="container">
+    <div class="prod-cta" data-reveal>
+      <div class="prod-cta__inner">
+        <h2 class="pg-heading" style="color:var(--ink);max-width:680px">Quantos agendamentos seu salão<br><em>perdeu essa semana depois das 18h?</em></h2>
+        <p style="margin-top:20px;font-size:1.1rem;color:var(--ink);opacity:0.65;max-width:500px">Diagnóstico gratuito de 30 minutos. Mapeamos onde seu salão perde clientes e qual automação faz mais sentido. Sem compromisso.</p>
+        <div class="prod-cta__actions">
+          <a href="https://cal.com/lucas-zanatta-bettbr/diagnostico" class="btn btn-primary btn-lg" target="_blank" rel="noopener">Agendar diagnóstico gratuito →</a>
+          <a href="mailto:contato@agenty.com.br" class="prod-cta__email">ou envie um e-mail →</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -231,12 +244,12 @@
   <div class="container">
     <div class="footer__top">
       <div class="footer__brand">
-        <a href="/" class="nav__logo"><span>agenty</span></a>
+        <a href="/" class="nav__logo"><span class="nav__logo-icon" aria-hidden="true"></span>agenty</a>
         <p>Consultoria de IA para pequenos negócios em Curitiba.</p>
         <p style="font-size:0.75rem;opacity:0.6;margin-top:4px">Xpert Brasil Consultoria, Planejamento e Projetos · CNPJ 00.261.584/0001-59</p>
       </div>
       <div class="footer__col"><h4>Soluções por segmento</h4><a href="clinicas.html">Clínicas</a><a href="saloes.html">Salões de Beleza</a><a href="restaurantes.html">Restaurantes</a><a href="varejo.html">Varejo Local</a></div>
-      <div class="footer__col"><h4>Empresa</h4><a href="sobre.html">Sobre nós</a><a href="casos.html">Casos</a><a href="faq.html">FAQ</a><a href="index.html#agendar">Agendar</a></div>
+      <div class="footer__col"><h4>Empresa</h4><a href="sobre.html">Sobre nós</a><a href="casos.html">Casos</a><a href="faq.html">FAQ</a><a href="https://cal.com/lucas-zanatta-bettbr/diagnostico" target="_blank" rel="noopener">Agendar</a></div>
       <div class="footer__col"><h4>Contato</h4><a href="mailto:contato@agenty.com.br">contato@agenty.com.br</a><a href="https://www.linkedin.com/in/lucas-zanatta-1b46b2113/" target="_blank" rel="noopener">LinkedIn</a></div>
     </div>
     <div class="footer__bottom">

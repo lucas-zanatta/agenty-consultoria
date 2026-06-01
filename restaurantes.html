@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=10">
+  <link rel="stylesheet" href="css/style.css?v=12">
 
   <script type="application/ld+json">
   {
@@ -32,8 +32,8 @@
     "description": "Atendimento automático no WhatsApp e gestão de avaliações do Google Meu Negócio para restaurantes em Curitiba.",
     "keywords": "bot WhatsApp restaurante delivery, gestão reputação online restaurante Curitiba, atendimento automático restaurante, IA para restaurante Curitiba",
     "url": "https://agenty.com.br/restaurantes.html",
-    "provider": {"@type": "LocalBusiness", "name": "Agenty", "url": "https://agenty.com.br"},
-    "areaServed": {"@type": "City", "name": "Curitiba"},
+    "provider": { "@type": "LocalBusiness", "name": "Agenty", "url": "https://agenty.com.br", "email": "contato@agenty.com.br" },
+    "areaServed": { "@type": "City", "name": "Curitiba" },
     "serviceType": "Inteligência Artificial para Restaurantes"
   }
   </script>
@@ -49,129 +49,193 @@
   }
   </script>
 </head>
-<body>
+<body class="dark-hero">
 
 <nav class="nav" id="nav">
-  <div class="container">
-    <div class="nav__inner">
-      <a href="/" class="nav__logo"><span class="nav__logo-icon" aria-hidden="true"></span>agenty</a>
-      <div class="nav__links">
-        <a href="servicos.html" class="nav__link">Soluções</a>
-        <a href="sobre.html" class="nav__link">Sobre</a>
-        <a href="casos.html" class="nav__link">Casos</a>
-        <a href="faq.html" class="nav__link">FAQ</a>
-      </div>
-      <a href="index.html#agendar" class="nav__cta">Agendar conversa</a>
-      <button class="nav__mobile-btn" id="mobile-btn" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Agenty">
+      <span class="nav__logo-icon" aria-hidden="true"></span>AGENTY
+    </a>
+    <div class="nav__links">
+      <a href="servicos.html" class="nav__link">Soluções</a>
+      <a href="sobre.html" class="nav__link">Sobre</a>
+      <a href="casos.html" class="nav__link">Casos</a>
+      <a href="faq.html" class="nav__link">FAQ</a>
     </div>
+    <a href="https://cal.com/lucas-zanatta-bettbr/diagnostico" class="nav__cta" target="_blank" rel="noopener">
+      <span class="nav__cta-dot"></span>Conversa grátis
+    </a>
+    <button class="nav__mobile-btn" id="mobile-btn" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
   <div class="nav__mobile-menu" id="mobile-menu">
     <a href="servicos.html" class="nav__mobile-link">Soluções</a>
     <a href="sobre.html" class="nav__mobile-link">Sobre</a>
     <a href="casos.html" class="nav__mobile-link">Casos</a>
     <a href="faq.html" class="nav__mobile-link">FAQ</a>
-    <a href="index.html#agendar" class="nav__mobile-cta">Agendar conversa</a>
+    <a href="https://cal.com/lucas-zanatta-bettbr/diagnostico" class="nav__mobile-cta" target="_blank" rel="noopener">Conversa grátis</a>
   </div>
 </nav>
 
-<header class="page-header">
-  <div class="container">
-    <div class="page-header__inner">
-      <nav class="breadcrumb" aria-label="Navegação estrutural">
-        <a href="/">Início</a>
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <a href="servicos.html">Soluções</a>
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <span>Restaurantes</span>
-      </nav>
-      <p class="caption" style="margin-bottom:12px">IA para restaurantes em Curitiba</p>
-      <h1 class="h1" data-animate>Seu restaurante respondendo<br><span class="gradient-text">enquanto você foca na cozinha</span></h1>
-      <p class="body-lg" style="max-width:600px;margin:20px auto 0" data-animate>Atendimento automático no WhatsApp e gestão de reputação no Google para restaurantes em Curitiba. IA que informa cardápio, horários, reservas e responde avaliações — sem sua equipe precisar parar o serviço.</p>
-      <div style="margin-top:32px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap" data-animate>
-        <a href="index.html#agendar" class="btn btn-primary btn-lg">Diagnóstico gratuito →</a>
-        <a href="gestor-reputacao.html" class="btn btn-secondary btn-lg">Ver Gestor de Reputação</a>
-      </div>
+<!-- ── Hero ── -->
+<section class="nicho-hero">
+  <div class="nicho-hero__inner">
+    <nav aria-label="Navegação estrutural" class="nicho-hero__badge">
+      IA para restaurantes · Curitiba, PR
+    </nav>
+    <h1 class="nicho-hero__h1" data-reveal>
+      Seu restaurante<br><em>respondendo</em><br>enquanto você foca na cozinha
+    </h1>
+    <p class="nicho-hero__sub" data-reveal data-reveal-delay="1">
+      Atendimento automático no WhatsApp e gestão de reputação no Google para restaurantes em Curitiba. IA que informa cardápio, horários e responde avaliações — sem sua equipe parar o serviço.
+    </p>
+    <div class="nicho-hero__ctas" data-reveal data-reveal-delay="2">
+      <a href="https://cal.com/lucas-zanatta-bettbr/diagnostico" class="btn-on-dark btn-lg" target="_blank" rel="noopener">Diagnóstico gratuito →</a>
+      <a href="gestor-reputacao.html" class="btn-ghost-light btn-lg">Ver Gestor de Reputação</a>
     </div>
-  </div>
-</header>
-
-<section class="section" style="background:var(--bg-2)">
-  <div class="container">
-    <div class="section-header center" data-animate>
-      <p class="caption">Os problemas que custam mesa e avaliação</p>
-      <h2 class="h2">Onde seu restaurante perde cliente<br>todo dia sem perceber</h2>
-    </div>
-    <div class="grid-4" style="gap:clamp(16px,3vw,24px)">
-      <div class="why-item" style="flex-direction:column;align-items:flex-start" data-animate>
-        <div class="why-item__icon" style="font-size:2rem">📱</div>
-        <div>
-          <h3 class="why-item__title">WhatsApp sem resposta</h3>
-          <p class="why-item__text">"Qual o horário de funcionamento?" "Tem mesa para quatro às 20h?" Perguntas simples sem resposta rápida viram cliente perdido.</p>
-        </div>
+    <div class="nicho-hero__stats" data-reveal data-reveal-delay="3">
+      <div class="nicho-hero__stat">
+        <span class="nicho-hero__stat-num">24/7</span>
+        <span class="nicho-hero__stat-label">atendimento sem depender da equipe</span>
       </div>
-      <div class="why-item" style="flex-direction:column;align-items:flex-start" data-animate data-animate-delay="1">
-        <div class="why-item__icon" style="font-size:2rem">⭐</div>
-        <div>
-          <h3 class="why-item__title">Avaliação negativa sem resposta</h3>
-          <p class="why-item__text">Um cliente reclamou da espera. A avaliação está visível para centenas de pessoas. Sem resposta, parece que você não se importa.</p>
-        </div>
+      <div class="nicho-hero__stat">
+        <span class="nicho-hero__stat-num">2h</span>
+        <span class="nicho-hero__stat-label">tempo máximo de resposta Google</span>
       </div>
-      <div class="why-item" style="flex-direction:column;align-items:flex-start" data-animate data-animate-delay="2">
-        <div class="why-item__icon" style="font-size:2rem">🗺️</div>
-        <div>
-          <h3 class="why-item__title">Concorrente aparece antes</h3>
-          <p class="why-item__text">O restaurante do lado tem mais avaliações respondidas e aparece primeiro no Google Maps. Mesmo sendo pior, atrai mais clientes.</p>
-        </div>
-      </div>
-      <div class="why-item" style="flex-direction:column;align-items:flex-start" data-animate data-animate-delay="3">
-        <div class="why-item__icon" style="font-size:2rem">🌙</div>
-        <div>
-          <h3 class="why-item__title">Dúvidas fora do expediente</h3>
-          <p class="why-item__text">Às 23h, alguém pesquisa onde jantar amanhã. Manda mensagem. Sua equipe já foi embora. O cliente escolhe quem respondeu.</p>
-        </div>
+      <div class="nicho-hero__stat">
+        <span class="nicho-hero__stat-num">+Maps</span>
+        <span class="nicho-hero__stat-label">ranking local melhorado com avaliações respondidas</span>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section">
+<!-- ── 01 Dores ── -->
+<section class="pg-section" id="dores">
   <div class="container">
-    <div class="section-header center" data-animate>
-      <p class="caption">O que a Agenty entrega para restaurantes</p>
-      <h2 class="h2">Duas soluções que trabalham<br>enquanto o serviço acontece</h2>
+    <div class="pg-section__head" data-reveal>
+      <span class="pg-label">01 — O PROBLEMA</span>
+      <h2 class="pg-heading">Onde seu restaurante perde cliente<br><em>todo dia sem perceber.</em></h2>
+      <p class="pg-subhead">Cada mensagem sem resposta rápida, cada avaliação ignorada — é um cliente que escolhe o concorrente.</p>
     </div>
-    <div style="display:grid;gap:24px;max-width:820px;margin:0 auto">
-      <div style="padding:32px;border-radius:var(--radius-xl);background:var(--grad-card);border:1px solid var(--border-2)" data-animate>
-        <div style="display:flex;gap:20px;align-items:flex-start">
-          <div style="font-size:2rem;flex-shrink:0">💬</div>
-          <div>
-            <h3 class="h3" style="margin-bottom:8px">Atendente WhatsApp</h3>
-            <p class="body" style="margin-bottom:12px">Responde dúvidas sobre cardápio, horários e endereço. Informa disponibilidade de reservas. Envia o link do delivery. Tudo 24h, no tom do seu restaurante.</p>
-            <p class="caption">CARDÁPIO · HORÁRIOS · RESERVAS · DELIVERY</p>
-          </div>
-        </div>
+    <div class="dores-grid" data-reveal data-reveal-delay="1">
+      <div class="dore-card">
+        <div class="dore-card__num">01</div>
+        <div class="dore-card__stat">CLIENTES QUE DESISTEM</div>
+        <h3 class="dore-card__title">WhatsApp sem resposta</h3>
+        <p class="dore-card__text">"Qual o horário?" "Tem mesa para quatro às 20h?" Perguntas simples sem resposta rápida viram cliente perdido — especialmente no fim de semana.</p>
       </div>
-      <div style="padding:32px;border-radius:var(--radius-xl);background:var(--grad-card);border:1px solid var(--border-2)" data-animate>
-        <div style="display:flex;gap:20px;align-items:flex-start">
-          <div style="font-size:2rem;flex-shrink:0">📍</div>
-          <div>
-            <h3 class="h3" style="margin-bottom:8px">Gestor de Reputação Google</h3>
-            <p class="body" style="margin-bottom:12px">Monitora e responde avaliações do Google Meu Negócio a cada 2 horas. Positivas respondidas automaticamente. Negativas chegam para você aprovar antes de publicar.</p>
-            <p class="caption">AVALIAÇÕES · GOOGLE MAPS · RANKING LOCAL</p>
-          </div>
-        </div>
+      <div class="dore-card">
+        <div class="dore-card__num">02</div>
+        <div class="dore-card__stat">VISTA POR CENTENAS</div>
+        <h3 class="dore-card__title">Avaliação negativa sem resposta</h3>
+        <p class="dore-card__text">Um cliente reclamou da espera. A avaliação está visível para todos que pesquisam. Sem resposta, parece que você não se importa — e o próximo cliente escolhe outra casa.</p>
+      </div>
+      <div class="dore-card">
+        <div class="dore-card__num">03</div>
+        <div class="dore-card__stat">PÁGINA 1 DO MAPS</div>
+        <h3 class="dore-card__title">Concorrente aparece antes</h3>
+        <p class="dore-card__text">O restaurante ao lado tem mais avaliações respondidas e aparece primeiro no Google Maps. Mesmo sendo pior, atrai mais clientes — só porque se mostrou presente.</p>
+      </div>
+      <div class="dore-card">
+        <div class="dore-card__num">04</div>
+        <div class="dore-card__stat">23H SEM ATENDIMENTO</div>
+        <h3 class="dore-card__title">Dúvidas fora do expediente</h3>
+        <p class="dore-card__text">Às 23h, alguém pesquisa onde jantar amanhã, manda mensagem. Sua equipe foi embora. O cliente escolhe quem respondeu — e esse não foi você.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section cta-section">
+<!-- ── 02 Soluções ── -->
+<section class="pg-section pg-section--alt" id="solucoes">
   <div class="container">
-    <div class="cta-box" data-animate>
-      <p class="caption" style="margin-bottom:16px">Próximo passo</p>
-      <h2 class="h2">Diagnóstico gratuito para seu restaurante</h2>
-      <p class="body">30 minutos. Analisamos sua presença no Google e no WhatsApp, e apresentamos o que pode ser automatizado. Sem compromisso.</p>
-      <a href="index.html#agendar" class="btn btn-primary btn-lg" style="display:inline-flex;margin-bottom:0">Agendar diagnóstico gratuito →</a>
+    <div class="pg-section__head" data-reveal>
+      <span class="pg-label">02 — O QUE ENTREGAMOS</span>
+      <h2 class="pg-heading">Duas soluções que trabalham<br><em>enquanto o serviço acontece.</em></h2>
+    </div>
+    <div class="feat-grid feat-grid--2" data-reveal data-reveal-delay="1">
+      <div class="feat-card">
+        <div class="feat-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3 class="feat-card__title">Atendente WhatsApp</h3>
+        <p class="feat-card__text">Responde dúvidas sobre cardápio, horários e endereço. Informa disponibilidade de reservas e envia o link do delivery. Tudo 24h, no tom do seu restaurante — sem parar o serviço.</p>
+        <p style="font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:12px">Cardápio · Horários · Reservas · Delivery</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3 class="feat-card__title">Gestor de Reputação Google</h3>
+        <p class="feat-card__text">Monitora e responde avaliações do Google Meu Negócio a cada 2 horas. Positivas respondidas automaticamente. Negativas chegam para você aprovar antes de publicar — com um clique.</p>
+        <p style="font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:12px">Avaliações · Google Maps · Ranking Local</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 03 Stats ── -->
+<section class="pg-section pg-section--dark" id="numeros">
+  <div class="container">
+    <div class="pg-section__head" data-reveal>
+      <span class="pg-label pg-label--light">03 — OS NÚMEROS</span>
+      <h2 class="pg-heading pg-heading--light">O impacto em<br><em>restaurantes reais.</em></h2>
+    </div>
+    <div class="nicho-stats-row" data-reveal data-reveal-delay="1">
+      <div class="nicho-stats-row__item">
+        <span class="nicho-stats-row__num">24/7</span>
+        <span class="nicho-stats-row__label">atendimento sem equipe parada no celular</span>
+      </div>
+      <div class="nicho-stats-row__item">
+        <span class="nicho-stats-row__num">2h</span>
+        <span class="nicho-stats-row__label">tempo máximo de resposta a avaliações Google</span>
+      </div>
+      <div class="nicho-stats-row__item">
+        <span class="nicho-stats-row__num">+22%</span>
+        <span class="nicho-stats-row__label">faturamento em restaurante após automação (caso real)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 04 FAQ ── -->
+<section class="pg-section" id="faq">
+  <div class="container">
+    <div class="pg-section__head" data-reveal>
+      <span class="pg-label">04 — DÚVIDAS FREQUENTES</span>
+      <h2 class="pg-heading">Perguntas sobre<br><em>IA para restaurantes.</em></h2>
+    </div>
+    <div class="faq-list" style="max-width:760px">
+      <div class="faq-item" data-reveal>
+        <button class="faq-item__btn" aria-expanded="false">O bot consegue informar o cardápio e preços automaticamente?<span class="faq-item__icon">+</span></button>
+        <div class="faq-item__body"><p>Sim. Cadastramos seu cardápio completo (pratos, bebidas, sobremesas, preços, restrições alimentares). O cliente pergunta "tem opção vegetariana?" e o bot responde na hora com as opções disponíveis. Você atualiza quando mudar o cardápio.</p></div>
+      </div>
+      <div class="faq-item" data-reveal>
+        <button class="faq-item__btn" aria-expanded="false">Funciona para reservas de mesa?<span class="faq-item__icon">+</span></button>
+        <div class="faq-item__body"><p>Sim. O bot coleta data, horário e número de pessoas, verifica disponibilidade e confirma a reserva. Para gestão de mesas em tempo real, integramos com sistemas de reserva como Cover Manager ou planilha própria.</p></div>
+      </div>
+      <div class="faq-item" data-reveal>
+        <button class="faq-item__btn" aria-expanded="false">Como o Gestor de Reputação ajuda meu restaurante no Google Maps?<span class="faq-item__icon">+</span></button>
+        <div class="faq-item__body"><p>O Google usa o engajamento com avaliações como sinal de ranking. Restaurantes que respondem todas as avaliações aparecem mais alto nos resultados de "restaurante perto de mim". Respondemos a cada 2h, no tom do seu estabelecimento — o que melhora posição e transmite presença.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 05 CTA ── -->
+<section class="pg-section pg-section--ochre" id="agendar">
+  <div class="container">
+    <div class="prod-cta" data-reveal>
+      <div class="prod-cta__inner">
+        <h2 class="pg-heading" style="color:var(--ink);max-width:680px">Quantas mensagens sem resposta<br><em>seu restaurante acumula por semana?</em></h2>
+        <p style="margin-top:20px;font-size:1.1rem;color:var(--ink);opacity:0.65;max-width:500px">Diagnóstico gratuito de 30 minutos. Analisamos sua presença no Google e no WhatsApp e apresentamos o que pode ser automatizado — sem compromisso.</p>
+        <div class="prod-cta__actions">
+          <a href="https://cal.com/lucas-zanatta-bettbr/diagnostico" class="btn btn-primary btn-lg" target="_blank" rel="noopener">Agendar diagnóstico gratuito →</a>
+          <a href="mailto:contato@agenty.com.br" class="prod-cta__email">ou envie um e-mail →</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -180,12 +244,12 @@
   <div class="container">
     <div class="footer__top">
       <div class="footer__brand">
-        <a href="/" class="nav__logo"><span>agenty</span></a>
+        <a href="/" class="nav__logo"><span class="nav__logo-icon" aria-hidden="true"></span>agenty</a>
         <p>Consultoria de IA para pequenos negócios em Curitiba.</p>
         <p style="font-size:0.75rem;opacity:0.6;margin-top:4px">Xpert Brasil Consultoria, Planejamento e Projetos · CNPJ 00.261.584/0001-59</p>
       </div>
       <div class="footer__col"><h4>Soluções por segmento</h4><a href="clinicas.html">Clínicas</a><a href="saloes.html">Salões de Beleza</a><a href="restaurantes.html">Restaurantes</a><a href="varejo.html">Varejo Local</a></div>
-      <div class="footer__col"><h4>Empresa</h4><a href="sobre.html">Sobre nós</a><a href="casos.html">Casos</a><a href="faq.html">FAQ</a><a href="index.html#agendar">Agendar</a></div>
+      <div class="footer__col"><h4>Empresa</h4><a href="sobre.html">Sobre nós</a><a href="casos.html">Casos</a><a href="faq.html">FAQ</a><a href="https://cal.com/lucas-zanatta-bettbr/diagnostico" target="_blank" rel="noopener">Agendar</a></div>
       <div class="footer__col"><h4>Contato</h4><a href="mailto:contato@agenty.com.br">contato@agenty.com.br</a><a href="https://www.linkedin.com/in/lucas-zanatta-1b46b2113/" target="_blank" rel="noopener">LinkedIn</a></div>
     </div>
     <div class="footer__bottom">
