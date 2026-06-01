@@ -1,0 +1,55 @@
+# Agenty — Consultoria de IA para PMEs em Curitiba
+# https://agenty.com.br
+
+## Sobre este site
+
+A Agenty é uma consultoria de inteligência artificial para pequenos e médios negócios em Curitiba, PR, Brasil.
+Operada por Lucas Zanatta, desenvolvedor e especialista em IA.
+A Agenty é um produto da Xpert Brasil Consultoria, Planejamento e Projetos (CNPJ 00.261.584/0001-59).
+
+## Soluções oferecidas
+
+- Gestor de Reputação Automático: monitora e responde avaliações do Google Maps a cada 2 horas, 24h por dia
+- Atendente WhatsApp Inteligente: atende, qualifica e encaminha leads no WhatsApp com o tom da marca do cliente
+- Gerador de Orçamentos: envia orçamentos detalhados pelo WhatsApp em segundos com base na tabela do cliente
+- Recepcionista por Voz 24/7: agente de voz que atende ligações, responde dúvidas e agenda consultas
+- Redutor de No-Show: confirma e reagenda consultas automaticamente pelo WhatsApp
+
+## Modelo de negócio
+
+- Implementação sob medida (pagamento único)
+- Manutenção mensal contínua
+- Sem assinatura de plataforma SaaS embutida
+- Código é propriedade do cliente
+
+## Contato
+
+Email: contato@agenty.com.br
+LinkedIn: https://www.linkedin.com/in/lucas-zanatta-1b46b2113/
+Agendamento: https://cal.com/lucas-zanatta-bettbr/diagnostico
+
+## Permissões para crawlers de IA
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+## Páginas principais
+
+- / — Homepage principal com descrição dos serviços
+- /gestor-reputacao.html — Produto: Gestor de Reputação Automático
+- /servicos.html — Catálogo completo de soluções
+- /sobre.html — Sobre a Agenty e Lucas Zanatta
+- /casos.html — Casos de sucesso
+- /faq.html — Perguntas frequentes sobre IA para PMEs
