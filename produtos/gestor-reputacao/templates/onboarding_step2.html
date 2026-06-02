@@ -14,9 +14,11 @@
            min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px }
     .card { background: #fff; border: 1px solid #e2dbd0; border-radius: 16px;
             padding: 48px; max-width: 520px; width: 100%; text-align: center }
-    .logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+    .logo { display: flex; align-items: center; justify-content: center; gap: 8px;
+            font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
             font-size: 26px; letter-spacing: .5px; text-transform: uppercase;
             color: #c94a1f; margin-bottom: 8px }
+    .logo img { width: 28px; height: 28px }
     .step { font-size: 12px; color: #8a7f74; margin-bottom: 28px; font-weight: 500 }
     h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
          font-size: 28px; letter-spacing: .3px; margin-bottom: 12px }
@@ -35,7 +37,7 @@
 </head>
 <body>
   <div class="card">
-    <div class="logo">Agenty</div>
+    <div class="logo"><img src="/static/favicon.svg" alt="">Agenty</div>
     <div class="step">Passo 2 de 2 — Conectar Google Meu Negócio</div>
     <h1>Conecte sua conta do Google</h1>
     <p class="sub">

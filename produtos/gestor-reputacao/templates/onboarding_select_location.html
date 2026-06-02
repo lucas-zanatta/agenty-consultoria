@@ -14,9 +14,11 @@
            min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px }
     .card { background: #fff; border: 1px solid #e2dbd0; border-radius: 16px;
             padding: 48px; max-width: 520px; width: 100% }
-    .logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+    .logo { display: flex; align-items: center; gap: 8px;
+            font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
             font-size: 26px; letter-spacing: .5px; text-transform: uppercase;
             color: #c94a1f; margin-bottom: 28px }
+    .logo img { width: 28px; height: 28px }
     h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
          font-size: 26px; letter-spacing: .3px; margin-bottom: 8px }
     p.sub { font-size: 14px; color: #8a7f74; margin-bottom: 28px; line-height: 1.6 }
@@ -38,7 +40,7 @@
 </head>
 <body>
   <div class="card">
-    <div class="logo">Agenty</div>
+    <div class="logo"><img src="/static/favicon.svg" alt="">Agenty</div>
     <h1>Qual é o seu estabelecimento?</h1>
     <p class="sub">Encontramos mais de um local vinculado à sua conta. Selecione qual deve ser monitorado.</p>
 
