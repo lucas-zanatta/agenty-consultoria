@@ -385,7 +385,7 @@
 </section>
 
 <!-- ── 05 — Preço ── -->
-<section class="pg-section pg-section--dark" id="preco" style="position:relative;overflow:hidden">
+<section class="pg-section pg-section--dark" id="preco" style="position:relative;overflow:hidden;background:linear-gradient(to top, #1c0d05 0%, #18130e 55%, #0f0c0a 100%)">
   <div id="price-dots-bg" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;z-index:0"></div>
   <div class="container" style="position:relative;z-index:1">
     <div class="prod-price" data-reveal>
@@ -533,7 +533,7 @@ Cal.ns.diagnostico("ui",{"hideEventTypeDetails":false,"layout":"month_view"});
   geo.setAttribute('color',    new THREE.Float32BufferAttribute(colors, 3));
 
   var mat = new THREE.PointsMaterial({
-    size: 5, vertexColors: true, transparent: true, opacity: 0.18, sizeAttenuation: true
+    size: 5, vertexColors: true, transparent: true, opacity: 0.38, sizeAttenuation: true
   });
   scene.add(new THREE.Points(geo, mat));
 
