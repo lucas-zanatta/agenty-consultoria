@@ -1295,10 +1295,11 @@ body::after {
 }
 .prod-price__card {
   flex: 0 0 380px;
-  border: 1px solid var(--ink-2);
-  border-radius: 3px;
+  border: 1.5px solid rgba(201, 74, 31, 0.45);
+  border-radius: 12px;
   padding: 40px;
-  background: rgba(250, 247, 242, 0.04);
+  background: var(--ink-2);
+  box-shadow: 0 0 0 1px rgba(201,74,31,0.08), 0 24px 48px rgba(0,0,0,0.35);
 }
 .prod-price__setup {
   display: flex;
@@ -1311,7 +1312,7 @@ body::after {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(250, 247, 242, 0.4);
+  color: rgba(250, 247, 242, 0.5);
 }
 .prod-price__setup-val {
   font-family: var(--font-display);
@@ -1321,12 +1322,12 @@ body::after {
   letter-spacing: -0.02em;
 }
 .prod-price__setup-note {
-  font-size: 0.8rem;
-  color: rgba(250, 247, 242, 0.35);
+  font-size: 0.85rem;
+  color: rgba(250, 247, 242, 0.75);
 }
 .prod-price__divider {
   height: 1px;
-  background: var(--ink-2);
+  background: rgba(250,247,242,0.08);
   margin: 0 0 24px;
 }
 .prod-price__monthly { display: flex; flex-direction: column; gap: 4px; margin-bottom: 28px; }
@@ -1335,7 +1336,7 @@ body::after {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(250, 247, 242, 0.4);
+  color: rgba(250, 247, 242, 0.5);
 }
 .prod-price__monthly-val {
   font-family: var(--font-display);
@@ -1348,7 +1349,7 @@ body::after {
 .prod-price__monthly-val span {
   font-size: 1.2rem;
   font-weight: 400;
-  color: rgba(250, 247, 242, 0.5);
+  color: rgba(250, 247, 242, 0.65);
 }
 .prod-price__list {
   list-style: none;
@@ -1360,7 +1361,7 @@ body::after {
 }
 .prod-price__list li {
   font-size: 0.9rem;
-  color: rgba(250, 247, 242, 0.65);
+  color: rgba(250, 247, 242, 0.8);
   padding-left: 18px;
   position: relative;
 }
@@ -1371,7 +1372,17 @@ body::after {
   color: var(--moss);
   font-size: 0.8rem;
 }
-.prod-price__cta { width: 100%; justify-content: center; }
+.prod-price__cta {
+  width: 100%;
+  justify-content: center;
+  background: var(--ember) !important;
+  color: var(--paper) !important;
+  border-color: var(--ember) !important;
+}
+.prod-price__cta:hover {
+  background: #b03f17 !important;
+  border-color: #b03f17 !important;
+}
 
 /* CTA section */
 .prod-cta { padding: 20px 0; }
