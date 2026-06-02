@@ -160,15 +160,41 @@ async def oauth_callback(request: Request, code: str, state: str):
 
     except Exception as e:
         log.error(f"Erro ao buscar contas GMB: {e}")
-        return HTMLResponse(
-            "<h2>Erro ao acessar o Google Meu Negócio.</h2>"
-            "<p>Certifique-se de que sua conta tem um perfil verificado e tente novamente.</p>",
-            status_code=500,
+        # Quota 0 ou API não aprovada — redireciona para entrada manual
+        return templates.TemplateResponse(
+            request, "onboarding_manual_location.html",
+            context={"token": token},
         )
 
     return templates.TemplateResponse(
         request, "onboarding_select_location.html",
         context={"token": token, "locations": locations},
+    )
+
+
+@router.post("/onboarding/{token}/manual-location")
+async def onboarding_manual_location(
+    request: Request,
+    token: str,
+    google_location_name: str = Form(...),
+):
+    client = db.get_client_by_onboarding_token(token)
+    if not client:
+        return HTMLResponse("<h2>Link inválido ou expirado.</h2>", status_code=404)
+
+    # Extrai account name do location name (accounts/X/locations/Y → accounts/X)
+    parts = google_location_name.strip().split("/")
+    account_name = "/".join(parts[:2]) if len(parts) >= 2 else ""
+
+    db.update_client(
+        client["id"],
+        google_account_name=account_name,
+        google_location_name=google_location_name.strip(),
+    )
+    db.activate_client(client["id"])
+    client = db.get_client_by_id(client["id"])
+    return templates.TemplateResponse(
+        request, "onboarding_done.html", context={"client": client}
     )
 
 

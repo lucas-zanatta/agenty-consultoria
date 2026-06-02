@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Localização do negócio — Agenty</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+    body { background: #faf7f2; color: #18130e; font-family: Inter, Arial, sans-serif;
+           min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px }
+    .card { background: #fff; border: 1px solid #e2dbd0; border-radius: 16px;
+            padding: 48px; max-width: 520px; width: 100% }
+    .logo { display: flex; align-items: center; gap: 8px;
+            font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+            font-size: 26px; letter-spacing: .5px; text-transform: uppercase;
+            color: #c94a1f; margin-bottom: 28px }
+    .logo img { width: 28px; height: 28px }
+    h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+         font-size: 26px; margin-bottom: 12px }
+    p { font-size: 14px; color: #8a7f74; line-height: 1.7; margin-bottom: 20px }
+    .steps { background: #faf7f2; border: 1px solid #e2dbd0; border-radius: 10px;
+             padding: 20px; margin-bottom: 28px }
+    .steps p { margin: 0; font-size: 13px; color: #2e2520; line-height: 1.8 }
+    .steps code { background: #f0ebe0; padding: 2px 6px; border-radius: 4px;
+                  font-size: 12px; color: #c94a1f }
+    label { display: block; font-size: 13px; font-weight: 600; color: #2e2520; margin-bottom: 6px }
+    input { width: 100%; padding: 12px 14px; border: 1px solid #e2dbd0;
+            border-radius: 8px; font-size: 13px; font-family: monospace;
+            color: #18130e; background: #faf7f2; outline: none; transition: border-color .15s }
+    input:focus { border-color: #c94a1f }
+    .hint { font-size: 12px; color: #8a7f74; margin-top: 6px }
+    button { width: 100%; margin-top: 24px; padding: 14px;
+             background: #c94a1f; color: #fff; border: none; border-radius: 8px;
+             font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+             font-size: 18px; letter-spacing: .5px; text-transform: uppercase;
+             cursor: pointer; transition: background .15s }
+    button:hover { background: #a83210 }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo"><img src="/static/favicon.svg" alt="">Agenty</div>
+    <h1>Informe sua localização</h1>
+    <p>Sua conta Google foi conectada com sucesso. Agora precisamos identificar qual estabelecimento monitorar.</p>
+
+    <div class="steps">
+      <p>
+        <strong>Como encontrar o ID do seu negócio:</strong><br>
+        1. Acesse <strong>business.google.com</strong><br>
+        2. Selecione seu negócio<br>
+        3. Na URL vai aparecer algo como:<br>
+        <code>https://business.google.com/n/12345678901234/dashboard</code><br>
+        4. Ou acesse o painel e veja o ID nas configurações<br><br>
+        O formato esperado é:<br>
+        <code>accounts/123456789/locations/987654321</code>
+      </p>
+    </div>
+
+    <form method="POST" action="/onboarding/{{ token }}/manual-location">
+      <label for="google_location_name">ID do negócio no Google</label>
+      <input id="google_location_name" name="google_location_name" type="text" required
+             placeholder="accounts/123456789/locations/987654321">
+      <div class="hint">
+        Não sabe onde achar? Responda o e-mail de boas-vindas que a Agenty vai encontrar para você.
+      </div>
+      <button type="submit">Ativar automação →</button>
+    </form>
+  </div>
+</body>
+</html>
