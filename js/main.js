@@ -280,6 +280,20 @@
     photoObserver.observe(lucasPhotos);
   }
 
+  // ── Bento card 3D tilt ───────────────────────────────────────
+  if (!window.matchMedia('(pointer: coarse)').matches) {
+    document.querySelectorAll('[data-tilt]').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width  - 0.5;
+        const y = (e.clientY - r.top)  / r.height - 0.5;
+        card.style.transform =
+          `perspective(900px) rotateX(${-y * 7}deg) rotateY(${x * 7}deg) translateZ(4px)`;
+      });
+      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    });
+  }
+
   // ── Cal.com modal ─────────────────────────────────────────────
   const calModal    = document.getElementById('cal-modal');
   const calClose    = document.getElementById('cal-modal-close');
@@ -315,7 +329,7 @@
 
     const sel = [
       'h2', 'h3', 'h4', '.pg-label', '.pg-subhead',
-      '.feat-card', '.dore-card', '.dore-col', '.process-col',
+      '.feat-card', '.bento-card', '.dore-col', '.process-col',
       '.faq-item', '.product-row', '.cta-box', '.prod-price__card',
       '.sh-sub__text', '.sh-sub .btn', '.sh-sub__stats',
     ].join(',');

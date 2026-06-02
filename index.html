@@ -189,31 +189,137 @@
         <br>vazando <em>em quatro buracos</em>.</h2>
     </div>
 
-    <div class="dores-grid" data-reveal data-reveal-delay="1">
-      <div class="dore-card">
-        <div class="dore-card__num">01</div>
-        <div class="dore-card__stat">-14% RANK</div>
-        <h3 class="dore-card__title">Avaliações sem resposta</h3>
-        <p class="dore-card__text">Cada review ignorado no Google Maps puxa seu rank pra baixo. A concorrência responde em horas. Você responde quando lembra.</p>
+    <div class="bento-grid" data-reveal data-reveal-delay="1">
+
+      <!-- 01 — Avaliações (wide) -->
+      <div class="bento-card" data-tilt>
+        <div class="bento-visual">
+          <svg class="bento-chart" viewBox="0 0 220 100" aria-hidden="true">
+            <line x1="0" y1="96" x2="220" y2="96" stroke="var(--border)" stroke-width="1"/>
+            <rect class="bc-bar bc-bar--1" x="8"  y="16" width="26" height="80" rx="3"/>
+            <rect class="bc-bar bc-bar--2" x="50" y="28" width="26" height="68" rx="3"/>
+            <rect class="bc-bar bc-bar--3" x="92" y="43" width="26" height="53" rx="3"/>
+            <rect class="bc-bar bc-bar--4" x="134" y="60" width="26" height="36" rx="3"/>
+            <rect class="bc-bar bc-bar--5 bc-bar--last" x="176" y="77" width="26" height="19" rx="3"/>
+            <polyline points="21,16 63,28 105,43 147,60 189,77"
+                      fill="none" stroke="var(--ember)" stroke-width="1.5"
+                      stroke-dasharray="4 3" opacity="0.55"/>
+            <text x="21" y="11" text-anchor="middle" font-size="8" fill="var(--ochre)" font-family="serif">★★★★★</text>
+            <text x="189" y="73" text-anchor="middle" font-size="9" fill="var(--ember)" font-weight="700" font-family="system-ui,sans-serif">-14%</text>
+          </svg>
+          <p class="bento-visual__caption">Rank Google Maps sem resposta</p>
+        </div>
+        <div class="bento-body">
+          <div class="bento-meta">
+            <span class="bento-num">01</span>
+            <span class="bento-stat">-14% RANK</span>
+          </div>
+          <h3 class="bento-title">Avaliações sem resposta</h3>
+          <p class="bento-text">Cada review ignorado no Google Maps puxa seu rank pra baixo. A concorrência responde em horas. Você responde quando lembra.</p>
+        </div>
       </div>
-      <div class="dore-card">
-        <div class="dore-card__num">02</div>
-        <div class="dore-card__stat">62% DESISTEM</div>
-        <h3 class="dore-card__title">WhatsApp em silêncio</h3>
-        <p class="dore-card__text">Lead manda mensagem às 22h. Resposta sai 14h do dia seguinte. Nesse meio tempo, ele já fechou com outro.</p>
+
+      <!-- 02 — WhatsApp (narrow) -->
+      <div class="bento-card" data-tilt>
+        <div class="bento-visual">
+          <div class="bento-chat">
+            <div class="bento-msg bento-msg--in">
+              <p>Boa noite, preciso de um orçamento</p>
+              <span class="bento-msg__time">22:14</span>
+            </div>
+            <div class="bento-gap">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              <span>14 horas depois…</span>
+            </div>
+            <div class="bento-msg bento-msg--silent">
+              <div class="bento-dots"><span></span><span></span><span></span></div>
+              <span class="bento-msg__time">sem resposta</span>
+            </div>
+          </div>
+        </div>
+        <div class="bento-body">
+          <div class="bento-meta">
+            <span class="bento-num">02</span>
+            <span class="bento-stat">62% DESISTEM</span>
+          </div>
+          <h3 class="bento-title">WhatsApp em silêncio</h3>
+          <p class="bento-text">Lead manda mensagem às 22h. Resposta sai 14h do dia seguinte. Nesse meio tempo, ele já fechou com outro.</p>
+        </div>
       </div>
-      <div class="dore-card">
-        <div class="dore-card__num">03</div>
-        <div class="dore-card__stat">1 EM 3</div>
-        <h3 class="dore-card__title">Ligação perdida</h3>
-        <p class="dore-card__text">Telefone toca durante o atendimento. Você não atende. O cliente não liga de novo.</p>
+
+      <!-- 03 — Ligação perdida (narrow) -->
+      <div class="bento-card" data-tilt>
+        <div class="bento-visual">
+          <div class="bento-calls">
+            <div class="bento-call bento-call--ok" aria-label="Ligação atendida">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.48a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.7a16 16 0 0 0 6.36 6.36l.96-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="bento-call bento-call--ok" aria-label="Ligação atendida">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.48a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.7a16 16 0 0 0 6.36 6.36l.96-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="bento-call bento-call--miss" aria-label="Ligação perdida">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="23" y1="1" x2="1" y2="23"/><path d="M16.5 10.5a5 5 0 0 0-5-5"/><path d="m10.68 5.45-.36-1.41A2.05 2.05 0 0 0 8.36 2.5H6.96a2 2 0 0 0-2 2.18 19.79 19.79 0 0 0 3.07 8.63A19.71 19.71 0 0 0 14.5 20.4l-1.5-2.47a2 2 0 0 0-2.11-.45 12.84 12.84 0 0 1-2.81-.7"/></svg>
+            </div>
+          </div>
+          <p class="bento-visual__caption" style="margin-top:16px">1 em cada 3 ligações perdida</p>
+        </div>
+        <div class="bento-body">
+          <div class="bento-meta">
+            <span class="bento-num">03</span>
+            <span class="bento-stat">1 EM 3</span>
+          </div>
+          <h3 class="bento-title">Ligação perdida</h3>
+          <p class="bento-text">Telefone toca durante o atendimento. Você não atende. O cliente não liga de novo.</p>
+        </div>
       </div>
-      <div class="dore-card">
-        <div class="dore-card__num">04</div>
-        <div class="dore-card__stat">-R$18K/ANO</div>
-        <h3 class="dore-card__title">No-show crônico</h3>
-        <p class="dore-card__text">Agenda cheia, mas a cadeira fica vazia. Sem confirmação, sem lembrete, sem dinheiro.</p>
+
+      <!-- 04 — No-show (wide) -->
+      <div class="bento-card" data-tilt>
+        <div class="bento-visual">
+          <div class="bento-cal" aria-hidden="true">
+            <div class="bento-cal__row">
+              <span class="bento-cal__lbl">Seg</span>
+              <div class="bento-cal__slot bento-cal__slot--ok"></div>
+              <div class="bento-cal__slot bento-cal__slot--miss"></div>
+              <div class="bento-cal__slot bento-cal__slot--ok"></div>
+            </div>
+            <div class="bento-cal__row">
+              <span class="bento-cal__lbl">Ter</span>
+              <div class="bento-cal__slot bento-cal__slot--ok"></div>
+              <div class="bento-cal__slot bento-cal__slot--ok"></div>
+              <div class="bento-cal__slot bento-cal__slot--miss"></div>
+            </div>
+            <div class="bento-cal__row">
+              <span class="bento-cal__lbl">Qua</span>
+              <div class="bento-cal__slot bento-cal__slot--miss"></div>
+              <div class="bento-cal__slot bento-cal__slot--ok"></div>
+              <div class="bento-cal__slot bento-cal__slot--miss"></div>
+            </div>
+            <div class="bento-cal__row">
+              <span class="bento-cal__lbl">Qui</span>
+              <div class="bento-cal__slot bento-cal__slot--ok"></div>
+              <div class="bento-cal__slot bento-cal__slot--miss"></div>
+              <div class="bento-cal__slot bento-cal__slot--ok"></div>
+            </div>
+            <div class="bento-cal__row">
+              <span class="bento-cal__lbl">Sex</span>
+              <div class="bento-cal__slot bento-cal__slot--miss"></div>
+              <div class="bento-cal__slot bento-cal__slot--ok"></div>
+              <div class="bento-cal__slot bento-cal__slot--miss"></div>
+            </div>
+          </div>
+          <p class="bento-visual__caption">Consultas não confirmadas</p>
+        </div>
+        <div class="bento-body">
+          <div class="bento-meta">
+            <span class="bento-num">04</span>
+            <span class="bento-stat">-R$18K/ANO</span>
+          </div>
+          <h3 class="bento-title">No-show crônico</h3>
+          <p class="bento-text">Agenda cheia, mas a cadeira fica vazia. Sem confirmação, sem lembrete, sem dinheiro.</p>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
