@@ -1696,6 +1696,39 @@ body:not(.home) .section {
   padding: 28px;
 }
 
+/* Section small padding (subpages) */
+.section--sm {
+  padding: clamp(48px, 6vw, 80px) 0;
+  border-top: 1px solid var(--border);
+}
+.section--sm.cta-section { background: var(--smoke); }
+
+/* Legal content (privacidade, termos) */
+.legal-content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.legal-content h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  font-weight: 400;
+  color: var(--ink);
+  margin: 40px 0 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.legal-content p,
+.legal-content li {
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  line-height: 1.75;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.legal-content ul { padding-left: 20px; margin-bottom: 16px; }
+.legal-content a { color: var(--ember); }
+.legal-content strong { color: var(--ink); font-weight: 600; }
+
 /* CTA section (subpages) */
 .cta-section { background: var(--smoke); }
 .cta-box {
@@ -1777,7 +1810,7 @@ body:not(.home) .section {
   overflow: hidden;
   transition: max-height 0.4s var(--ease-out);
 }
-.faq-item.open .faq-item__body { max-height: 400px; }
+.faq-item.open .faq-item__body { max-height: 1000px; }
 .faq-item__body p { padding-bottom: 24px; color: var(--muted); line-height: 1.7; }
 
 /* Grad card (subpages) */
@@ -1839,6 +1872,7 @@ body:not(.home) .section {
   --text-2:  var(--muted);
   --text-3:  var(--muted);
   --primary: var(--ember);
+  --primary-light: var(--ember);
   --primary-dim: rgba(201, 74, 31, 0.1);
   --primary-glow: rgba(201, 74, 31, 0.25);
   --border-2: var(--border);
@@ -1876,6 +1910,19 @@ body:not(.home) .section {
   .feat-card:nth-child(3) { border-bottom: 1px solid var(--border) !important; }
   .prod-price       { flex-direction: column; gap: 40px; }
   .prod-price__card { flex: 0 0 auto; width: 100%; }
+
+  /* Subpages — page header */
+  .page-header { padding: calc(var(--nav-h) + 36px) 0 36px; }
+  .page-header .h1 br { display: none; }
+  .body-lg { font-size: 1.15rem; }
+
+  /* casos.html — article e stats responsivos */
+  .case-article { grid-template-columns: 1fr !important; }
+  .case-stats   { grid-template-columns: 1fr 1fr !important; }
+
+  /* Reduce section padding on mobile */
+  body:not(.home) .section { padding: clamp(56px, 8vw, 100px) 0; }
+  .section--sm { padding: clamp(40px, 5vw, 64px) 0; }
 }
 @media (max-width: 540px) {
   .grid-4 { grid-template-columns: 1fr; }
@@ -1883,6 +1930,10 @@ body:not(.home) .section {
   .prod-hero__stats { flex-direction: column; }
   .prod-hero__stat  { border-bottom: 1px solid var(--ink-2); padding: 20px 24px; }
   .prod-hero__stat:last-child { border-bottom: none; }
+
+  /* casos.html — stats empilham no mobile pequeno */
+  .case-stats { grid-template-columns: 1fr !important; }
+  .footer__bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
 
 /* ── Nav claro (sobre fundo escuro) ─────────────────────────── */
