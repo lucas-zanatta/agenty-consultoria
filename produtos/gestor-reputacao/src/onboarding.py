@@ -22,7 +22,8 @@ templates = Jinja2Templates(
 
 _SCOPES = ["https://www.googleapis.com/auth/business.manage"]
 
-_pending_oauth: dict[str, str] = {}
+# state → (onboarding_token, flow) — guardamos o flow para reusar o code_verifier PKCE no callback
+_pending_oauth: dict[str, tuple[str, "Flow"]] = {}
 
 
 def _build_flow() -> Flow:
@@ -104,11 +105,10 @@ async def onboarding_google_auth(token: str):
     flow = _build_flow()
     auth_url, state = flow.authorization_url(
         access_type="offline",
-        include_granted_scopes="true",
         prompt="consent",
         state=token,
     )
-    _pending_oauth[state] = token
+    _pending_oauth[state] = (token, flow)  # preserva o flow com o code_verifier PKCE
     return RedirectResponse(auth_url)
 
 
@@ -116,13 +116,17 @@ async def onboarding_google_auth(token: str):
 
 @router.get("/oauth/callback", response_class=HTMLResponse)
 async def oauth_callback(request: Request, code: str, state: str):
-    token = _pending_oauth.pop(state, state)
+    pending = _pending_oauth.pop(state, None)
+    if pending:
+        token, flow = pending
+    else:
+        token = state
+        flow = _build_flow()
 
     client = db.get_client_by_onboarding_token(token)
     if not client:
         return HTMLResponse("<h2>Link inválido ou expirado.</h2>", status_code=404)
 
-    flow = _build_flow()
     flow.fetch_token(code=code)
     creds = flow.credentials
 
