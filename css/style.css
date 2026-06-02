@@ -1541,6 +1541,17 @@ body::after {
   .hero__display { font-size: clamp(2.6rem, 10vw, 4rem); }
   .cta-big__line { font-size: clamp(3rem, 14vw, 6rem); }
   .cta-big__line-serif { font-size: clamp(2.5rem, 12vw, 5rem); }
+
+  /* Scroll-hero: stack words vertically on mobile */
+  .sh__text {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+  }
+  .sh__text span {
+    font-size: clamp(1.3rem, 6.5vw, 2rem);
+  }
 }
 
 /* ================================================================
