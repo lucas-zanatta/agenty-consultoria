@@ -27,12 +27,12 @@ templates = Jinja2Templates(directory=str(Path(__file__).parent.parent / "templa
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    log.info("Atendente WhatsApp iniciado")
+    log.info("Zinvo iniciado")
     yield
-    log.info("Atendente WhatsApp encerrado")
+    log.info("Zinvo encerrado")
 
 
-app = FastAPI(title="Agenty — Atendente WhatsApp", lifespan=lifespan)
+app = FastAPI(title="Zinvo — Atendente WhatsApp Inteligente", lifespan=lifespan)
 app.mount("/static", StaticFiles(directory=str(Path(__file__).parent.parent / "static")), name="static")
 app.include_router(wa_router)
 app.include_router(stripe_router)

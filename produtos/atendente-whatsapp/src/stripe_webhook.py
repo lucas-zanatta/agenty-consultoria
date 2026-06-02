@@ -72,7 +72,7 @@ def _send_onboarding_email(email: str, name: str, token: str):
     onboarding_url = f"{config.APP_BASE_URL}/onboarding/{token}"
     first = name.split()[0] if name else "cliente"
 
-    subject = "[Agenty] Configure seu Atendente WhatsApp em 5 minutos"
+    subject = "[Agenty] Configure o Zinvo em 5 minutos"
     html = f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head><meta charset="utf-8"></head>
@@ -81,18 +81,18 @@ def _send_onboarding_email(email: str, name: str, token: str):
 <table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden">
   <tr><td style="background:#080812;padding:24px 32px">
     <p style="margin:0;color:#c94a1f;font-size:22px;font-weight:bold;font-family:Arial,sans-serif">Agenty</p>
-    <p style="margin:4px 0 0;color:#64748b;font-size:13px">Atendente WhatsApp Inteligente</p>
+    <p style="margin:4px 0 0;color:#64748b;font-size:13px">Zinvo — Atendente WhatsApp Inteligente</p>
   </td></tr>
   <tr><td style="padding:32px">
     <h2 style="margin:0 0 16px;color:#0f172a">Olá, {first}!</h2>
     <p style="margin:0 0 16px;color:#334155;line-height:1.7">
-      Seu Atendente WhatsApp está pronto para ser configurado. Leva menos de 5 minutos.
+      O Zinvo — seu atendente WhatsApp inteligente — está pronto para ser configurado. Leva menos de 5 minutos.
     </p>
     <div style="text-align:center;margin:28px 0">
       <a href="{onboarding_url}"
          style="display:inline-block;background:#c94a1f;color:#fff;padding:16px 40px;
                 border-radius:8px;text-decoration:none;font-weight:bold;font-size:16px">
-        Configurar meu Atendente
+        Configurar o Zinvo
       </a>
     </div>
     <p style="margin:0;color:#94a3b8;font-size:13px">

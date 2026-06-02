@@ -211,7 +211,7 @@ Lançada em dez/2025. Substitui o stack Vapi + ElevenLabs separados.
 | # | Produto | Score | Stack base | Build |
 |---|---------|-------|-----------|-------|
 | 1 | Gestor de Reputação Automático | 15/15 | Google My Business API + Claude Haiku + Python (APScheduler) | 1–2 dias |
-| 2 | Atendente WhatsApp Inteligente | 14/15 | Meta WhatsApp Cloud API + Claude Haiku + Python (FastAPI) + Redis | 2–3 dias |
+| 2 | Zinvo (Atendente WhatsApp Inteligente) | 14/15 | Meta WhatsApp Cloud API + Claude Haiku + FastAPI + Voyage AI RAG + pgvector | 2–3 dias |
 | 3 | Gerador de Orçamentos (WhatsApp) | 14/15 | Meta WhatsApp Cloud API + Claude Haiku + Python + Google Sheets | 2–3 dias |
 | 4 | Recepcionista por Voz 24/7 | 13/15 | Twilio + Grok Voice Agent API + Google Calendar API + Python | 3–4 dias |
 | 5 | Redutor de No-Show | 13/15 | Meta WhatsApp Cloud API + Claude Haiku + Python + Google Calendar | 2–3 dias |
