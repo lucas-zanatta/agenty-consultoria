@@ -6,10 +6,10 @@ from pathlib import Path
 
 import uvicorn
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi import Request
 
 sys.path.insert(0, str(Path(__file__).parent))
 import config
@@ -51,6 +51,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Agenty — Gestor de Reputacao", lifespan=lifespan)
+app.mount("/static", StaticFiles(directory=str(Path(__file__).parent.parent / "static")), name="static")
 app.include_router(onboarding_router)
 app.include_router(webhook_router)
 
