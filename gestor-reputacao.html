@@ -23,6 +23,66 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=13">
+  <style>
+    .prod-price__scarcity {
+      margin-top: 32px;
+      background: var(--ink);
+      border: 1.5px solid var(--ember);
+      border-radius: var(--radius-lg, 16px);
+      padding: 28px 28px 24px;
+      text-align: center;
+      color: var(--paper);
+    }
+    .scarcity__badge {
+      display: inline-block;
+      background: var(--ember);
+      color: var(--paper);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      padding: 4px 12px;
+      border-radius: 4px;
+      margin-bottom: 14px;
+    }
+    .scarcity__title {
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: var(--paper);
+      margin-bottom: 10px;
+    }
+    .scarcity__title strong { color: var(--ochre); }
+    .scarcity__sub {
+      font-size: 0.8rem;
+      color: rgba(250,247,242,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+    .scarcity__timer {
+      margin: 0 auto 20px;
+    }
+    .scarcity__digits {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(2.8rem, 8vw, 4.5rem);
+      color: var(--ochre);
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+    .scarcity__cta {
+      display: inline-flex;
+      margin-top: 4px;
+    }
+    .scarcity__expired {
+      font-size: 0.85rem;
+      color: rgba(250,247,242,0.5);
+      margin-top: 12px;
+    }
+    @media (max-width: 540px) {
+      .prod-price__scarcity { padding: 20px 16px 18px; }
+    }
+  </style>
 
   <script type="application/ld+json">
   {
@@ -298,13 +358,12 @@
       <div class="prod-price__card">
         <div class="prod-price__setup">
           <span class="prod-price__setup-label">Implementação</span>
-          <span class="prod-price__setup-val">R$ 3.000</span>
-          <span class="prod-price__setup-note">50% na assinatura · 50% na entrega</span>
+          <span class="prod-price__setup-note" style="font-size:1rem;font-weight:600;color:var(--ink)">50% na assinatura · 50% na entrega</span>
         </div>
         <div class="prod-price__divider"></div>
         <div class="prod-price__monthly">
           <span class="prod-price__monthly-label">Manutenção mensal</span>
-          <div class="prod-price__monthly-val">R$ 150<span>/mês</span></div>
+          <div class="prod-price__monthly-val">R$ 49<span style="font-size:1.1rem">,90/mês</span></div>
         </div>
         <ul class="prod-price__list">
           <li>Setup completo em até 48h</li>
@@ -320,6 +379,20 @@
           Quer entender quanto custa a gestão manual antes de automatizar?
           <a href="gestao-google-meu-negocio-curitiba.html" style="color:var(--ember)">Veja o guia completo →</a>
         </p>
+      </div>
+
+      <!-- Escassez: 1º mês grátis -->
+      <div class="prod-price__scarcity" id="scarcity-block">
+        <div class="scarcity__badge">OFERTA DESTA SESSÃO</div>
+        <p class="scarcity__title">Agende o diagnóstico agora e ganhe o <strong>1º mês de manutenção grátis.</strong></p>
+        <p class="scarcity__sub">Esta oferta expira em:</p>
+        <div class="scarcity__timer" id="scarcity-timer">
+          <span class="scarcity__digits" id="timer-display">10:00</span>
+        </div>
+        <a href="#agendar" class="btn btn-primary scarcity__cta" data-cal-namespace="diagnostico" data-cal-link="lucas-zanatta-bettbr/diagnostico" data-cal-config='{"layout":"month_view"}'>
+          Quero o 1º mês grátis →
+        </a>
+        <p class="scarcity__expired" id="scarcity-expired" style="display:none">Oferta encerrada — você ainda pode agendar o diagnóstico gratuito.</p>
       </div>
     </div>
   </div>
@@ -375,5 +448,46 @@ Cal.ns.diagnostico("ui",{"hideEventTypeDetails":false,"layout":"month_view"});
 
 <script src="js/scroll-hero.js"></script>
 <script src="js/main.js"></script>
+<script>
+(function () {
+  var DURATION = 600; // 10 minutos em segundos
+  var KEY = 'agenty_timer_end';
+
+  var display  = document.getElementById('timer-display');
+  var cta      = document.querySelector('.scarcity__cta');
+  var expired  = document.getElementById('scarcity-expired');
+  if (!display) return;
+
+  // Guarda o tempo de expiração na sessão (persiste em refresh)
+  var end = parseInt(sessionStorage.getItem(KEY), 10);
+  if (!end || end <= Date.now()) {
+    end = Date.now() + DURATION * 1000;
+    sessionStorage.setItem(KEY, end);
+  }
+
+  function pad(n) { return n < 10 ? '0' + n : n; }
+
+  function tick() {
+    var remaining = Math.max(0, Math.round((end - Date.now()) / 1000));
+    var m = Math.floor(remaining / 60);
+    var s = remaining % 60;
+    display.textContent = pad(m) + ':' + pad(s);
+
+    if (remaining <= 0) {
+      display.textContent = '00:00';
+      if (cta)     { cta.style.display = 'none'; }
+      if (expired) { expired.style.display = 'block'; }
+      return;
+    }
+    // Pulsa quando abaixo de 60s
+    if (remaining <= 60) {
+      display.style.color = 'var(--ember)';
+    }
+    setTimeout(tick, 1000);
+  }
+
+  tick();
+})();
+</script>
 </body>
 </html>
