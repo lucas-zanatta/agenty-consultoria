@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Configuração enviada — Agenty</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+    body { background: #faf7f2; color: #18130e; font-family: Inter, Arial, sans-serif;
+           min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px }
+    .card { background: #fff; border: 1px solid #e2dbd0; border-radius: 16px;
+            padding: 48px; max-width: 480px; width: 100%; text-align: center }
+    .logo { display: flex; align-items: center; justify-content: center; gap: 8px;
+            font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+            font-size: 26px; letter-spacing: .5px; text-transform: uppercase;
+            color: #c94a1f; margin-bottom: 32px }
+    .logo img { width: 28px; height: 28px }
+    .icon { font-size: 52px; margin-bottom: 20px }
+    h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+         font-size: 28px; margin-bottom: 12px }
+    em.accent { font-family: 'Instrument Serif', serif; font-style: italic; color: #c94a1f }
+    p { font-size: 15px; color: #8a7f74; line-height: 1.7; margin-bottom: 12px }
+    .info { background: #faf7f2; border: 1px solid #e2dbd0; border-radius: 10px;
+            padding: 20px; margin: 24px 0; text-align: left }
+    .info-row { display: flex; justify-content: space-between; font-size: 14px;
+                padding: 6px 0; border-bottom: 1px solid #e2dbd0 }
+    .info-row:last-child { border-bottom: none }
+    .info-label { color: #8a7f74 }
+    .info-value { font-weight: 600; color: #18130e }
+    .next-steps { text-align: left; margin: 24px 0 }
+    .next-steps h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 16px;
+                     font-weight: 700; margin-bottom: 12px; color: #18130e }
+    .next-steps ol { padding-left: 20px; font-size: 14px; color: #8a7f74; line-height: 2 }
+    a.link { color: #c94a1f; text-decoration: none; font-size: 14px }
+    a.link:hover { text-decoration: underline }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo"><img src="/static/favicon.svg" alt="">Agenty</div>
+    <div class="icon">✅</div>
+    <h1>Configuração <em class="accent">recebida!</em></h1>
+    <p>Seus dados foram salvos com sucesso. Agora vamos conectar seu número de WhatsApp.</p>
+
+    <div class="info">
+      <div class="info-row">
+        <span class="info-label">Negócio</span>
+        <span class="info-value">{{ client.biz_name or client.email }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Horário de atendimento</span>
+        <span class="info-value">{{ client.business_hours_start or 8 }}h às {{ client.business_hours_end or 18 }}h</span>
+      </div>
+      {% if chunks %}
+      <div class="info-row">
+        <span class="info-label">Documentos processados</span>
+        <span class="info-value">{{ chunks }} trechos indexados</span>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="next-steps">
+      <h2>Próximos passos</h2>
+      <ol>
+        <li>A equipe Agenty receberá uma notificação agora</li>
+        <li>Em até 24h, conectaremos seu número de WhatsApp</li>
+        <li>Você receberá um e-mail de confirmação quando o bot estiver ativo</li>
+      </ol>
+    </div>
+
+    {% if errors %}
+    <p style="color:#ef4444;font-size:13px;text-align:left">
+      Atenção: alguns documentos não foram processados:<br>
+      {% for e in errors %}• {{ e }}<br>{% endfor %}
+    </p>
+    {% endif %}
+
+    <p style="margin-top:20px"><a href="https://agenty.com.br" class="link">agenty.com.br</a></p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Configure seu Atendente — Agenty</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+    body { background: #faf7f2; color: #18130e; font-family: Inter, Arial, sans-serif;
+           min-height: 100vh; display: flex; align-items: flex-start; justify-content: center;
+           padding: 32px 16px }
+    .card { background: #fff; border: 1px solid #e2dbd0; border-radius: 16px;
+            padding: 48px; max-width: 620px; width: 100% }
+    .logo { display: flex; align-items: center; gap: 8px;
+            font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+            font-size: 26px; letter-spacing: .5px; text-transform: uppercase;
+            color: #c94a1f; margin-bottom: 8px }
+    .logo img { width: 28px; height: 28px }
+    .step { font-size: 12px; color: #8a7f74; margin-bottom: 28px; font-weight: 500 }
+    h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+         font-size: 28px; margin-bottom: 8px }
+    p.sub { font-size: 14px; color: #8a7f74; margin-bottom: 32px; line-height: 1.6 }
+    .section { margin-top: 28px; padding-top: 20px; border-top: 1px solid #e2dbd0 }
+    .section h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+                  font-size: 18px; color: #18130e; margin-bottom: 16px }
+    label { display: block; font-size: 13px; font-weight: 600; color: #2e2520;
+            margin-bottom: 6px; margin-top: 16px }
+    label:first-of-type { margin-top: 0 }
+    input[type=text], input[type=tel], input[type=number], select, textarea {
+      width: 100%; padding: 11px 14px; border: 1px solid #e2dbd0;
+      border-radius: 8px; font-size: 14px; font-family: Inter, sans-serif;
+      color: #18130e; background: #faf7f2; outline: none; transition: border-color .15s }
+    input:focus, select:focus, textarea:focus { border-color: #c94a1f }
+    textarea { resize: vertical; min-height: 80px; line-height: 1.6 }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px }
+    .hint { font-size: 12px; color: #8a7f74; margin-top: 4px }
+    button { width: 100%; margin-top: 32px; padding: 14px;
+             background: #c94a1f; color: #fff; border: none; border-radius: 8px;
+             font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+             font-size: 18px; letter-spacing: .5px; text-transform: uppercase;
+             cursor: pointer; transition: background .15s }
+    button:hover { background: #a83210 }
+    @media (max-width: 500px) { .row { grid-template-columns: 1fr } }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo"><img src="/static/favicon.svg" alt="">Agenty</div>
+    <div class="step">Passo 1 de 2 — Informações do negócio</div>
+    <h1>Configure seu Atendente WhatsApp</h1>
+    <p class="sub">Essas informações definem como a IA vai responder seus clientes no WhatsApp.</p>
+
+    <form method="POST" action="/onboarding/{{ token }}/setup">
+
+      <div class="section">
+        <h2>Identificação</h2>
+        <label>Nome do negócio *</label>
+        <input type="text" name="biz_name" required placeholder="Ex: Salão da Maria"
+               value="{{ client.biz_name or '' }}">
+        <div class="row">
+          <div>
+            <label>Tipo de negócio *</label>
+            <input type="text" name="biz_type" required placeholder="Ex: salão de beleza"
+                   value="{{ client.biz_type or '' }}">
+          </div>
+          <div>
+            <label>Cidade</label>
+            <input type="text" name="biz_city" value="{{ client.biz_city or 'Curitiba' }}">
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Serviços e preços</h2>
+        <label>Quais serviços / produtos você oferece?</label>
+        <textarea name="biz_services" placeholder="Ex: Corte feminino, coloração, hidratação, escova...">{{ client.biz_services or '' }}</textarea>
+
+        <label>Tabela de preços</label>
+        <textarea name="biz_prices" placeholder="Ex: Corte simples R$50, Coloração a partir de R$120...">{{ client.biz_prices or '' }}</textarea>
+
+        <label>Endereço / área de atendimento</label>
+        <input type="text" name="biz_address" placeholder="Ex: Rua das Flores, 123 — Batel, Curitiba"
+               value="{{ client.biz_address or '' }}">
+
+        <label>Formas de pagamento aceitas</label>
+        <input type="text" name="biz_payment_methods" placeholder="Ex: Pix, cartão de crédito e débito, dinheiro"
+               value="{{ client.biz_payment_methods or '' }}">
+
+        <label>Política de cancelamento / garantia</label>
+        <textarea name="biz_cancellation" placeholder="Ex: Cancelamentos com menos de 2h do horário não são reembolsados...">{{ client.biz_cancellation or '' }}</textarea>
+
+        <label>Diferenciais do seu negócio</label>
+        <textarea name="biz_differentials" placeholder="Ex: 10 anos de experiência, produtos veganos, estacionamento gratuito...">{{ client.biz_differentials or '' }}</textarea>
+
+        <label>Informações adicionais (campo livre)</label>
+        <textarea name="biz_extra" placeholder="Qualquer informação importante que o bot deve saber...">{{ client.biz_extra or '' }}</textarea>
+      </div>
+
+      <div class="section">
+        <h2>Atendimento</h2>
+        <div class="row">
+          <div>
+            <label>Horário de início</label>
+            <input type="number" name="business_hours_start" min="0" max="23"
+                   value="{{ client.business_hours_start or 8 }}">
+          </div>
+          <div>
+            <label>Horário de fim</label>
+            <input type="number" name="business_hours_end" min="0" max="23"
+                   value="{{ client.business_hours_end or 18 }}">
+          </div>
+        </div>
+
+        <label>Mensagem fora do horário</label>
+        <textarea name="out_of_hours_message" placeholder="Ex: Olá! Estamos fora do horário agora. Respondemos de seg–sex das 9h às 18h.">{{ client.out_of_hours_message or '' }}</textarea>
+
+        <label>Seu WhatsApp para receber notificações de leads e escaladas</label>
+        <input type="tel" name="handover_phone" placeholder="Ex: 5541999999999 (com DDI e DDD, sem espaços)"
+               value="{{ client.handover_phone or '' }}">
+        <div class="hint">Formato internacional: 55 + DDD + número. Ex: 5541999887766</div>
+      </div>
+
+      <div class="section">
+        <h2>Agendamento via Cal.com (opcional)</h2>
+        <label>API Key do Cal.com</label>
+        <input type="text" name="cal_api_key" placeholder="cal_live_..."
+               value="{{ client.cal_api_key or '' }}">
+        <label>ID do tipo de evento (Event Type ID)</label>
+        <input type="text" name="cal_event_type_id" placeholder="Ex: 123456"
+               value="{{ client.cal_event_type_id or '' }}">
+        <div class="hint">Encontre em cal.com → Event Types → clique no evento → URL contém o ID</div>
+      </div>
+
+      <button type="submit">Continuar → Adicionar documentos</button>
+    </form>
+  </div>
+</body>
+</html>

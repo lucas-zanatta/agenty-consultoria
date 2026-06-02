@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Documentos do negócio — Agenty</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+    body { background: #faf7f2; color: #18130e; font-family: Inter, Arial, sans-serif;
+           min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px }
+    .card { background: #fff; border: 1px solid #e2dbd0; border-radius: 16px;
+            padding: 48px; max-width: 540px; width: 100% }
+    .logo { display: flex; align-items: center; gap: 8px;
+            font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+            font-size: 26px; letter-spacing: .5px; text-transform: uppercase;
+            color: #c94a1f; margin-bottom: 8px }
+    .logo img { width: 28px; height: 28px }
+    .step { font-size: 12px; color: #8a7f74; margin-bottom: 28px; font-weight: 500 }
+    h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+         font-size: 26px; margin-bottom: 12px }
+    p { font-size: 14px; color: #8a7f74; line-height: 1.7; margin-bottom: 16px }
+    .upload-area { border: 2px dashed #e2dbd0; border-radius: 12px; padding: 32px;
+                   text-align: center; transition: border-color .15s; cursor: pointer }
+    .upload-area:hover { border-color: #c94a1f }
+    .upload-area input { display: none }
+    .upload-icon { font-size: 36px; margin-bottom: 12px }
+    .upload-text { font-size: 14px; color: #8a7f74 }
+    .upload-text strong { color: #c94a1f }
+    .file-list { margin-top: 16px; font-size: 13px; color: #2e2520 }
+    .examples { background: #faf7f2; border: 1px solid #e2dbd0; border-radius: 10px;
+                padding: 16px; margin-bottom: 24px }
+    .examples p { margin: 0; font-size: 13px; color: #2e2520 }
+    .examples ul { margin: 8px 0 0 20px; font-size: 13px; color: #8a7f74; line-height: 1.8 }
+    button { width: 100%; padding: 14px; background: #c94a1f; color: #fff;
+             border: none; border-radius: 8px;
+             font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+             font-size: 18px; letter-spacing: .5px; text-transform: uppercase;
+             cursor: pointer; transition: background .15s; margin-top: 20px }
+    button:hover { background: #a83210 }
+    .skip { display: block; text-align: center; margin-top: 16px; font-size: 13px;
+            color: #8a7f74; text-decoration: none }
+    .skip:hover { color: #c94a1f }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo"><img src="/static/favicon.svg" alt="">Agenty</div>
+    <div class="step">Passo 2 de 2 — Documentos do negócio (opcional)</div>
+    <h1>Adicione seus documentos</h1>
+    <p>Faça upload de PDFs do seu negócio. O Atendente vai usar essas informações para responder melhor.</p>
+
+    <div class="examples">
+      <p><strong>Exemplos de documentos úteis:</strong></p>
+      <ul>
+        <li>Cardápio ou catálogo de produtos</li>
+        <li>Tabela de preços completa</li>
+        <li>Manual de serviços ou FAQ</li>
+        <li>Regulamento ou termos de uso</li>
+      </ul>
+    </div>
+
+    <form method="POST" action="/onboarding/{{ token }}/upload" enctype="multipart/form-data">
+      <div class="upload-area" onclick="document.getElementById('file-input').click()">
+        <input id="file-input" type="file" name="files" multiple accept=".pdf"
+               onchange="showFiles(this)">
+        <div class="upload-icon">📄</div>
+        <div class="upload-text">
+          Clique para selecionar ou arraste os PDFs aqui<br>
+          <strong>Máximo 5 arquivos · 10 MB cada</strong>
+        </div>
+        <div class="file-list" id="file-list"></div>
+      </div>
+
+      <button type="submit">Finalizar configuração →</button>
+    </form>
+
+    <form method="POST" action="/onboarding/{{ token }}/skip-documents">
+      <a href="#" class="skip" onclick="this.closest('form').submit(); return false;">
+        Pular por agora — configurar documentos depois
+      </a>
+    </form>
+  </div>
+  <script>
+    function showFiles(input) {
+      const list = document.getElementById('file-list');
+      const names = Array.from(input.files).map(f => f.name).join(', ');
+      list.textContent = names ? `Selecionado: ${names}` : '';
+    }
+    const area = document.querySelector('.upload-area');
+    area.addEventListener('dragover', e => { e.preventDefault(); area.style.borderColor = '#c94a1f'; });
+    area.addEventListener('dragleave', () => { area.style.borderColor = '#e2dbd0'; });
+    area.addEventListener('drop', e => {
+      e.preventDefault();
+      area.style.borderColor = '#e2dbd0';
+      document.getElementById('file-input').files = e.dataTransfer.files;
+      showFiles(document.getElementById('file-input'));
+    });
+  </script>
+</body>
+</html>
