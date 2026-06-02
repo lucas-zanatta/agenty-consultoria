@@ -24,30 +24,102 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=13">
   <style>
+    /* ── Scarcity strip ── */
     .scarcity-inline {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(201,74,31,0.12);
-      border: 1px solid rgba(201,74,31,0.35);
-      border-radius: 8px;
-      padding: 10px 14px;
-      margin: 10px 0 20px;
+      background: rgba(201,74,31,0.10);
+      border: 1px solid rgba(201,74,31,0.3);
+      border-radius: 10px;
+      padding: 14px 16px 12px;
+      margin: 12px 0 20px;
+      text-align: center;
     }
-    .scarcity-inline__gift { font-size: 1rem; flex-shrink: 0; }
-    .scarcity-inline__text {
-      font-size: 0.85rem;
-      color: rgba(250,247,242,0.75);
-      line-height: 1.4;
-    }
-    .scarcity-inline__text strong {
-      color: var(--ochre);
+    .scarcity-inline__label {
+      font-size: 0.7rem;
       font-family: var(--font-display);
       font-weight: 800;
-      font-size: 1rem;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.12em;
+      color: var(--ember);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 8px;
     }
-    .scarcity-inline.expired { opacity: 0.4; }
+    .scarcity-inline__gift-text {
+      font-size: 0.8rem;
+      color: rgba(250,247,242,0.65);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .scarcity-inline__gift-text strong { color: rgba(250,247,242,0.9); }
+    /* Flip timer */
+    .flip-timer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 4px;
+    }
+    .flip-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .flip-unit__display {
+      position: relative;
+      overflow: hidden;
+      height: 2.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .flip-unit__num {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 2rem;
+      color: var(--ochre);
+      letter-spacing: 0.02em;
+      line-height: 1;
+      display: block;
+      will-change: transform, opacity;
+    }
+    .flip-unit__num.flip-out {
+      animation: flipOut 0.28s ease forwards;
+    }
+    .flip-unit__num.flip-in {
+      animation: flipIn 0.28s ease forwards;
+    }
+    .flip-unit__label {
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(250,247,242,0.35);
+      font-family: var(--font-display);
+      font-weight: 700;
+    }
+    .flip-unit__line {
+      height: 1px;
+      width: 100%;
+      background: rgba(201,74,31,0.25);
+      margin-top: 4px;
+    }
+    .flip-sep {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.8rem;
+      color: rgba(201,74,31,0.4);
+      line-height: 1;
+      margin-bottom: 18px;
+      flex-shrink: 0;
+    }
+    @keyframes flipOut {
+      from { transform: translateY(0);    opacity: 1; }
+      to   { transform: translateY(-60%); opacity: 0; }
+    }
+    @keyframes flipIn {
+      from { transform: translateY(60%);  opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .scarcity-inline.expired { opacity: 0.35; pointer-events: none; }
+    .scarcity-inline.expired .flip-unit__num { color: var(--muted); }
   </style>
 
   <script type="application/ld+json">
@@ -334,8 +406,21 @@
 
         <!-- Escassez inline -->
         <div class="scarcity-inline" id="scarcity-block">
-          <span class="scarcity-inline__gift">🎁</span>
-          <span class="scarcity-inline__text">1º mês grátis — expira em <strong id="timer-display">10:00</strong></span>
+          <span class="scarcity-inline__label">🎁 Oferta desta sessão</span>
+          <p class="scarcity-inline__gift-text">Agende agora e ganhe o <strong>1º mês de manutenção grátis</strong></p>
+          <div class="flip-timer">
+            <div class="flip-unit">
+              <div class="flip-unit__display"><span class="flip-unit__num" id="flip-min">10</span></div>
+              <span class="flip-unit__label">min</span>
+              <div class="flip-unit__line"></div>
+            </div>
+            <span class="flip-sep">:</span>
+            <div class="flip-unit">
+              <div class="flip-unit__display"><span class="flip-unit__num" id="flip-sec">00</span></div>
+              <span class="flip-unit__label">seg</span>
+              <div class="flip-unit__line"></div>
+            </div>
+          </div>
         </div>
 
         <ul class="prod-price__list">
@@ -412,9 +497,10 @@ Cal.ns.diagnostico("ui",{"hideEventTypeDetails":false,"layout":"month_view"});
 (function () {
   var DURATION = 600;
   var KEY = 'agenty_timer_end';
-  var display = document.getElementById('timer-display');
-  var block   = document.getElementById('scarcity-block');
-  if (!display) return;
+  var elMin = document.getElementById('flip-min');
+  var elSec = document.getElementById('flip-sec');
+  var block = document.getElementById('scarcity-block');
+  if (!elMin || !elSec) return;
 
   var end = parseInt(sessionStorage.getItem(KEY), 10);
   if (!end || end <= Date.now()) {
@@ -422,20 +508,33 @@ Cal.ns.diagnostico("ui",{"hideEventTypeDetails":false,"layout":"month_view"});
     sessionStorage.setItem(KEY, end);
   }
 
-  function pad(n) { return n < 10 ? '0' + n : n; }
+  var prevMin = -1, prevSec = -1;
+
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+  function flipTo(el, newVal) {
+    el.classList.remove('flip-in', 'flip-out');
+    el.classList.add('flip-out');
+    setTimeout(function () {
+      el.textContent = newVal;
+      el.classList.remove('flip-out');
+      el.classList.add('flip-in');
+      setTimeout(function () { el.classList.remove('flip-in'); }, 280);
+    }, 280);
+  }
 
   function tick() {
     var remaining = Math.max(0, Math.round((end - Date.now()) / 1000));
     var m = Math.floor(remaining / 60);
     var s = remaining % 60;
-    display.textContent = pad(m) + ':' + pad(s);
+
+    if (m !== prevMin) { flipTo(elMin, pad(m)); prevMin = m; }
+    if (s !== prevSec) { flipTo(elSec, pad(s)); prevSec = s; }
 
     if (remaining <= 0) {
-      display.textContent = '00:00';
       if (block) block.classList.add('expired');
       return;
     }
-    if (remaining <= 60) display.style.color = 'var(--ember)';
     setTimeout(tick, 1000);
   }
 
