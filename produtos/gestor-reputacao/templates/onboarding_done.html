@@ -4,17 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Automação ativada! — Agenty</title>
+  <link rel="icon" type="image/svg+xml" href="https://agenty.com.br/assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
     body { background: #faf7f2; color: #18130e; font-family: Inter, Arial, sans-serif;
            min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px }
     .card { background: #fff; border: 1px solid #e2dbd0; border-radius: 16px;
             padding: 48px; max-width: 480px; width: 100%; text-align: center }
-    .logo { color: #c94a1f; font-size: 22px; font-weight: 800; margin-bottom: 32px }
-    .check { font-size: 56px; margin-bottom: 20px }
-    h1 { font-size: 24px; font-weight: 700; margin-bottom: 12px }
+    .logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+            font-size: 26px; letter-spacing: .5px; text-transform: uppercase;
+            color: #c94a1f; margin-bottom: 32px }
+    .check { font-size: 52px; margin-bottom: 20px }
+    h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+         font-size: 30px; letter-spacing: .3px; margin-bottom: 12px }
     p { font-size: 15px; color: #8a7f74; line-height: 1.7; margin-bottom: 12px }
     .highlight { color: #18130e; font-weight: 600 }
+    em.accent { font-family: 'Instrument Serif', serif; font-style: italic; color: #c94a1f }
     .info { background: #faf7f2; border: 1px solid #e2dbd0; border-radius: 10px;
             padding: 20px; margin: 28px 0; text-align: left }
     .info-row { display: flex; justify-content: space-between; font-size: 14px;
@@ -30,7 +38,7 @@
   <div class="card">
     <div class="logo">Agenty</div>
     <div class="check">✅</div>
-    <h1>Sua automação está ativa!</h1>
+    <h1>Sua automação está <em class="accent">ativa!</em></h1>
     <p>O <span class="highlight">Gestor de Reputação Automático</span> já está monitorando as avaliações do seu negócio.</p>
 
     <div class="info">
