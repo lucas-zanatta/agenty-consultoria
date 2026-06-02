@@ -60,16 +60,16 @@ async def approve(request: Request, token: str):
     review = db.get_review_by_approval_token(token)
     if not review:
         return templates.TemplateResponse(
-            "approve_result.html",
-            {"request": request, "success": False, "reason": "invalid"},
+            request, "approve_result.html",
+            context={"success": False, "reason": "invalid"},
             status_code=404,
         )
 
     client = db.get_client_by_id(review["client_id"])
     if not client:
         return templates.TemplateResponse(
-            "approve_result.html",
-            {"request": request, "success": False, "reason": "invalid"},
+            request, "approve_result.html",
+            context={"success": False, "reason": "invalid"},
             status_code=404,
         )
 
@@ -82,13 +82,13 @@ async def approve(request: Request, token: str):
     if success:
         db.set_replied(client["id"], review["review_id"], review["draft_response"])
         return templates.TemplateResponse(
-            "approve_result.html",
-            {"request": request, "success": True, "client": client},
+            request, "approve_result.html",
+            context={"success": True, "client": client},
         )
 
     return templates.TemplateResponse(
-        "approve_result.html",
-        {"request": request, "success": False, "reason": "error"},
+        request, "approve_result.html",
+        context={"success": False, "reason": "error"},
         status_code=500,
     )
 

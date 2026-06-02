@@ -1,7 +1,6 @@
 import logging
 import sys
 from pathlib import Path
-from urllib.parse import urlencode
 
 import httpx
 from fastapi import APIRouter, Form, Request
@@ -23,7 +22,6 @@ templates = Jinja2Templates(
 
 _SCOPES = ["https://www.googleapis.com/auth/business.manage"]
 
-# onboarding_token → OAuth state para recuperar no callback
 _pending_oauth: dict[str, str] = {}
 
 
@@ -31,11 +29,11 @@ def _build_flow() -> Flow:
     return Flow.from_client_config(
         {
             "web": {
-                "client_id":                config.GOOGLE_CLIENT_ID,
-                "client_secret":            config.GOOGLE_CLIENT_SECRET,
-                "auth_uri":                 "https://accounts.google.com/o/oauth2/auth",
-                "token_uri":                "https://oauth2.googleapis.com/token",
-                "redirect_uris":            [f"{config.APP_BASE_URL}/oauth/callback"],
+                "client_id":     config.GOOGLE_CLIENT_ID,
+                "client_secret": config.GOOGLE_CLIENT_SECRET,
+                "auth_uri":      "https://accounts.google.com/o/oauth2/auth",
+                "token_uri":     "https://oauth2.googleapis.com/token",
+                "redirect_uris": [f"{config.APP_BASE_URL}/oauth/callback"],
             }
         },
         scopes=_SCOPES,
@@ -52,10 +50,10 @@ async def onboarding_form(request: Request, token: str):
         return HTMLResponse("<h2>Link inválido ou expirado.</h2>", status_code=404)
     if client["status"] == "active":
         return templates.TemplateResponse(
-            "onboarding_done.html", {"request": request, "client": client}
+            request, "onboarding_done.html", context={"client": client}
         )
     return templates.TemplateResponse(
-        "onboarding_step1.html", {"request": request, "token": token, "client": client}
+        request, "onboarding_step1.html", context={"token": token, "client": client}
     )
 
 
@@ -82,9 +80,7 @@ async def onboarding_setup(
         approval_email=approval_email,
         auto_reply_min_rating=auto_reply_min_rating,
     )
-    return RedirectResponse(
-        f"/onboarding/{token}/connect", status_code=303
-    )
+    return RedirectResponse(f"/onboarding/{token}/connect", status_code=303)
 
 
 # ── Passo 2: conectar Google Meu Negócio via OAuth ───────────────────────────
@@ -95,13 +91,12 @@ async def onboarding_connect(request: Request, token: str):
     if not client:
         return HTMLResponse("<h2>Link inválido ou expirado.</h2>", status_code=404)
     return templates.TemplateResponse(
-        "onboarding_step2.html", {"request": request, "token": token, "client": client}
+        request, "onboarding_step2.html", context={"token": token, "client": client}
     )
 
 
 @router.get("/onboarding/{token}/google-auth")
 async def onboarding_google_auth(token: str):
-    """Inicia o fluxo OAuth com o Google."""
     client = db.get_client_by_onboarding_token(token)
     if not client:
         return HTMLResponse("<h2>Link inválido ou expirado.</h2>", status_code=404)
@@ -111,7 +106,7 @@ async def onboarding_google_auth(token: str):
         access_type="offline",
         include_granted_scopes="true",
         prompt="consent",
-        state=token,  # token de onboarding como state para recuperar no callback
+        state=token,
     )
     _pending_oauth[state] = token
     return RedirectResponse(auth_url)
@@ -121,7 +116,7 @@ async def onboarding_google_auth(token: str):
 
 @router.get("/oauth/callback", response_class=HTMLResponse)
 async def oauth_callback(request: Request, code: str, state: str):
-    token = _pending_oauth.pop(state, state)  # fallback: state é o próprio token
+    token = _pending_oauth.pop(state, state)
 
     client = db.get_client_by_onboarding_token(token)
     if not client:
@@ -131,10 +126,8 @@ async def oauth_callback(request: Request, code: str, state: str):
     flow.fetch_token(code=code)
     creds = flow.credentials
 
-    # Salva o refresh_token no banco
     db.update_client(client["id"], google_refresh_token=creds.refresh_token)
 
-    # Busca contas e locais do GMB com o access_token recém-obtido
     try:
         accounts  = list_accounts(creds.token)
         locations = []
@@ -145,19 +138,17 @@ async def oauth_callback(request: Request, code: str, state: str):
             locs = list_locations(creds.token, acc["name"])
 
             if len(locs) == 1:
-                # Único local — ativa direto
-                loc     = locs[0]
-                loc_v4  = f"{acc['name']}/{loc['name']}"
+                loc    = locs[0]
+                loc_v4 = f"{acc['name']}/{loc['name']}"
                 db.update_client(client["id"], google_location_name=loc_v4)
                 db.activate_client(client["id"])
                 client = db.get_client_by_id(client["id"])
                 return templates.TemplateResponse(
-                    "onboarding_done.html", {"request": request, "client": client}
+                    request, "onboarding_done.html", context={"client": client}
                 )
 
             locations = [(acc["name"], loc) for loc in locs]
         else:
-            # Múltiplas contas — mostra seletor
             for acc in accounts:
                 locs = list_locations(creds.token, acc["name"])
                 for loc in locs:
@@ -172,8 +163,8 @@ async def oauth_callback(request: Request, code: str, state: str):
         )
 
     return templates.TemplateResponse(
-        "onboarding_select_location.html",
-        {"request": request, "token": token, "locations": locations},
+        request, "onboarding_select_location.html",
+        context={"token": token, "locations": locations},
     )
 
 
@@ -181,7 +172,7 @@ async def oauth_callback(request: Request, code: str, state: str):
 async def onboarding_select_location(
     request: Request,
     token: str,
-    account_name: str  = Form(...),
+    account_name:  str = Form(...),
     location_name: str = Form(...),
 ):
     client = db.get_client_by_onboarding_token(token)
@@ -198,5 +189,5 @@ async def onboarding_select_location(
     client = db.get_client_by_id(client["id"])
 
     return templates.TemplateResponse(
-        "onboarding_done.html", {"request": request, "client": client}
+        request, "onboarding_done.html", context={"client": client}
     )
