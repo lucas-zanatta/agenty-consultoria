@@ -385,8 +385,9 @@
 </section>
 
 <!-- ── 05 — Preço ── -->
-<section class="pg-section pg-section--dark" id="preco">
-  <div class="container">
+<section class="pg-section pg-section--dark" id="preco" style="position:relative;overflow:hidden">
+  <div id="price-dots-bg" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;z-index:0"></div>
+  <div class="container" style="position:relative;z-index:1">
     <div class="prod-price" data-reveal>
       <div class="prod-price__left">
         <span class="pg-label pg-label--light">05 — INVESTIMENTO</span>
@@ -396,7 +397,7 @@
       <div class="prod-price__card">
         <div class="prod-price__setup">
           <span class="prod-price__setup-label">Implementação</span>
-          <span class="prod-price__setup-note" style="font-size:1rem;font-weight:600;color:var(--ink)">50% na assinatura · 50% na entrega</span>
+          <span class="prod-price__setup-note" style="font-size:1rem;font-weight:700;color:var(--ochre)">50% na assinatura · 50% na entrega</span>
         </div>
         <div class="prod-price__divider"></div>
         <div class="prod-price__monthly">
@@ -406,8 +407,8 @@
 
         <!-- Escassez inline -->
         <div class="scarcity-inline" id="scarcity-block">
-          <span class="scarcity-inline__label">🎁 Oferta desta sessão</span>
-          <p class="scarcity-inline__gift-text">Agende agora e ganhe o <strong>1º mês de manutenção grátis</strong></p>
+          <span class="scarcity-inline__label">1º MÊS GRÁTIS</span>
+          <p class="scarcity-inline__gift-text">Agende o diagnóstico antes de o cronômetro terminar.</p>
           <div class="flip-timer">
             <div class="flip-unit">
               <div class="flip-unit__display"><span class="flip-unit__num" id="flip-min">10</span></div>
@@ -491,12 +492,81 @@ Cal("init","diagnostico",{origin:"https://cal.com"});
 Cal.ns.diagnostico("ui",{"hideEventTypeDetails":false,"layout":"month_view"});
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="js/scroll-hero.js"></script>
 <script src="js/main.js"></script>
 <script>
+// Dotted wave background — seção de investimento
+(function () {
+  if (typeof THREE === 'undefined') return;
+  var section   = document.getElementById('preco');
+  var container = document.getElementById('price-dots-bg');
+  if (!section || !container) return;
+
+  var SEPARATION = 120, AMOUNTX = 38, AMOUNTY = 28;
+  var W = section.offsetWidth, H = section.offsetHeight;
+
+  var scene    = new THREE.Scene();
+  var camera   = new THREE.PerspectiveCamera(60, W / H, 1, 10000);
+  camera.position.set(0, 300, 1100);
+
+  var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(W, H);
+  renderer.setClearColor(0x000000, 0);
+  container.appendChild(renderer.domElement);
+
+  var positions = [], colors = [];
+  for (var ix = 0; ix < AMOUNTX; ix++) {
+    for (var iy = 0; iy < AMOUNTY; iy++) {
+      positions.push(
+        ix * SEPARATION - (AMOUNTX * SEPARATION) / 2,
+        0,
+        iy * SEPARATION - (AMOUNTY * SEPARATION) / 2
+      );
+      colors.push(0.79, 0.29, 0.12); // ember #c94a1f
+    }
+  }
+
+  var geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geo.setAttribute('color',    new THREE.Float32BufferAttribute(colors, 3));
+
+  var mat = new THREE.PointsMaterial({
+    size: 5, vertexColors: true, transparent: true, opacity: 0.18, sizeAttenuation: true
+  });
+  scene.add(new THREE.Points(geo, mat));
+
+  var count = 0;
+  var posArr = geo.attributes.position.array;
+
+  function animate() {
+    requestAnimationFrame(animate);
+    var i = 0;
+    for (var ix = 0; ix < AMOUNTX; ix++) {
+      for (var iy = 0; iy < AMOUNTY; iy++) {
+        posArr[i * 3 + 1] = Math.sin((ix + count) * 0.3) * 50 + Math.sin((iy + count) * 0.5) * 50;
+        i++;
+      }
+    }
+    geo.attributes.position.needsUpdate = true;
+    renderer.render(scene, camera);
+    count += 0.08;
+  }
+  animate();
+
+  new ResizeObserver(function () {
+    W = section.offsetWidth; H = section.offsetHeight;
+    camera.aspect = W / H;
+    camera.updateProjectionMatrix();
+    renderer.setSize(W, H);
+  }).observe(section);
+})();
+</script>
+<script>
 (function () {
   var DURATION = 600;
-  var KEY = 'agenty_timer_end';
+  var KEY = 'agenty_timer_v3';
   var elMin = document.getElementById('flip-min');
   var elSec = document.getElementById('flip-sec');
   var block = document.getElementById('scarcity-block');
