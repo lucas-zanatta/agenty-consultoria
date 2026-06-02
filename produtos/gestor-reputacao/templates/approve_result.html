@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Resultado — Agenty</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+    body { background: #faf7f2; color: #18130e; font-family: Inter, Arial, sans-serif;
+           min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px }
+    .card { background: #fff; border: 1px solid #e2dbd0; border-radius: 16px;
+            padding: 48px; max-width: 440px; width: 100%; text-align: center }
+    .logo { color: #c94a1f; font-size: 22px; font-weight: 800; margin-bottom: 32px }
+    .icon { font-size: 52px; margin-bottom: 20px }
+    h1 { font-size: 22px; font-weight: 700; margin-bottom: 12px }
+    p { font-size: 14px; color: #8a7f74; line-height: 1.7 }
+    a { color: #c94a1f; text-decoration: none }
+    a:hover { text-decoration: underline }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">Agenty</div>
+
+    {% if success %}
+      <div class="icon">✅</div>
+      <h1>Resposta publicada!</h1>
+      <p>Sua resposta foi publicada com sucesso no Google.<br>
+      Ela aparecerá publicamente em alguns instantes.</p>
+    {% elif reason == "invalid" %}
+      <div class="icon">⚠️</div>
+      <h1>Link inválido ou expirado</h1>
+      <p>Este link já foi utilizado ou não existe.<br>
+      Nenhuma ação foi realizada.</p>
+    {% else %}
+      <div class="icon">❌</div>
+      <h1>Erro ao publicar</h1>
+      <p>Não foi possível publicar a resposta.<br>
+      <a href="https://agenty.com.br">Entre em contato com a Agenty</a> para resolver.</p>
+    {% endif %}
+
+    <p style="margin-top:28px;font-size:13px">
+      <a href="https://agenty.com.br">agenty.com.br</a>
+    </p>
+  </div>
+</body>
+</html>

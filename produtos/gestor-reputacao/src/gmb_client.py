@@ -1,30 +1,24 @@
 import logging
-import sys
-from pathlib import Path
 
 import httpx
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 
-sys.path.insert(0, str(Path(__file__).parent))
 import config
-from mock_reviews import MOCK_REVIEWS
 
 log = logging.getLogger("agenty.gmb")
 
 _REVIEWS_BASE = "https://mybusiness.googleapis.com/v4"
 _SCOPES = ["https://www.googleapis.com/auth/business.manage"]
-
-# Mapeamento da API do Google para inteiros
 _STAR_MAP = {"ONE": 1, "TWO": 2, "THREE": 3, "FOUR": 4, "FIVE": 5}
 
 
 class GMBClient:
 
-    def __init__(self):
+    def __init__(self, refresh_token: str):
         self._creds = Credentials(
             token=None,
-            refresh_token=config.GOOGLE_REFRESH_TOKEN,
+            refresh_token=refresh_token,
             token_uri="https://oauth2.googleapis.com/token",
             client_id=config.GOOGLE_CLIENT_ID,
             client_secret=config.GOOGLE_CLIENT_SECRET,
@@ -39,13 +33,8 @@ class GMBClient:
             "Content-Type": "application/json",
         }
 
-    def list_unanswered_reviews(self) -> list[dict]:
-        """Retorna avaliações sem resposta do local configurado."""
-        if config.MOCK_MODE:
-            log.info("[MOCK] Retornando avaliacoes fictícias")
-            return MOCK_REVIEWS
-
-        url = f"{_REVIEWS_BASE}/{config.GOOGLE_LOCATION_NAME}/reviews"
+    def list_unanswered_reviews(self, location_name: str) -> list[dict]:
+        url = f"{_REVIEWS_BASE}/{location_name}/reviews"
         reviews = []
         page_token = None
 
@@ -70,11 +59,6 @@ class GMBClient:
         return reviews
 
     def post_reply(self, review_name: str, text: str) -> bool:
-        """Publica uma resposta para uma avaliação. Retorna True se bem-sucedido."""
-        if config.MOCK_MODE:
-            log.info(f"[MOCK] Resposta publicada (simulada): {review_name}")
-            return True
-
         url = f"{_REVIEWS_BASE}/{review_name}/reply"
         with httpx.Client(timeout=30) as client:
             resp = client.put(url, headers=self._headers(), json={"comment": text})
@@ -88,12 +72,35 @@ class GMBClient:
 
     @staticmethod
     def parse_review(raw: dict) -> dict:
-        """Converte o formato bruto da API para o formato interno."""
         return {
-            "review_id":     raw["reviewId"],
-            "location_name": config.GOOGLE_LOCATION_NAME,
-            "rating":        _STAR_MAP.get(raw.get("starRating", ""), 0),
-            "author":        raw.get("reviewer", {}).get("displayName", ""),
-            "text":          raw.get("comment", ""),
-            "created_at":    raw.get("createTime", ""),
+            "review_id":  raw["reviewId"],
+            "rating":     _STAR_MAP.get(raw.get("starRating", ""), 0),
+            "author":     raw.get("reviewer", {}).get("displayName", ""),
+            "text":       raw.get("comment", ""),
+            "created_at": raw.get("createTime", ""),
         }
+
+
+def list_accounts(access_token: str) -> list[dict]:
+    """Lista contas do Google Business Profile — usado no onboarding OAuth."""
+    headers = {"Authorization": f"Bearer {access_token}"}
+    resp = httpx.get(
+        "https://mybusinessaccountmanagement.googleapis.com/v1/accounts",
+        headers=headers,
+        timeout=15,
+    )
+    resp.raise_for_status()
+    return resp.json().get("accounts", [])
+
+
+def list_locations(access_token: str, account_name: str) -> list[dict]:
+    """Lista locais de uma conta — usado no onboarding OAuth."""
+    headers = {"Authorization": f"Bearer {access_token}"}
+    resp = httpx.get(
+        f"https://mybusinessbusinessinformation.googleapis.com/v1/{account_name}/locations",
+        headers=headers,
+        params={"readMask": "name,title"},
+        timeout=15,
+    )
+    resp.raise_for_status()
+    return resp.json().get("locations", [])

@@ -1,85 +1,115 @@
-import sqlite3
+import sys
 import uuid
-from contextlib import contextmanager
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
-DB_PATH = Path(__file__).parent.parent / "data" / "reviews.db"
+from supabase import create_client, Client
+
+sys.path.insert(0, str(Path(__file__).parent))
+import config
+
+_sb: Client = create_client(config.SUPABASE_URL, config.SUPABASE_SERVICE_KEY)
 
 
-def init_db():
-    DB_PATH.parent.mkdir(exist_ok=True)
-    with _conn() as conn:
-        conn.execute("""
-            CREATE TABLE IF NOT EXISTS reviews (
-                review_id       TEXT PRIMARY KEY,
-                location_name   TEXT NOT NULL,
-                rating          INTEGER,
-                author          TEXT,
-                text            TEXT,
-                created_at      TEXT,
-                status          TEXT DEFAULT 'pending',
-                draft_response  TEXT,
-                final_response  TEXT,
-                approval_token  TEXT UNIQUE,
-                processed_at    TEXT
-            )
-        """)
+# ── Clients ───────────────────────────────────────────────────────────────────
+
+def create_client_record(
+    email: str,
+    name: str,
+    stripe_customer_id: str = "",
+    stripe_subscription_id: str = "",
+) -> dict:
+    result = _sb.table("clients").insert({
+        "email": email,
+        "name": name,
+        "stripe_customer_id": stripe_customer_id,
+        "stripe_subscription_id": stripe_subscription_id,
+        "status": "pending_onboarding",
+    }).execute()
+    return result.data[0]
 
 
-@contextmanager
-def _conn():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    try:
-        yield conn
-        conn.commit()
-    finally:
-        conn.close()
+def get_client_by_onboarding_token(token: str) -> dict | None:
+    result = _sb.table("clients").select("*").eq("onboarding_token", token).execute()
+    return result.data[0] if result.data else None
 
 
-def upsert_review(review: dict):
-    with _conn() as conn:
-        conn.execute("""
-            INSERT OR IGNORE INTO reviews
-                (review_id, location_name, rating, author, text, created_at, status)
-            VALUES
-                (:review_id, :location_name, :rating, :author, :text, :created_at, 'pending')
-        """, review)
+def get_client_by_id(client_id: str) -> dict | None:
+    result = _sb.table("clients").select("*").eq("id", client_id).execute()
+    return result.data[0] if result.data else None
 
 
-def get_pending() -> list[dict]:
-    with _conn() as conn:
-        rows = conn.execute(
-            "SELECT * FROM reviews WHERE status = 'pending'"
-        ).fetchall()
-        return [dict(r) for r in rows]
+def get_active_clients() -> list[dict]:
+    result = _sb.table("clients").select("*").eq("status", "active").execute()
+    return result.data
 
 
-def set_draft(review_id: str, draft: str) -> str:
+def update_client(client_id: str, **fields) -> dict:
+    result = _sb.table("clients").update(fields).eq("id", client_id).execute()
+    return result.data[0]
+
+
+def activate_client(client_id: str) -> dict:
+    return update_client(
+        client_id,
+        status="active",
+        activated_at=datetime.now(timezone.utc).isoformat(),
+    )
+
+
+def suspend_client(client_id: str) -> dict:
+    return update_client(client_id, status="suspended")
+
+
+# ── Reviews ───────────────────────────────────────────────────────────────────
+
+def upsert_review(client_id: str, review: dict):
+    _sb.table("reviews").upsert({
+        "client_id":   client_id,
+        "review_id":   review["review_id"],
+        "rating":      review["rating"],
+        "author":      review["author"],
+        "text":        review["text"],
+        "created_at":  review["created_at"],
+        "status":      "pending",
+    }, on_conflict="client_id,review_id", ignore_duplicates=True).execute()
+
+
+def get_pending_reviews(client_id: str) -> list[dict]:
+    result = (
+        _sb.table("reviews")
+        .select("*")
+        .eq("client_id", client_id)
+        .eq("status", "pending")
+        .execute()
+    )
+    return result.data
+
+
+def set_draft(client_id: str, review_id: str, draft: str) -> str:
     token = str(uuid.uuid4())
-    with _conn() as conn:
-        conn.execute("""
-            UPDATE reviews
-            SET status = 'draft_sent', draft_response = ?, approval_token = ?
-            WHERE review_id = ?
-        """, (draft, token, review_id))
+    _sb.table("reviews").update({
+        "status":         "draft_sent",
+        "draft_response": draft,
+        "approval_token": token,
+    }).eq("client_id", client_id).eq("review_id", review_id).execute()
     return token
 
 
-def set_replied(review_id: str, response: str):
-    with _conn() as conn:
-        conn.execute("""
-            UPDATE reviews
-            SET status = 'replied', final_response = ?, processed_at = ?
-            WHERE review_id = ?
-        """, (response, datetime.utcnow().isoformat(), review_id))
+def set_replied(client_id: str, review_id: str, response: str):
+    _sb.table("reviews").update({
+        "status":         "replied",
+        "final_response": response,
+        "processed_at":   datetime.now(timezone.utc).isoformat(),
+    }).eq("client_id", client_id).eq("review_id", review_id).execute()
 
 
-def get_by_token(token: str) -> dict | None:
-    with _conn() as conn:
-        row = conn.execute(
-            "SELECT * FROM reviews WHERE approval_token = ? AND status = 'draft_sent'",
-            (token,)
-        ).fetchone()
-        return dict(row) if row else None
+def get_review_by_approval_token(token: str) -> dict | None:
+    result = (
+        _sb.table("reviews")
+        .select("*")
+        .eq("approval_token", token)
+        .eq("status", "draft_sent")
+        .execute()
+    )
+    return result.data[0] if result.data else None

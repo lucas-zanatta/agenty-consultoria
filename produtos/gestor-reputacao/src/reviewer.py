@@ -4,66 +4,98 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-import config
 import db
 import claude_client
 import notifier
 from gmb_client import GMBClient
+from mock_reviews import MOCK_REVIEWS
 
 log = logging.getLogger("agenty.reviewer")
 
-_gmb = GMBClient()
+
+def run_all_clients():
+    """Ponto de entrada do scheduler — itera sobre todos os clientes ativos."""
+    clients = db.get_active_clients()
+    log.info(f"Ciclo iniciado — {len(clients)} cliente(s) ativo(s)")
+
+    for client in clients:
+        try:
+            _run_cycle(client)
+        except Exception as e:
+            log.error(f"Erro no ciclo do cliente {client['id']} ({client['business_name']}): {e}")
 
 
-def run_cycle():
-    log.info("Iniciando ciclo de verificacao de avaliacoes...")
+def _run_cycle(client: dict):
+    client_id     = client["id"]
+    business_name = client.get("business_name") or client["email"]
+    mock_mode     = not client.get("google_refresh_token")
 
-    try:
-        raw_reviews = _gmb.list_unanswered_reviews()
-    except Exception as e:
-        log.error(f"Erro ao buscar avaliacoes na API do Google: {e}")
-        return
+    log.info(f"[{business_name}] Verificando avaliacoes...")
 
-    log.info(f"{len(raw_reviews)} avaliacoes sem resposta encontradas")
+    if mock_mode:
+        log.info(f"[{business_name}] Sem credenciais Google — usando mock")
+        raw_reviews = MOCK_REVIEWS
+    else:
+        try:
+            gmb = GMBClient(refresh_token=client["google_refresh_token"])
+            raw_reviews = gmb.list_unanswered_reviews(client["google_location_name"])
+        except Exception as e:
+            log.error(f"[{business_name}] Erro ao buscar avaliacoes: {e}")
+            return
 
-    # Registra no banco qualquer avaliação ainda não vista
+    log.info(f"[{business_name}] {len(raw_reviews)} avaliacao(oes) sem resposta")
+
     for raw in raw_reviews:
         review = GMBClient.parse_review(raw)
-        db.upsert_review(review)
+        db.upsert_review(client_id, review)
 
-    # Processa as pendentes
-    pending = db.get_pending()
-    log.info(f"{len(pending)} avaliacoes pendentes para processar")
+    pending = db.get_pending_reviews(client_id)
+    log.info(f"[{business_name}] {len(pending)} pendente(s) para processar")
 
     for review in pending:
-        _process(review, raw_reviews)
-        time.sleep(7)  # max ~8 replies/min — rate limit da GMB API
+        _process(client, review, raw_reviews, mock_mode)
+        time.sleep(7)  # rate limit GMB API: ~8 replies/min
 
 
-def _process(review: dict, raw_reviews: list):
-    review_id = review["review_id"]
-    rating    = review["rating"]
-    author    = review.get("author") or "Cliente"
-    text      = review.get("text") or ""
+def _process(client: dict, review: dict, raw_reviews: list, mock_mode: bool):
+    client_id  = client["id"]
+    review_id  = review["review_id"]
+    rating     = review["rating"]
+    author     = review.get("author") or "Cliente"
+    text       = review.get("text") or ""
+    min_rating = client.get("auto_reply_min_rating") or 4
 
-    # Monta o nome completo da avaliação para a API
     raw = next((r for r in raw_reviews if r.get("reviewId") == review_id), {})
-    review_name = raw.get("name") or f"{config.GOOGLE_LOCATION_NAME}/reviews/{review_id}"
+    review_name = raw.get("name") or f"{client['google_location_name']}/reviews/{review_id}"
 
-    log.info(f"Processando avaliacao de {author} ({rating} estrelas)")
+    business_name = client.get("business_name", "")
+    log.info(f"[{business_name}] Processando: {author} ({rating} estrelas)")
 
     try:
-        draft = claude_client.generate_response(rating, author, text)
+        draft = claude_client.generate_response(
+            business_name=business_name,
+            business_type=client.get("business_type", ""),
+            business_city=client.get("business_city", "Curitiba"),
+            tone=client.get("tone", "proximo_descontraido"),
+            rating=rating,
+            author=author,
+            review_text=text,
+        )
     except Exception as e:
-        log.error(f"Erro ao gerar resposta para {review_id}: {e}")
+        log.error(f"[{business_name}] Erro ao gerar resposta para {review_id}: {e}")
         return
 
-    if rating >= config.AUTO_REPLY_MIN_RATING:
-        success = _gmb.post_reply(review_name, draft)
-        if success:
-            db.set_replied(review_id, draft)
-            log.info(f"Auto-respondido: {author} ({rating} estrelas)")
+    if rating >= min_rating:
+        if mock_mode:
+            log.info(f"[{business_name}] [MOCK] Auto-respondido: {author}")
+            db.set_replied(client_id, review_id, draft)
+        else:
+            gmb = GMBClient(refresh_token=client["google_refresh_token"])
+            success = gmb.post_reply(review_name, draft)
+            if success:
+                db.set_replied(client_id, review_id, draft)
+                log.info(f"[{business_name}] Auto-respondido: {author}")
     else:
-        token = db.set_draft(review_id, draft)
-        notifier.send_approval_email(review, draft, token)
-        log.info(f"Rascunho enviado para aprovacao: {author} ({rating} estrelas)")
+        token = db.set_draft(client_id, review_id, draft)
+        notifier.send_approval_email(client, review, draft, token)
+        log.info(f"[{business_name}] Rascunho enviado para aprovacao: {author}")

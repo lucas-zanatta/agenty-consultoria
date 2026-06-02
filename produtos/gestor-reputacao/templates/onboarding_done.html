@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Automação ativada! — Agenty</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+    body { background: #faf7f2; color: #18130e; font-family: Inter, Arial, sans-serif;
+           min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px }
+    .card { background: #fff; border: 1px solid #e2dbd0; border-radius: 16px;
+            padding: 48px; max-width: 480px; width: 100%; text-align: center }
+    .logo { color: #c94a1f; font-size: 22px; font-weight: 800; margin-bottom: 32px }
+    .check { font-size: 56px; margin-bottom: 20px }
+    h1 { font-size: 24px; font-weight: 700; margin-bottom: 12px }
+    p { font-size: 15px; color: #8a7f74; line-height: 1.7; margin-bottom: 12px }
+    .highlight { color: #18130e; font-weight: 600 }
+    .info { background: #faf7f2; border: 1px solid #e2dbd0; border-radius: 10px;
+            padding: 20px; margin: 28px 0; text-align: left }
+    .info-row { display: flex; justify-content: space-between; font-size: 14px;
+                padding: 6px 0; border-bottom: 1px solid #e2dbd0 }
+    .info-row:last-child { border-bottom: none }
+    .info-label { color: #8a7f74 }
+    .info-value { font-weight: 600; color: #18130e }
+    a.link { color: #c94a1f; text-decoration: none; font-size: 14px }
+    a.link:hover { text-decoration: underline }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">Agenty</div>
+    <div class="check">✅</div>
+    <h1>Sua automação está ativa!</h1>
+    <p>O <span class="highlight">Gestor de Reputação Automático</span> já está monitorando as avaliações do seu negócio.</p>
+
+    <div class="info">
+      <div class="info-row">
+        <span class="info-label">Negócio</span>
+        <span class="info-value">{{ client.business_name }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Respostas automáticas</span>
+        <span class="info-value">{{ client.auto_reply_min_rating }}+ estrelas</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">E-mail de aprovação</span>
+        <span class="info-value">{{ client.approval_email }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Verificação a cada</span>
+        <span class="info-value">2 horas</span>
+      </div>
+    </div>
+
+    <p>Avaliações de <strong>{{ client.auto_reply_min_rating }} a 5 estrelas</strong> serão respondidas automaticamente.<br>
+    Avaliações negativas chegam no seu e-mail para aprovação.</p>
+
+    <p style="margin-top:20px"><a href="https://agenty.com.br" class="link">agenty.com.br</a></p>
+  </div>
+</body>
+</html>
