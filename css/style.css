@@ -1330,7 +1330,7 @@ body::after {
   background: rgba(250,247,242,0.08);
   margin: 0 0 24px;
 }
-.prod-price__monthly { display: flex; flex-direction: column; gap: 4px; margin-bottom: 28px; }
+.prod-price__monthly { display: flex; flex-direction: column; gap: 6px; margin-bottom: 28px; padding: 16px 0 4px; }
 .prod-price__monthly-label {
   font-size: 0.65rem;
   font-weight: 600;
@@ -1340,7 +1340,7 @@ body::after {
 }
 .prod-price__monthly-val {
   font-family: var(--font-display);
-  font-size: 3rem;
+  font-size: 3.8rem;
   font-weight: 900;
   color: var(--paper);
   letter-spacing: -0.03em;
