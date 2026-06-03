@@ -96,6 +96,12 @@ def set_draft(client_id: str, review_id: str, draft: str) -> str:
     return token
 
 
+def update_draft(review_id: str, client_id: str, new_draft: str):
+    _sb.table("reviews").update({
+        "draft_response": new_draft,
+    }).eq("review_id", review_id).eq("client_id", client_id).execute()
+
+
 def set_replied(client_id: str, review_id: str, response: str):
     _sb.table("reviews").update({
         "status":         "replied",

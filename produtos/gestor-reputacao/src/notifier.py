@@ -22,6 +22,8 @@ def send_approval_email(client: dict, review: dict, draft: str, token: str):
     border      = _BORDER.get(rating, "#94a3b8")
     urgency     = " — URGENTE" if rating <= 2 else ""
     approve_url = f"{config.APP_BASE_URL}/approve/{token}"
+    revise_url  = f"{config.APP_BASE_URL}/revise/{token}"
+    custom_url  = f"{config.APP_BASE_URL}/custom/{token}"
 
     business_name  = client.get("business_name") or client["email"]
     approval_email = client.get("approval_email") or client["email"]
@@ -55,15 +57,27 @@ def send_approval_email(client: dict, review: dict, draft: str, token: str):
       <p style="margin:0;color:#1e293b;font-style:italic;line-height:1.7">"{draft}"</p>
     </div>
 
-    <div style="text-align:center;margin-bottom:28px">
+    <!-- 3 ações -->
+    <div style="text-align:center;margin-bottom:16px">
       <a href="{approve_url}"
-         style="display:inline-block;background:#c94a1f;color:#ffffff;padding:14px 36px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:16px;letter-spacing:.3px">
+         style="display:inline-block;background:#c94a1f;color:#ffffff;padding:14px 36px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:15px;letter-spacing:.3px">
         Aprovar e publicar no Google
       </a>
     </div>
+    <div style="text-align:center;margin-bottom:16px">
+      <a href="{revise_url}"
+         style="display:inline-block;background:#f0f4ff;color:#1e293b;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:14px;border:1px solid #c7d2fe">
+        Pedir modificações à IA
+      </a>
+    </div>
+    <div style="text-align:center;margin-bottom:28px">
+      <a href="{custom_url}"
+         style="display:inline-block;background:#f8fafc;color:#64748b;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;border:1px solid #e2e8f0">
+        Escrever minha própria resposta
+      </a>
+    </div>
 
-    <p style="margin:0;color:#94a3b8;font-size:13px;line-height:1.6">
-      Quer ajustar o texto? Responda este e-mail com sua versao e publicamos manualmente.<br>
+    <p style="margin:0;color:#94a3b8;font-size:12px;line-height:1.6;text-align:center">
       Este link expira em 72 horas.
     </p>
   </td></tr>

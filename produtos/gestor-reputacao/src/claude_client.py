@@ -58,3 +58,49 @@ def generate_response(
         messages=[{"role": "user", "content": user_msg}],
     )
     return response.content[0].text.strip()
+
+
+def revise_response(
+    business_name: str,
+    business_type: str,
+    business_city: str,
+    tone: str,
+    rating: int,
+    author: str,
+    review_text: str,
+    current_draft: str,
+    feedback: str,
+) -> str:
+    """Reescreve o rascunho incorporando o feedback do cliente."""
+    tone_desc = _TONE_DESC.get(tone, _TONE_DESC["proximo_descontraido"])
+
+    system = (
+        f"Você é o assistente de atendimento de {business_name}, "
+        f"{business_type} em {business_city}.\n"
+        f"Tom de voz: {tone_desc}.\n"
+        "Idioma: Português brasileiro.\n\n"
+        "Regras para responder avaliações do Google:\n"
+        "- Chame o avaliador pelo primeiro nome quando disponível\n"
+        "- Mencione um detalhe específico do texto da avaliação\n"
+        "- Avaliações negativas: reconheça sem admitir culpa; ofereça canal de contato direto\n"
+        "- Entre 20 e 100 palavras\n"
+        "- Nunca mencione concorrentes, preços ou promoções\n"
+        "- Nunca admita uma falha específica"
+    )
+
+    user_msg = (
+        f"Avaliação recebida:\n"
+        f"Nota: {rating}/5 — Autor: {author or 'Anônimo'}\n"
+        f"Texto: \"{review_text or 'Sem texto'}\"\n\n"
+        f"Rascunho atual:\n\"{current_draft}\"\n\n"
+        f"O dono do negócio pediu as seguintes modificações:\n\"{feedback}\"\n\n"
+        "Reescreva a resposta incorporando o feedback, mantendo o tom e as regras."
+    )
+
+    response = _client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=300,
+        system=system,
+        messages=[{"role": "user", "content": user_msg}],
+    )
+    return response.content[0].text.strip()

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Escrever minha resposta — Agenty</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+    body { background: #faf7f2; color: #18130e; font-family: Inter, Arial, sans-serif;
+           min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px }
+    .card { background: #fff; border: 1px solid #e2dbd0; border-radius: 16px;
+            padding: 48px; max-width: 520px; width: 100% }
+    .logo { display: flex; align-items: center; gap: 8px;
+            font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+            font-size: 26px; letter-spacing: .5px; text-transform: uppercase;
+            color: #c94a1f; margin-bottom: 28px }
+    .logo img { width: 28px; height: 28px }
+    h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+         font-size: 24px; margin-bottom: 12px }
+    p { font-size: 14px; color: #8a7f74; line-height: 1.6; margin-bottom: 20px }
+    .review-box { border-left: 4px solid #e2dbd0; background: #faf7f2; padding: 14px 18px;
+                  border-radius: 6px; margin-bottom: 24px; font-size: 14px;
+                  color: #334155; line-height: 1.6 }
+    label { display: block; font-size: 13px; font-weight: 600; color: #2e2520; margin-bottom: 8px }
+    textarea { width: 100%; padding: 12px 14px; border: 1px solid #e2dbd0; border-radius: 8px;
+               font-size: 14px; font-family: Inter, sans-serif; color: #18130e;
+               background: #faf7f2; resize: vertical; min-height: 120px;
+               outline: none; transition: border-color .15s; line-height: 1.6 }
+    textarea:focus { border-color: #c94a1f }
+    .hint { font-size: 12px; color: #8a7f74; margin-top: 6px; margin-bottom: 24px }
+    button { width: 100%; padding: 14px; background: #18130e; color: #fff;
+             border: none; border-radius: 8px;
+             font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+             font-size: 18px; letter-spacing: .5px; text-transform: uppercase;
+             cursor: pointer; transition: background .15s }
+    button:hover { background: #2e2520 }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo"><img src="/static/favicon.svg" alt="">Agenty</div>
+    <h1>Escrever minha própria resposta</h1>
+    <p>Avaliação recebida:</p>
+
+    <div class="review-box">
+      <strong>{{ review.rating }}/5 — {{ review.author or 'Anônimo' }}</strong><br>
+      {{ review.text or 'Sem texto.' }}
+    </div>
+
+    <form method="POST" action="/custom/{{ token }}">
+      <label for="response_text">Sua resposta</label>
+      <textarea id="response_text" name="response_text" required
+        placeholder="Escreva aqui sua resposta para publicar no Google..."></textarea>
+      <div class="hint">Esta resposta será publicada diretamente no Google Maps, exatamente como você escrever.</div>
+      <button type="submit">Publicar no Google →</button>
+    </form>
+  </div>
+</body>
+</html>
