@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import sys
+import threading
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -35,7 +36,7 @@ templates = Jinja2Templates(
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     scheduler.add_job(
-        lambda: asyncio.get_event_loop().run_in_executor(None, reviewer.run_all_clients),
+        reviewer.run_all_clients,
         trigger="interval",
         hours=config.CHECK_INTERVAL_HOURS,
         id="review_cycle",
@@ -44,7 +45,7 @@ async def lifespan(app: FastAPI):
     scheduler.start()
     log.info(f"Scheduler iniciado — ciclo a cada {config.CHECK_INTERVAL_HOURS}h")
 
-    asyncio.get_event_loop().run_in_executor(None, reviewer.run_all_clients)
+    threading.Thread(target=reviewer.run_all_clients, daemon=True).start()
 
     yield
     scheduler.shutdown()
