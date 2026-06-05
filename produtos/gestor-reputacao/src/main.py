@@ -20,6 +20,7 @@ import notifier
 import reviewer
 from gmb_client import GMBClient
 from onboarding import router as onboarding_router
+from stripe_webhook import router as stripe_router
 from webhook import router as webhook_router
 
 logging.basicConfig(
@@ -56,6 +57,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Agenty — Gestor de Reputacao", lifespan=lifespan)
 app.mount("/static", StaticFiles(directory=str(Path(__file__).parent.parent / "static")), name="static")
 app.include_router(onboarding_router)
+app.include_router(stripe_router)
 app.include_router(webhook_router)
 
 
